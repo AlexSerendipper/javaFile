@@ -1,0 +1,35 @@
+spring:
+# 配置数据源信息
+  datasource:
+    dynamic:
+    # 设置默认的数据源或者数据源组, 默认值即为master
+      primary: master
+      # 是否严格匹配数据源, 默认设置为false，表示未指定数据源则使用默认数据源。 true表示严格匹配，表示未指定数据源则时抛异常
+      strict: false
+      datasource:
+        master:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://localhost:3306/javastudy?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+          username: root
+          password: qqabcd
+        slave_1:
+          url: jdbc:mysql://localhost:3306/zzjbook?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          username: root
+          password: qqabcd
+
+#spring:
+#  # 配置数据源信息
+#  datasource:
+#    # 配置数据源类型
+#    type: com.zaxxer.hikari.HikariDataSource
+#    # 配置连接数据库信息
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/javastudy?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+#    username: root
+#    password: qqabcd
+
+# 配置MyBatis日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

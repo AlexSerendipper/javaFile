@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--映射文件的命名空间（namespace） 需要与 mapper接口的全类名 保持一致-->
+<mapper namespace="basicfunction.mappers.DynamicSQLMapper">
+    <!--映射文件中编写SQL的标签的id属性 需要与 接口中方法的方法名 保持一致-->
+    <!-- *******************************增***************************************   -->
+    <!-- int InsertEmpByCollection(List<Emp> emps); -->
+    <insert id="InsertEmpByCollection">
+        insert into mybatis_emp values
+        <foreach collection="emps" item="emp" separator=",">
+            (null,#{emp.empName},#{emp.age},#{emp.sex},#{emp.email},null)
+        </foreach>
+    </insert>
+
+
+    <!-- ********************************删**************************************   -->
+    <!-- int (@Param(value = "eids") Integer[] eids); -->
+    <delete id="deleteEmpByArray">
+        delete from mybatis_emp where eid in
+        <foreach collection="eids" item="eid" separator="," open="(" close=")">
+            #{eid}
+        </foreach>
+    </delete>
+
+    <!-- *********************************改*************************************   -->
+    <!--  -->
+
+
+    <!-- ********************************查**************************************   -->
+    <!--List<Emp> getEmpByEqual(Emp emp);-->
+    <select id="getEmpByEqual" resultType="Emp">
+        select <include refid="empColumns"></include>
+        from mybatis_emp where 1=1
+        <if test="empName!='' and empName!=null "> and emp_name = #{empName}</if>
+        <if test="age!='' and age!=null "> and age = #{age}</if>
+        <if test="sex!='' and sex!=null "> and sex = #{sex}</if>
+        <if test="email!='' and email!=null "> and email = #{email}</if>
+    </select>
+
+    <!-- List<Emp> getEmpByWhere(Emp emp);  -->
+    <select id="getEmpByWhere" resultType="Emp">
+        select *
+        from mybatis_emp
+        <where>
+            <if test="empName!='' and empName!=null "> and emp_name = #{empName}</if>
+            <if test="age!='' and age!=null "> and age = #{age}</if>
+            <if test="sex!='' and sex!=null "> and sex = #{sex}</if>
+            <if test="email!='' and email!=null "> and email = #{email}</if>
+        </where>
+    </select>
+
+    <!-- List<Emp> getEmpByTrim(Emp emp);  -->
+    <select id="getEmpByTrim" resultType="Emp">
+        select *
+        from mybatis_emp
+        <trim prefix="where" suffixOverrides="and|or">
+            <if test="empName!='' and empName!=null "> emp_name = #{empName} and</if>
+            <if test="age!='' and age!=null "> age = #{age} and </if>
+            <if test="sex!='' and sex!=null "> sex = #{sex} and</if>
+            <if test="email!='' and email!=null "> email = #{email} and</if>
+        </trim>
+    </select>
+
+    <!--List<Emp> getEmpByChoose(Emp emp);-->
+    <select id="getEmpByChoose" resultType="Emp">
+        select *
+        from mybatis_emp
+        <where>
+            <choose>
+                <when test="empName != '' and empName != null"> emp_name = #{empName} </when>
+                <when test="age != '' and age != null"> age = #{age} </when>
+                <when test="sex != '' and sex != null"> sex = #{sex} </when>
+                <when test="email != '' and email != null"> email = #{email} </when>
+                <otherwise>did=1</otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <sql id="empColumns">
+        eid,emp_name,age
+    </sql>
+
+</mapper>

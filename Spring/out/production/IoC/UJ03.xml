@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--1、外部bean-->
+    <!--service 和 dao 对象创建-->
+    <bean id="userService" class="IoC.service.UserService">
+        <!--注入 userDao 对象
+        name 属性：类里面属性名称
+        ref 属性：创建userDao对象的别名(即bean标签id值)
+        -->
+        <property name="userDao" ref="userDaoImpl"></property>
+    </bean>
+
+    <bean id="userDaoImpl" class="IoC.dao.UserDaoImpl"></bean>
+
+
+
+    <!--内部bean-->
+    <bean id="emp" class="IoC.bean.Emp">
+        <!--设置两个普通属性-->
+        <property name="ename" value="lucy"></property>
+        <property name="gender" value="女"></property>
+        <!--设置对象类型属性-->
+        <!--可以使用外部bean的方式，用bean标签创建Dept类，然后使用ref引入-->
+        <property name="dept">
+            <bean id="dept" class="IoC.bean.Dept">
+                <property name="dname" value="安保部"></property>
+            </bean>
+        </property>
+    </bean>
+
+
+
+    <!--级联赋值-->
+    <bean id="emp2" class="IoC.bean.Emp">
+        <!--设置两个普通属性-->
+        <property name="ename" value="lucy"></property>
+        <property name="gender" value="女"></property>
+        <!--级联赋值-->
+        <property name="dept" ref="dept"></property>
+        <property name="dept.dname" value="技术部"></property>
+    </bean>
+    <bean id="dept" class="IoC.bean.Dept">
+        <!--设置了这一行，就属于是外部bean的级联赋值了-->
+        <!--<property name="dname"></property>-->
+    </bean>
+</beans>

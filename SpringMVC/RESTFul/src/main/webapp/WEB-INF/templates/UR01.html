@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<a th:href="@{/user}">UR01：查询所有用户信息</a><br>
+
+<a th:href="@{/user/1}">UR01：根据id查询用户信息</a><br>
+
+<a th:href="@{/user}">UR01：</a><br>
+
+<form th:action="@{/user}" method="post">
+    用户名：<input type="text" name="username" value="zzj"><br>
+    密码:<input type="text" name="password" value="qqabcd"><br>
+    <input type="submit" value="添加"><br>
+</form>
+
+<form th:action="@{/user}" method="post">
+    <input type="hidden" name="_method" value="put">
+    用户名：<input type="text" name="username" value="zzj"><br>
+    密码:<input type="text" name="password" value="qqabcd"><br>
+    <input type="submit" value="修改"><br>
+</form>
+
+<!--因为通常都是使用超链接来实现表单提交，所以使用js来解决这个问题-->
+<a href="" id="delete">根据id删除用户信息</a>
+<form th:action="@{/user/1}" method="post" id="deleteForm">
+    <input type="hidden" name="_method" value="delete">
+<!--    <input type="submit" id="deleteInput" value="根据id删除用户信息，通过上面超链接进行提交"><br>-->
+</form>
+
+
+<script>
+    var aa = document.querySelector("#delete");
+    var ff = document.querySelector("#deleteForm");
+    aa.addEventListener("click",function (e){
+        // 一定要组织a标签的自动跳转
+        e.preventDefault();
+        ff.submit();
+    })
+</script>
+</body>
+
+</html>

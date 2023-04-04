@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Insert title here</title>
+		<script type="text/javascript" src="script/jquery-1.7.2.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				// 1、ajax请求
+				$("#ajaxBtn").click(function(){
+					$.ajax({
+						url:"http://localhost:8080/ajax/ajaxServlet",
+						// data:"action=jQueryAjax",
+						data:{action:"jqueryAjax"},
+						type:"GET",
+						// 服务器返回的数据就是d，就不用像原生做法一样去获取了
+						success:function (d) {
+							// var jsonObj = JSON.parse(data);
+							$("#msg").html("编号：" + d.id + " , 姓名：" + d.name);
+						},
+						// 设置了返回的数据类型，就不用像原生做法一样去做转换了
+						dataType : "json"
+					});
+				});
+
+				// 2、ajax--get请求
+				$("#getBtn").click(function(){
+					$.get("http://localhost:8080/ajax/ajaxServlet",
+							"action=jqueryAjax",
+							function (data) {$("#msg").html(" get 编号：" + data.id + " , 姓名：" + data.name);},
+							"json");
+				});
+
+
+
+				// 3、ajax--post 请求
+				$("#postBtn").click(function(){
+					$.post("http://localhost:8080/ajax/ajaxServlet",
+							"action=jqueryAjax",
+							function (data){$("#msg").html(" post 编号：" + data.id + " , 姓名：" + data.name);},
+							"json");
+				});
+
+
+				// 4、ajax--getJson请求
+				$("#getJSONBtn").click(function(){
+					$.getJSON("http://localhost:8080/ajax/ajaxServlet",
+							"action=jqueryAjax",
+							function(data) {$("#msg").html(" getJSON 编号：" + data.id + " , 姓名：" + data.name);});
+				});
+
+
+				// 5、ajax的serialize()方法
+				$("#submit").click(function(){
+					// 把参数序列化
+					$.getJSON("http://localhost:8080/ajax/ajaxServlet",
+							// 注意要加连字符，否则报错了
+							"action=serializeAjax&" + $("#form01").serialize(),
+							function (data) {$("#msg").html(" Serialize 编号：" + data.id + " , 姓名：" + data.name);});
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div>
+			<button id="ajaxBtn">$.ajax请求</button>
+			<button id="getBtn">$.get请求</button>
+			<button id="postBtn">$.post请求</button>
+			<button id="getJSONBtn">$.getJSON请求</button>
+		</div>
+		<div id="msg"></div>
+		<br/><br/>
+		<form id="form01" >
+			用户名：<input name="username" type="text" /><br/>
+			密码：<input name="password" type="password" /><br/>
+			下拉单选：<select name="single">
+			  	<option value="Single">Single</option>
+			  	<option value="Single2">Single2</option>
+			</select><br/>
+		  	下拉多选：
+		  	<select name="multiple" multiple="multiple">
+		    	<option selected="selected" value="Multiple">Multiple</option>
+		    	<option value="Multiple2">Multiple2</option>
+		    	<option selected="selected" value="Multiple3">Multiple3</option>
+		  	</select><br/>
+		  	复选：
+		 	<input type="checkbox" name="check" value="check1"/> check1
+		 	<input type="checkbox" name="check" value="check2" checked="checked"/> check2<br/>
+		 	单选：
+		 	<input type="radio" name="radio" value="radio1" checked="checked"/> radio1
+		 	<input type="radio" name="radio" value="radio2"/> radio2<br/>
+		</form>			
+		<button id="submit">提交--serialize()</button>
+	</body>
+</html>

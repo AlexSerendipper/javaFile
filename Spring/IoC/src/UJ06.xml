@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--多实例演示-->
+    <!--配置了后置处理器，当创建了其他的bean对象，会传递到此处的后置处理器-->
+    <!--即，该配置文件的所有其他bean对象都会配置该后置处理器-->
+    <bean id="uj06" class="IoC.UJ06" scope="prototype">
+
+    </bean>
+
+    <!--声明周期演示-->
+    <bean id="orders" class="IoC.bean.Orders" init-method="initMethod" destroy-method="destroyMethod">
+        <property name="oname" value="手机"></property>
+    </bean>
+</beans>

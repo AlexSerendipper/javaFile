@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--映射文件的命名空间（namespace） 需要与 mapper接口的全类名 保持一致-->
+<mapper namespace="basicfunction.mappers.DeptMapper">
+    <!--映射文件中编写SQL的标签的id属性 需要与 接口中方法的方法名 保持一致-->
+    <!-- *******************************增***************************************   -->
+    <!--  -->
+
+
+
+    <!-- ********************************删**************************************   -->
+    <!--  -->
+
+
+
+    <!-- *********************************改*************************************   -->
+    <!--  -->
+
+
+
+    <!-- ********************************查**************************************   -->
+    <!-- 多对一 分布查询第二步：Dept getEmpAndDeptTwo(Integer did)  -->
+    <select id="getEmpAndDeptTwo" resultType="dept">
+        select * from mybatis_dept where did = #{did};
+    </select>
+
+
+    <!-- 一对多collection: Dept getDeptAndEmp(Integer did);-->
+    <resultMap id="DeptAndEmpResultMap" type="dept">
+        <id property="did" column="did"></id>
+        <result property="deptName" column="dept_name"></result>
+        <!--使用collection专门处理一对多的映射关系，其中property表示进行处理的属性，ofType表示存储在集合中数据的类型的全类名 -->
+        <collection property="emps" ofType="emp">
+            <id column="eid" property="eid"></id>
+            <result property="empName" column="emp_name"></result>
+            <result property="age" column="age"></result>
+            <result property="sex" column="sex"></result>
+            <result property="email" column="email"></result>
+            <result property="did" column="did"></result>
+        </collection>
+    </resultMap>
+
+    <select id="getDeptAndEmp" resultMap="DeptAndEmpResultMap">
+        select * from mybatis_dept left join mybatis_emp on mybatis_dept.did = mybatis_emp.did
+        where mybatis_dept.did = #{did}
+    </select>
+
+    <!-- 一对多 分步查询第一步：Dept getDeptAndEmpOne(Integer did);-->
+    <resultMap id="DeptEmpResultMap" type="dept">
+        <id property="did" column="did"></id>
+        <result property="deptName" column="dept_name"></result>
+        <collection property="emps"
+                    select="basicfunction.mappers.EmpMapper.getDeptAndEmpTwo"
+                    column="did"
+        >
+        </collection>
+    </resultMap>
+
+    <select id="getDeptAndEmpOne" resultMap="DeptEmpResultMap">
+        select * from mybatis_dept where mybatis_dept.did = #{did}
+    </select>
+
+
+</mapper>

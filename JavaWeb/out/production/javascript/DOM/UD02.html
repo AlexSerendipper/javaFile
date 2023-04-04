@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+
+
+<body>
+    <ol>
+        <li class="sex" id="sb">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li><img src="../111.jpg"></li>
+    </ol>
+</body>
+<script>
+    var element1 = document.querySelector('ol');
+    var element2 = document.querySelector('.sex');
+    var element3 = document.querySelector('img')
+    // 修改元素
+    element2.innerText = "666";
+    element3.src = "../222.jpg";
+    element3.style.width = '50px';
+    // 自定义属性H5用法
+    element1.setAttribute('data-test-try','66666666');
+    alert(element1.dataset.testTry);
+</script>
+</html>

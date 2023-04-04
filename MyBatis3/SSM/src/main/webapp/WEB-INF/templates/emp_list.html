@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Info</title>
+    <link rel="stylesheet" th:href="@{/static/css/index_work.css}">
+</head>
+<body>
+<table>
+    <tr>
+        <th colspan="6">Employee Info</th>
+    </tr>
+
+    <tr>
+        <!--流水号保证每一页都是从1开始-->
+        <th>流水号</th>
+        <th>emp_name</th>
+        <th>age</th>
+        <th>sex</th>
+        <th>email</th>
+        <th>options</th>
+    </tr>
+
+    <!--status是thymeleaf提供的辅助对象，status.count表示循环次数, 第一次循环就是1，第二次循环就是2-->
+    <tr th:each="emp,status : ${empList}">
+        <td th:text="${status.count}"></td>
+        <td th:text="${emp.empName}"></td>
+        <td th:text="${emp.age}"></td>
+        <td th:text="${emp.sex}"></td>
+        <td th:text="${emp.email}"></td>
+        <td>
+            <a href="">delete</a>
+            <a href="">update</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

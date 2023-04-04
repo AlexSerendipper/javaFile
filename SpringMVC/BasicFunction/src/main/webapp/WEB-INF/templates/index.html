@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<h1>首页</h1>
+<p>*****************UBF02*******************</p>
+<a th:href="@{/UBF02}">UBF02：访问UBF02.html页面</a><br>
+
+<p>*****************UBF03*******************</p>
+<form th:action="@{/test/UBF03?username=zzj}" method="post">
+    <button>UBF03：访问UBF03.html页面</button>
+</form><br>
+<a th:href="@{/aa/test/UBF03/zzj/qqabcd}">UBF03：通过路径占位符方式，访问UBF03.html页面</a><br>
+
+
+<p>*****************UBF04*******************</p>
+<a th:href="@{/UBF04?username=zzj&password=qqabcd}">UBF04：通过ServletAPI获取请求参数，并且通过创建一个session，从而创建一个键值为JSEESIONID的cookie</a><br>
+<a th:href="@{/test1/UBF04?user_name=zzj&password=qqabcd}">UBF04：通过 控制器方法的形参 获取请求参数(参数、请求头、cookie)</a><br>
+<form th:action="@{/test2/UBF04}" method="get">
+    用户名：<input type="text" name="username" value="zzj"><br>
+    密码：<input type="password" name="password" value="qqabcd"><br>
+    爱好：<input type="checkbox" name="hobby" value="a">a
+         <input type="checkbox" name="hobby" value="b">b
+         <input type="checkbox" name="hobby" value="c">c<br>
+    <input type="submit" value="UBF04：通过 控制器方法的形参 获取请求参数(若请求所传输的请求参数中有多个同名的请求参数时)"><br>
+</form><br>
+
+<form th:action="@{/test3/UBF04}" method="post">
+    用户名：<input type="text" name="username" value="zzj"><br>
+    密码：<input type="password" name="password" value="qqabcd"><br>
+    性别：<input type="radio" name="sex" value="男">男
+         <input type="radio" name="sex" value="女">女<br>
+    年龄：<input type="text" name="age" value="17"><br>
+    邮箱：<input type="text" name="email" value="642671525@qq.com"><br>
+    <input type="submit" value="通过pojo类接收请求参数">
+</form>
+<p>*****************UBF05*******************</p>
+<a th:href="@{/test1/UBF05}">UBF05：通过ServletAPI共享域数据，值为value1</a><br>
+<a th:href="@{/test2/UBF05}">UBF05：使用ModelAndView向request域对象共享数据，值为value2</a><br>
+<a th:href="@{/test3/UBF05}">UBF05：使用Model向request域对象共享数据，值为value3</a><br>
+<a th:href="@{/test4/UBF05}">UBF05：使用map向request域对象共享数据，值为value4</a><br>
+<a th:href="@{/test5/UBF05}">UBF05：使用ModelMap向request域对象共享数据，值为value5</a><br>
+
+<a th:href="@{/test6/UBF05}">UBF05：使用ServletAPI向 session 域对象共享数据，值为value6</a><br>
+<a th:href="@{/test7/UBF05}">UBF05：使用ServletAPI向 application 域对象共享数据，值为value7</a><br>
+<p>*****************UBF06*******************</p>
+<a th:href="@{/test1/UBF06}">UBF06：当控制器方法中所设置的视图名称没有任何前缀时，此时的视图名称会被SpringMVC配置文件中所配置的视图解析器解析，转发到UBF06</a><br>
+<a th:href="@{/test2/UBF06}">UBF06：以"forward:"为前缀进行页面跳转，转发到上一链接后，转发到UBF06</a><br>
+<a th:href="@{/test3/UBF06}">UBF06：以"redirect:"为前缀进行页面重定向，转发到上一链接后，转发到UBF06</a><br>
+
+
+</body>
+</html>

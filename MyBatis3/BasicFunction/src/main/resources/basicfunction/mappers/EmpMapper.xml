@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--映射文件的命名空间（namespace） 需要与 mapper接口的全类名 保持一致-->
+<mapper namespace="basicfunction.mappers.EmpMapper">
+    <!--映射文件中编写SQL的标签的id属性 需要与 接口中方法的方法名 保持一致-->
+    <!-- *******************************增***************************************   -->
+    <!--  -->
+
+
+
+
+
+    <!-- ********************************删**************************************   -->
+    <!--  -->
+
+
+
+
+
+    <!-- *********************************改*************************************   -->
+    <!--  -->
+
+
+
+
+
+
+    <!-- ********************************查**************************************   -->
+    <!-- 查询所有员工：List<Emp> getAllEmp(); -->
+    <resultMap id="empResultMap" type="emp">
+        <id property="eid" column="eid"></id>
+        <result property="empName" column="emp_name"></result>
+        <result property="age" column="age"></result>
+        <result property="sex" column="sex"></result>
+        <result property="email" column="email"></result>
+    </resultMap>
+
+    <select id="getAllEmp" resultMap="empResultMap">
+        select * from mybatis_emp;
+    </select>
+
+
+    <!-- 多对一association： List<Emp> getEmpAndDept(Integer eid);-->
+    <resultMap id="EmpAndDeptResultMapFirst" type="emp">
+        <id property="eid" column="eid"></id>
+        <result property="empName" column="emp_name"></result>
+        <result property="age" column="age"></result>
+        <result property="sex" column="sex"></result>
+        <result property="email" column="email"></result>
+        <result property="did" column="did"></result>
+        <!--使用association专门处理多对一的映射关系，其中javaType属性为 需要进行赋值的属性的全类名-->
+        <association property="dept" javaType="dept">
+            <id column="did" property="did"></id>
+            <result property="deptName" column="dept_name" ></result>
+        </association>
+    </resultMap>
+
+    <select id="getEmpAndDept" resultMap="EmpAndDeptResultMapFirst">
+        select * from mybatis_emp left join mybatis_dept on mybatis_emp.did=mybatis_dept.did where mybatis_emp.eid = #{eid};
+    </select>
+
+
+
+    <!-- 多对一 分步查询第一步：Emp getEmpAndDeptOne(Integer eid);-->
+    <resultMap id="EmpAndDeptResultMapOne" type="emp">
+        <id property="eid" column="eid"></id>
+        <result property="empName" column="emp_name"></result>
+        <result property="age" column="age"></result>
+        <result property="sex" column="sex"></result>
+        <result property="email" column="email"></result>
+        <result property="did" column="did"></result>
+        <!--使用association专门处理多对一的映射关系，其中javaType属性为 需要进行赋值的属性的全类名-->
+        <association property="dept"
+                     select="basicfunction.mappers.DeptMapper.getEmpAndDeptTwo"
+                     column="did"
+                     >
+        </association>
+    </resultMap>
+
+    <select id="getEmpAndDeptOne" resultMap="EmpAndDeptResultMapOne">
+        select * from mybatis_emp where eid = #{eid};
+    </select>
+
+
+    <!-- 一对多 分步查询第二步：Emp getDeptAndEmpTwo(Integer did);-->
+    <select id="getDeptAndEmpTwo" resultType="emp">
+        select * from mybatis_emp where did = #{did};
+    </select>
+
+</mapper>

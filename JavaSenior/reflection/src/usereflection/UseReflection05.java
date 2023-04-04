@@ -7,9 +7,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * 【调用运行时类的指定结构（属性、方法、构造器）】要改变运行时类的指定结构，必须基于运行时类的指定结构的对象
- *  1）调用运行时类的指定属性。在Field中：
- *  public Object get(Object obj) 取得指定对象obj，在此Field的属性值。静态属性的调用者为当前类
+ * 【修改/调用 运行时类的指定结构（属性、方法、构造器）】
+ *  1）调用运行时类的指定属性（首先通过.getFields()获取其属性对象）
+ *  public Object get(Object obj) 取得指定对象obj在此Field的属性值。静态属性的调用者为当前类
  *  public void set(Object obj,Object value) 设置指定对象obj在此Field的属性内容。静态属性的调用者为当前类
  *  setAccessible(true)：对于私有权限，必须要将访问权限扩大才能修改
  *  2）调用运行时类的指定方法

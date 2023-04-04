@@ -83,7 +83,15 @@ public class UO06 {
     @Test
     public void test1(){
         Wolf wolf = new Wolf();
+        // 注意，这里wolf重写了sleep方法，所以this指向子类重写的方法
+        // ✔✔✔.getClass方法也应当如此理解，所以this指向的是子类wolf，而不是父类animal
     }
+
+
+
+
+
+
     class Creature {
         public Creature() {
             System.out.println("Creature无参数的构造器");
@@ -98,6 +106,12 @@ public class UO06 {
         public Animal(String name, int age) {
             this(name);
             System.out.println("Animal带两个参数的构造器，其age为" + age);
+            this.sleep();
+            System.out.println(this.getClass().getName());
+        }
+
+        public void sleep(){
+            System.out.println("animal sleep now~");
         }
     }
 
@@ -105,6 +119,10 @@ public class UO06 {
         public Wolf() {
             super("灰太狼", 3);
             System.out.println("Wolf无参数的构造器");
+        }
+
+        public void sleep(){
+            System.out.println("wolf sleep now~");
         }
     }
 }

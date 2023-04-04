@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>所有员工信息（分页）</title>
+    <link rel="stylesheet" th:href="@{/static/css/index_work.css}">
+</head>
+<body>
+<table>
+    <tr>
+        <th colspan="6">Employee Info</th>
+    </tr>
+
+    <tr>
+        <!--流水号保证每一页都是从1开始-->
+        <th>流水号</th>
+        <th>emp_name</th>
+        <th>age</th>
+        <th>sex</th>
+        <th>email</th>
+        <th>options</th>
+    </tr>
+
+    <!--status是thymeleaf提供的辅助对象，status.count表示循环次数, 第一次循环就是1，第二次循环就是2-->
+    <tr th:each="emp,status : ${pageInfo.list}">
+        <td th:text="${status.count}"></td>
+        <td th:text="${emp.empName}"></td>
+        <td th:text="${emp.age}"></td>
+        <td th:text="${emp.sex}"></td>
+        <td th:text="${emp.email}"></td>
+        <td>
+            <a href="">delete</a>
+            <a href="">update</a>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="6">
+            <!--如果有上一页，才显示 首页和上一页 标签-->
+            <span th:if="${pageInfo.hasPreviousPage}">
+                <a th:href="@{/emp/page/1}">首页</a>
+                <a th:href="@{'/emp/page/' + ${pageInfo.prePage} }">上一页</a>
+            </span>
+
+            <!--设置导航分页的具体页码，即循环遍历pageInfo.navigatepageNums-->
+            <span th:each="num : ${pageInfo.navigatepageNums}">
+                <!--当前页加一个[]-->
+                <a th:if="${pageInfo.pageNum==num}" th:href="@{'/emp/page/'+${num}}" th:text="'['+${num}+']'" style="color:red;"></a>
+                <!--非当前页正常遍历即可-->
+                <a th:if="${pageInfo.pageNum!=num}" th:href="@{'/emp/page/'+${num}}" th:text="${num} "></a>
+            </span>
+
+            <!--如果有下一页，才显示 下一页和末页 标签-->
+            <span th:if="${pageInfo.hasNextPage}">
+                <a th:href="@{'/emp/page/'+${pageInfo.nextPage}}">下一页</a>
+                <a th:href="@{'/emp/page/'+${pageInfo.pages}}">末页</a>
+            </span>
+        </td>
+    </tr>
+
+</table>
+</body>
+</html>

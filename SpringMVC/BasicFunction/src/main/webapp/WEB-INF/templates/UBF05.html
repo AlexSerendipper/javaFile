@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<h1>测试共享域对象</h1>
+共享域数据为：
+<p th:text="${key}"></p>
+<p th:text="${session.key}"></p>
+<p th:text="${application.key}"></p>
+<p>-------------------------------------------</p>
+
+</body>
+</html>

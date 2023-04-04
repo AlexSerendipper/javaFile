@@ -14,7 +14,7 @@ package usegit;
  * （1）建立远程仓库：使用右上角new repository建立
  * （2）连接远程仓库：
  *      HTTPS零配置访问，到访问时需要重复输入账号密码（按照Github上提示输入即可，但是我sign in with your broswers失效，原因未知）
- *         git remote add 远仓别名 https://github.com/AlexSerendipper/ttest.git       # 将远程仓库（即其网址.git）重命名为别名（可省略）。使用git remote -v可以查看当前远程仓库的别名
+ *         git remote add 远仓别名 https://github.com/AlexSerendipper/ttest.git       # ✔✔将远程仓库（即其网址.git）重命名为别名（可省略）。使用git remote -v可以查看当前远程仓库的别名
  *         git branch -M 分支别名                                                     # 为当前分支起别名（若起了别名，推送到远程仓库后用的是别名）（常省略）
  *         git push 远仓别名 分支别名                                                  # 推送分支到远程仓库，可以不使用别名直接输入全名，只是使用HTTPS需要输入密码
  *      SSH需要额外配置，配置成功后不用重复输入账号密码✔✔✔✔✔

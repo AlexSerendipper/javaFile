@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--这个还不能放在jump目录中，会被filter拦截呜呜呜-->
+<script type="text/javascript" src="servlet/jquery-1.7.2.js"></script>
+<script type="text/javascript">
+    $(function (){
+        // 给验证码的图片，绑定单击事件
+        $("img#codeImg").click(function () {
+            // 在事件响应的 function 函数中有一个 this 对象。这个 this 对象，是当前正在响应事件的 dom 对象
+            // src 属性表示验证码 img 标签的 图片路径。它可读，可写
+            // 理论上每一次将图片的src重新赋值http://localhost:8080/javaweb/kaptcha.jpg，相当于重新请求，就可以更新图片
+            // 但是浏览器的为了让每次请求更快，就把每次请求的内容都缓存到了电脑中（内存中或硬盘中）。
+            // 缓存，即把http://localhost:8080/javaweb/kaptcha.jpg这个请求，与第一次返回的图片对等。后续只要发起该请求，就直接返回图片~~~故我们要设置访问地址不同（设置参数不同）跳过浏览器的缓存
+            this.src = "http://localhost:8080/javaweb/kaptcha.jpg?d=" + new Date();
+        });
+    });
+</script>
+<body>
+<h1>我是在webapp目录下的html文件哦</h1>
+<a href="jump_forUS06/jump/index.html">我要普通跳转到JUMP目录中</a><br>
+<a href="http://localhost:8080/javaweb/jump">我要请求转发跳转到JUMP目录中</a>
+<p>---------------------------验证码的使用-------------------------------------------</p>
+<form action="http://localhost:8080/javaweb/jump" method="post">
+    用户名：<input type="text" name="username" > <br>
+    验证码：<input type="text" style="width: 80px;" name="code">
+    <img id="codeImg" src="http://localhost:8080/javaweb/kaptcha.jpg" alt="" style="width: 100px; height: 28px;"> <br>
+    <input type="submit" value="登录">
+</form>
+</body>
+
+</html>

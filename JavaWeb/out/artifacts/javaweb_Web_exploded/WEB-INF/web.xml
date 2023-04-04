@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+ http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+    <!--上下文参数-->
+    <context-param>
+        <param-name>password</param-name>
+        <param-value>root</param-value>
+    </context-param>
+    <!-- servlet标签：配置一个Servlet程序 -->
+    <servlet>
+        <servlet-name>US01</servlet-name>
+        <servlet-class>servlet.US01</servlet-class>
+        <init-param>
+            <!--是参数名-->
+            <param-name>username</param-name>
+            <!--是参数值-->
+            <param-value>root</param-value>
+        </init-param>
+    </servlet>
+    <!--servlet-mapping标签：配置访问servlet程序的地址-->
+    <servlet-mapping>
+        <!--servlet-name标签：指定使用哪一个Servlet程序，一般上面定义哪个就用哪个-->
+        <servlet-name>US01</servlet-name>
+        <!--url-pattern标签：配置访问Servlet程序的web地址,访问地址为http://ip:port/工程目录/hello-->
+        <url-pattern>/implement</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <!--servlet-name标签：为Servlet程序起一个别名（一般是类名） -->
+        <servlet-name>US02</servlet-name>
+        <!--servlet-class标签：指定Servlet程序的全类名！-->
+        <servlet-class>servlet.US02</servlet-class>
+    </servlet>
+    <!--servlet-mapping标签：配置访问servlet程序的地址-->
+    <servlet-mapping>
+        <!--servlet-name标签：指定使用哪一个Servlet程序，一般上面定义哪个就用哪个-->
+        <servlet-name>US02</servlet-name>
+        <!--url-pattern标签：配置访问Servlet程序的web地址,访问地址为http://ip:port/工程目录/hello-->
+        <url-pattern>/extend</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <!--servlet-name标签：为Servlet程序起一个别名（一般是类名） -->
+        <servlet-name>US04</servlet-name>
+        <!--servlet-class标签：指定Servlet程序的全类名！-->
+        <servlet-class>servlet.US04</servlet-class>
+    </servlet>
+    <!--servlet-mapping标签：配置访问servlet程序的地址-->
+    <servlet-mapping>
+        <!--servlet-name标签：指定使用哪一个Servlet程序，一般上面定义哪个就用哪个-->
+        <servlet-name>US04</servlet-name>
+        <!--url-pattern标签：配置访问Servlet程序的web地址,访问地址为http://ip:port/工程目录/hello-->
+        <url-pattern>/request</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <!--servlet-name标签：为Servlet程序起一个别名（一般是类名） -->
+        <servlet-name>US05</servlet-name>
+        <!--servlet-class标签：指定Servlet程序的全类名！-->
+        <servlet-class>servlet.US05</servlet-class>
+    </servlet>
+    <!--servlet-mapping标签：配置访问servlet程序的地址-->
+    <servlet-mapping>
+        <!--servlet-name标签：指定使用哪一个Servlet程序，一般上面定义哪个就用哪个-->
+        <servlet-name>US05</servlet-name>
+        <!--url-pattern标签：配置访问Servlet程序的web地址,访问地址为http://ip:port/工程目录/hello-->
+        <url-pattern>/servlet1</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <!--servlet-name标签：为Servlet程序起一个别名（一般是类名） -->
+        <servlet-name>US06</servlet-name>
+        <!--servlet-class标签：指定Servlet程序的全类名！-->
+        <servlet-class>servlet.US06</servlet-class>
+    </servlet>
+    <!--servlet-mapping标签：配置访问servlet程序的地址-->
+    <servlet-mapping>
+        <!--servlet-name标签：指定使用哪一个Servlet程序，一般上面定义哪个就用哪个-->
+        <servlet-name>US06</servlet-name>
+        <!--url-pattern标签：配置访问Servlet程序的web地址,访问地址为http://ip:port/工程目录/hello-->
+        <url-pattern>/jump</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <!--servlet-name标签：为Servlet程序起一个别名（一般是类名） -->
+        <servlet-name>US07</servlet-name>
+        <!--servlet-class标签：指定Servlet程序的全类名！-->
+        <servlet-class>servlet.US07</servlet-class>
+    </servlet>
+    <!--servlet-mapping标签：配置访问servlet程序的地址-->
+    <servlet-mapping>
+        <!--servlet-name标签：指定使用哪一个Servlet程序，一般上面定义哪个就用哪个-->
+        <servlet-name>US07</servlet-name>
+        <!--url-pattern标签：配置访问Servlet程序的web地址,访问地址为http://ip:port/工程目录/hello-->
+        <url-pattern>/response</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <!--servlet-name标签：为Servlet程序起一个别名（一般是类名） -->
+        <servlet-name>UJ02</servlet-name>
+        <!--servlet-class标签：指定Servlet程序的全类名！-->
+        <servlet-class>jsp.UJ02</servlet-class>
+    </servlet>
+    <!--servlet-mapping标签：配置访问servlet程序的地址-->
+    <servlet-mapping>
+        <!--servlet-name标签：指定使用哪一个Servlet程序，一般上面定义哪个就用哪个-->
+        <servlet-name>UJ02</servlet-name>
+        <!--url-pattern标签：配置访问Servlet程序的web地址,访问地址为http://ip:port/工程目录/hello-->
+        <url-pattern>/student</url-pattern>
+    </servlet-mapping>
+
+
+    <listener>
+        <listener-class>servlet.US08</listener-class>
+    </listener>
+
+
+    <servlet>
+        <!--servlet-name标签：为Servlet程序起一个别名（一般是类名） -->
+        <servlet-name>US09</servlet-name>
+        <!--servlet-class标签：指定Servlet程序的全类名！-->
+        <servlet-class>servlet.US09</servlet-class>
+    </servlet>
+    <!--servlet-mapping标签：配置访问servlet程序的地址-->
+    <servlet-mapping>
+        <!--servlet-name标签：指定使用哪一个Servlet程序，一般上面定义哪个就用哪个-->
+        <servlet-name>US09</servlet-name>
+        <!--url-pattern标签：配置访问Servlet程序的web地址,访问地址为http://ip:port/工程目录/hello-->
+        <url-pattern>/upload</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <!--servlet-name标签：为Servlet程序起一个别名（一般是类名） -->
+        <servlet-name>US10</servlet-name>
+        <!--servlet-class标签：指定Servlet程序的全类名！-->
+        <servlet-class>servlet.US10</servlet-class>
+    </servlet>
+    <!--servlet-mapping标签：配置访问servlet程序的地址-->
+    <servlet-mapping>
+        <!--servlet-name标签：指定使用哪一个Servlet程序，一般上面定义哪个就用哪个-->
+        <servlet-name>US10</servlet-name>
+        <!--url-pattern标签：配置访问Servlet程序的web地址,访问地址为http://ip:port/工程目录/hello-->
+        <url-pattern>/download</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <!--servlet-name标签：为Servlet程序起一个别名（一般是类名） -->
+        <servlet-name>UCS01</servlet-name>
+        <!--servlet-class标签：指定Servlet程序的全类名！-->
+        <servlet-class>cookie_session.UCS01</servlet-class>
+    </servlet>
+    <!--servlet-mapping标签：配置访问servlet程序的地址-->
+    <servlet-mapping>
+        <!--servlet-name标签：指定使用哪一个Servlet程序，一般上面定义哪个就用哪个-->
+        <servlet-name>UCS01</servlet-name>
+        <!--url-pattern标签：配置访问Servlet程序的web地址,访问地址为http://ip:port/工程目录/hello-->
+        <url-pattern>/cookieServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <!--servlet-name标签：为Servlet程序起一个别名（一般是类名） -->
+        <servlet-name>UCS02</servlet-name>
+        <!--servlet-class标签：指定Servlet程序的全类名！-->
+        <servlet-class>cookie_session.UCS02</servlet-class>
+    </servlet>
+    <!--servlet-mapping标签：配置访问servlet程序的地址-->
+    <servlet-mapping>
+        <!--servlet-name标签：指定使用哪一个Servlet程序，一般上面定义哪个就用哪个-->
+        <servlet-name>UCS02</servlet-name>
+        <!--url-pattern标签：配置访问Servlet程序的web地址,访问地址为http://ip:port/工程目录/hello-->
+        <url-pattern>/loginServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <!--servlet-name标签：为Servlet程序起一个别名（一般是类名） -->
+        <servlet-name>UCS03</servlet-name>
+        <!--servlet-class标签：指定Servlet程序的全类名！-->
+        <servlet-class>cookie_session.UCS03</servlet-class>
+    </servlet>
+    <!--servlet-mapping标签：配置访问servlet程序的地址-->
+    <servlet-mapping>
+        <!--servlet-name标签：指定使用哪一个Servlet程序，一般上面定义哪个就用哪个-->
+        <servlet-name>UCS03</servlet-name>
+        <!--url-pattern标签：配置访问Servlet程序的web地址,访问地址为http://ip:port/工程目录/hello-->
+        <url-pattern>/sessionServlet</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <session-timeout>20</session-timeout>
+    </session-config>
+
+
+    <servlet>
+        <servlet-name>KaptchaServlet</servlet-name>
+        <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>KaptchaServlet</servlet-name>
+        <url-pattern>/kaptcha.jpg</url-pattern>
+    </servlet-mapping>
+
+
+    <!--filter 标签用于配置一个 Filter 过滤器-->
+    <filter>
+        <!--给 filter 起一个别名-->
+        <filter-name>Filter1</filter-name>
+        <!--配置 filter 的全类名-->
+        <filter-class>servlet.US11</filter-class>
+        <init-param>
+            <param-name>username</param-name>
+            <param-value>root</param-value>
+        </init-param>
+        <init-param>
+            <param-name>url</param-name>
+            <param-value>jdbc:mysql://localhost3306/test</param-value>
+        </init-param>
+    </filter>
+    <!--filter-mapping配置Filter过滤器的拦截路径-->
+    <filter-mapping>
+        <!--filter-name表示当前的拦截路径给哪个filter使用,一般和别名相同-->
+        <filter-name>Filter1</filter-name>
+        <!--url-pattern 配置filter的拦截路径。其中：/ 表示：http://ip:port/工程路径/  -->
+        <!--*表示全部文件，即拦截jump_forUS06文件下的全部文件-->
+        <url-pattern>/jump_forUS06/*</url-pattern>
+    </filter-mapping>
+
+
+
+
+
+    <!--filter 标签用于配置一个 Filter 过滤器-->
+    <filter>
+        <!--给 filter 起一个别名-->
+        <filter-name>Filter2</filter-name>
+        <!--配置 filter 的全类名-->
+        <filter-class>servlet.US12</filter-class>
+        <init-param>
+            <param-name>username</param-name>
+            <param-value>root</param-value>
+        </init-param>
+        <init-param>
+            <param-name>url</param-name>
+            <param-value>jdbc:mysql://localhost3306/test</param-value>
+        </init-param>
+    </filter>
+    <!--filter-mapping配置Filter过滤器的拦截路径-->
+    <filter-mapping>
+        <!--filter-name表示当前的拦截路径给哪个filter使用,一般和别名相同-->
+        <filter-name>Filter2</filter-name>
+        <!--url-pattern 配置filter的拦截路径。其中：/ 表示：http://ip:port/工程路径/  -->
+        <!--*表示全部文件，即拦截jump_forUS06文件下的全部文件-->
+        <url-pattern>/jump_forUS06/*</url-pattern>
+    </filter-mapping>
+</web-app>

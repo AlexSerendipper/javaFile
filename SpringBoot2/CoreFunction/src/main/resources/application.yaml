@@ -1,0 +1,23 @@
+person:
+  userName: ZhengHuai
+  boss: false
+  birth: 2019/12/12 20:12:33
+  age: 18
+
+  pet:
+    name: 狗哥
+
+  interests: [ 唱,跳,rap,篮球 ]
+
+  animal: [ 猫猫, 狗狗 ]
+
+  score: {english: 90, math: 90}
+
+  salarys: [ 3999,6666 ]
+
+  allPets:
+    sick:
+      - { name: tom }
+      - { name: jerry }
+    health:
+      - { name: mario}

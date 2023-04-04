@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页（由于thymeleaf找不到templates目录下的index,就会由default-servlet找到static下的index）</title>
+</head>
+<body>
+    <p>------------UW03--------------</p>
+    <form action="/saveperson1" method="post">
+        姓名： <input name="username" value="zzj"><br>
+        年龄： <input name="age" value="17"><br>
+        生日： <input name="birth" value="2019/4/20"><br>
+        宠物姓名： <input name="pet.name" value="lzy"><br>
+        宠物年龄： <input name="pet.age" value="15"><br>
+        <input type="submit" value="通过级联赋值">
+    </form>
+    <form th:action="@{/saveperson2}" method="post">
+        姓名： <input name="username" value="zzj"><br>
+        年龄： <input name="age" value="17"><br>
+        生日： <input name="birth" value="2019/4/20"><br>
+        宠物： <input name="pet" value="hqy,18"><br>
+        <input type="submit" value="通过自定义组件进行赋值">
+    </form>
+    <p>------------UW06--------------</p>
+    <form th:action="@{/upload}" method="post" enctype="multipart/form-data">
+        姓名： <input name="username" value="zzj"><br>
+        年龄： <input name="age" value="17"><br>
+        生日： <input name="birth" value="2019/4/20"><br>
+        宠物： <input name="pet" value="hqy,18"><br>
+        头像(单文件上传)： <input type="file" name="avatar"><br>
+        生活照(多文件上传)： <input type="file" name="photos" multiple><br>
+        <input type="submit" value="文件上传">
+    </form>
+    <p>------------UW07--------------</p>
+    <a th:href="@{/error1}">模仿除零异常</a>
+
+</body>
+</html>

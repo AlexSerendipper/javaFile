@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+
+<generatorConfiguration>
+    <!--
+    targetRuntime: 执行生成的逆向工程的版本
+    （1）MyBatis3Simple: 生成基本的CRUD（清新简洁版）：自动生成 增删改功能 加上 查询所有数据 以及 查询一条数据 功能
+    （2）MyBatis3: 生成带条件的CRUD（奢华尊享版）
+    -->
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!-- 数据库的连接信息（需要更改） -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/javastudy?characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true"
+                        userId="root"
+                        password="qqabcd">
+        </jdbcConnection>
+        <!-- javaBean的生成策略，即表所对应的实体类的生成策略 -->
+        <!-- 在targetProject目录下，将生成的javabean放置在targetPackage包下 -->
+        <javaModelGenerator targetPackage="extendfunction.pojo"
+                            targetProject=".\src\main\java">
+            <!-- 决定能否使用子包 -->
+            <property name="enableSubPackages" value="true" />
+            <!-- 当将表中的字段名，自动转换为实体类的属性时，可以去掉字段名前后的空格 -->
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+        <!-- SQL映射文件的生成策略（即mapper.xml） -->
+        <sqlMapGenerator targetPackage="extendfunction.mappers"
+                         targetProject=".\src\main\resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+        <!-- Mapper接口的生成策略（即mapper接口） -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="extendfunction.mappers" targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+        <!-- 逆向分析的表 -->
+        <!-- tableName属性指定表名。。domainObjectName属性指定生成出来的实体类的类名-->
+        <!-- mapper接口以及映射文件的名字，都是通过实体类的类名自动生成 -->
+        <!-- tableName设置为*号，可以对应所有表，此时不写domainObjectName -->
+        <table tableName="mybatis_emp" domainObjectName="Emp"/>
+        <table tableName="mybatis_dept" domainObjectName="Dept"/>
+    </context>
+</generatorConfiguration>

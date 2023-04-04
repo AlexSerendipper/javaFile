@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--映射文件的命名空间（namespace） 需要与 mapper接口的全类名 保持一致-->
+<mapper namespace="mybatisplus.mapper.UserMapper">
+    <!--映射文件中编写SQL的标签的id属性 需要与 接口中方法的方法名 保持一致-->
+    <!-- *******************************增***************************************   -->
+    <!--  -->
+
+
+    <!-- ********************************删**************************************   -->
+    <!--  -->
+
+
+    <!-- *********************************改*************************************   -->
+    <!--  -->
+
+
+    <!-- ********************************查**************************************   -->
+    <!-- Map<String,Object> selectMapById(long id); -->
+    <select id="selectMapById" resultType="map">
+        select *
+        from mybatisplus_user
+        where id=#{id};
+    </select>
+
+
+    <!--IPage<User> selectPageVo(Page<User> page, Integer age);-->
+    <select id="selectPageVo" resultType="User">
+        SELECT * FROM mybatisplus_user WHERE age > #{age}
+    </select>
+
+
+
+</mapper>

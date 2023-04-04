@@ -1,0 +1,68 @@
+package basicfunction;
+
+/**
+ * 【核心配置文件详解】这部分内容只做了解，实际中可以直接复制使用
+ *  核心配置文件中的标签必须按照固定的顺序书写✔✔
+ *    properties?,settings?,typeAliases?,typeHandlers?,objectFactory?,objectWrapperFactory?,reflectorFactory?,plugins?,environments?,databaseIdProvider?,mappers?
+--------------------------
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+     <!-- 引入properties文件，此时就可以 ${属性名} 的方式访问属性值，用以配置数据库 -->
+     <properties resource="jdbc.properties"></properties>
+
+     <settings>
+         <!--将表中字段的下划线自动转换为驼峰-->
+         <setting name="mapUnderscoreToCamelCase" value="true"/>
+         <!--开启延迟加载-->
+         <setting name="lazyLoadingEnabled" value="true"/>
+     </settings>
+
+     <typeAliases>
+         <!--
+         typeAlias：设置某个具体的类型的别名
+         type属性：设置 需要设置别名的类 的全类名
+         alias属性：设置 该类的 别名，若不设置此属性，默认别名为 类名，且不区分大小写。
+         若设置此属性，别名所设置的值！-->
+         <!--<typeAlias type="com.atguigu.mybatis.bean.User"></typeAlias>-->
+         <!-- 最常用的做法，以包为单位，设置改包下所有的类型都拥有默认的别名，即类名(不区分大小写) -->
+         <package name="basicfunction.pojo"/>
+     </typeAliases>
+
+    <!-- 设置连接数据库的环境，default设置默认使用的环境的id，就算配置了多个环境，一个工程一般都只对应一个环境 -->
+    <environments default="development">
+        <!-- 设置具体的连接数据库的环境信息，id设置为当前环境的唯一标识 -->
+        <environment id="development">
+            <!-- transactionManager设置事务管理方式，type="JDBC"：设置当前执行sql时，使用原生jdbc管理方式，即事务的提交或回滚都必须手动处理。 -->
+            <!-- type="MANAGED"：设置事务被管理，例如spring中的AOP -->
+            <transactionManager type="JDBC"/>
+            <!-- dataSource：设置数据源，type="POOLED"：使用数据库连接池 来 缓存数据库连接，下次使用可以从缓存中直接获取，不需要重新创建 -->
+            <!-- type="UNPOOLED"：不使用数据库连接池，即每次使用连接都需要重新创建。 type="JNDI"：表示调用上下文中的数据源 -->
+            <dataSource type="POOLED">
+                 <property name="driver" value="${jdbc.driveClassName}"/>
+                 <property name="url" value="${jdbc.url}"/>
+                 <property name="username" value="${jdbc.username}"/>
+                 <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--引入映射文件-->
+    <mappers>
+        <!-- <mapper resource="mappers/UserMapper.xml"/> -->
+        <!--以包的形式引入映射文件
+            要求1：映射文件和mapper接口 所在的包 必须内外层路径一致
+            要求2：映射文件和mapper接口 的名字（除后缀） 必须一致 -->
+        <package name="basicfunction.mappers"/>
+    </mappers>
+</configuration>
+--------------------------
+
+ @author Alex
+ @create 2023-03-11-8:56
+ */
+public class UBF02 {
+}

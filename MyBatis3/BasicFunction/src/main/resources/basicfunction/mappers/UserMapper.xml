@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--映射文件的命名空间（namespace） 需要与 mapper接口的全类名 保持一致-->
+<mapper namespace="basicfunction.mappers.UserMapper">
+    <!--映射文件中编写SQL的标签的id属性 需要与 接口中方法的方法名 保持一致-->
+    <!--  *********************************增***************************************************  -->
+    <insert id="insertUser">
+        insert into mybatis_user values(null,'zzj','qqabcd',17,'男','642671525@qq.com')
+    </insert>
+
+    <!--User insert(User user);-->
+    <insert id="insert">
+        <!--select * from mybatis_user where username = #{username}-->
+        insert into mybatis_user values(#{id},#{username},#{password},#{age},#{sex},#{email})
+    </insert>
+
+    <!--int insertUserGetKey(User user);-->
+    <insert id="insertUserGetKey" useGeneratedKeys="true" keyProperty="id">
+        insert into mybatis_user values(null,#{username},#{password},#{age},#{sex},#{email})
+    </insert>
+
+
+    <!--  *********************************删***************************************************  -->
+    <!--int deleteUser();-->
+    <delete id="deleteUser">
+        delete from mybatis_user where id = #{id}
+    </delete>
+
+    <!--int deleteMore(String ids);-->
+    <delete id="deleteMore">
+        delete from mybatis_user where id in (${ids})
+    </delete>
+
+
+
+
+
+    <!--  *********************************改***************************************************  -->
+    <!--int updateUser();-->
+    <update id="updateUser">
+        update mybatis_user set username = #{username},password = #{password},age=#{age},sex=#{sex},email=#{email} where id = #{id}
+    </update>
+
+
+
+
+    <!--  *********************************查***************************************************  -->
+    <!--User getUserById();-->
+    <select id="getUserById" resultType="User">
+        select * from mybatis_user where id = #{id}
+    </select>
+
+    <!--List<User> getUserList();-->
+    <select id="getUserList" resultType="User">
+        select * from mybatis_user
+    </select>
+
+    <!--User getUserByUsername();-->
+    <select id="getUserByUsername" resultType="User">
+        <!--select * from mybatis_user where username = #{username}-->
+        select * from mybatis_user where username = "${username}"
+    </select>
+
+    <!--Map<String, Object> getUserToMap(@Param("id") int id);-->
+    <select id="getUserToMap" resultType="map">
+        select * from mybatis_user where id = #{id}
+    </select>
+
+    <!--List<Map<String, Object>> getAllUserToMapList();-->
+    <select id="getAllUserToMapList" resultType="map">
+        select * from mybatis_user
+    </select>
+
+    <!--Map<String, Object> getAllUserToMap();-->
+    <select id="getAllUserToMap" resultType="map">
+        select * from mybatis_user
+    </select>
+
+    <!--  ******************************验证登录******************************************************  -->
+    <!--User checkLogin(String username,String password);-->
+    <select id="checkLogin" resultType="User">
+        <!--select * from mybatis_user where username = #{username}-->
+        select * from mybatis_user where username = "${arg0}" and password = #{arg1}
+    </select>
+
+    <!--User checkLoginByMap(Map<String,Object> map);-->
+    <select id="checkLoginByMap" resultType="User">
+        <!--select * from mybatis_user where username = #{username}-->
+        select * from mybatis_user where username = "${username}" and password = #{password}
+    </select>
+
+    <!--User checkLoginByParam(@Param("uu") String username, @Param("pp") String password);-->
+    <select id="checkLoginByParam" resultType="User">
+        <!--select * from mybatis_user where username = #{username}-->
+        select * from mybatis_user where username = "${uu}" and password = #{pp}
+    </select>
+
+    <!--  ************************************特殊查询**********************************************  -->
+    <!--int getCount();-->
+    <select id="getCount" resultType="_integer">
+        select count(id) from mybatis_user
+    </select>
+
+    <!--List<User> getUserByLike(String blur_name);-->
+    <select id="getUserByLike" resultType="User">
+        <!--select * from t_user where username like '%${mohu}%'-->
+        <!--select * from t_user where username like concat('%',#{mohu},'%')-->
+        select * from mybatis_user where username like "%"#{blur_name}"%"
+    </select>
+
+    <!--List<User> getAllUser(String tableName);-->
+    <select id="getAllUser" resultType="User">
+        select * from ${tableName}
+    </select>
+
+</mapper>

@@ -1,0 +1,9 @@
+management:
+  endpoints:
+    enabled-by-default: true  # 暴露所有端点信息
+    web:
+      exposure:
+        include: '*'  # 以web方式暴露所有端点
+  endpoint:
+    health:
+      show-details: always # 显示健康端口的详细信息

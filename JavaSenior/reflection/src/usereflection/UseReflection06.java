@@ -29,15 +29,16 @@ import java.lang.reflect.Proxy;
  * （1）如何根据加载到内存中的代理类，动态的创建一个代理类及其对象
  * （2）当通过代理类的对象调用方法时，如何动态的去调用被代理类中的同名方法
  *
- * 【动态代理的实现】该部分仅作了解，后续框架中已高度集成
- *  1）创建一个实现接口InvocationHandler的类，传入被代理类，方法以及形参列表（解决问题2）
+ * 【动态代理的实现】该部分仅作了解，Spring框架中已高度集成
+ *  1）✔创建一个实现接口InvocationHandler的类：实现传入 被代理类，方法以及形参列表
+ *        实现当代理类被调用时，动态的去调用被代理类中的同名方法（解决问题2）
  *     public Object invoke(Object theProxy, Method method, Object[] params)
- *         Object value = method.invoke(targetObj, params);
- *         return value
- *      }
- * 2）通过Proxy的静态方法创建一个Subject接口代理（即返回动态代理对象）（解决问题1）
- *    传入的参数为被代理的类加载器，被代理实现的接口，InvocationHandler实例
- *     newProxyInstance(ClassLoader loader, Class[] interfaces, InvocationHandler h)
+ *          Object value = method.invoke(targetObj, params);
+ *          return value
+ *       }
+ *  2）通过Proxy的静态方法：实现传入的参数为被代理的类加载器，被代理实现的接口，InvocationHandler实例，返回一个动态代理对象
+ *     这个动态代理对象能实现与传入的 被代理类完全相同功能（解决问题1）
+ *     Proxy.newProxyInstance(ClassLoader loader, Class[] interfaces, InvocationHandler h)        #
  *
  @author Alex
  @create 2022-12-22-10:38
@@ -51,12 +52,10 @@ public class UseReflection06 {
         System.out.println("*****************");
         // 动态性就体现在编译期间不需要固定的代理类，根据被代理对象生成代理类
         NikeClothFactory nikeClothFactory = new NikeClothFactory();
-        ClothFactory proxyInstance1 = (ClothFactory) ProxyFactory.getProxyInstance(nikeClothFactory);  // 都实现了相同的接口，可以强转
+        ClothFactory proxyInstance1 = (ClothFactory) ProxyFactory.getProxyInstance(nikeClothFactory);  // 都实现了相同的接口，所以肯定可以强转为该接口的实现类
         proxyInstance1.produceCloth();
     }
 }
-
-
 
 // 动态代理工厂，生成动态代理类
 // 如何根据加载到内存中的代理类，动态的创建一个代理类及其对象。调用Proxy.newProxyInstance
@@ -80,6 +79,7 @@ class MyInvocationHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        // 执行被代理类中的方法
         // 注意被代理类方法可能会有返回值
         Object value = method.invoke(obj, args);
         return value;

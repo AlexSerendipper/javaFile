@@ -13,9 +13,9 @@ import org.junit.Test;
  * 【条件判断语句】
  * （1）IF
  *   IF 表达式1 THEN 操作1                         # 表达式可以加括号
- *     [ELSEIF 表达式2 THEN 操作2]……
- *     [ELSE 操作N]                                 # ELSE不用加THEN
- *     END IF
+ *     [ELSEIF 表达式2 THEN 操作2];……
+ *     [ELSE 操作N];                                 # ELSE不用加THEN
+ *     END IF;
  *  (2)CASE
  *   CASE 表达式
  *    WHEN 值1 THEN 结果1或语句1(如果是语句，需要加分号)

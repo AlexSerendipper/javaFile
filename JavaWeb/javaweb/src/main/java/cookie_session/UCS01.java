@@ -16,31 +16,31 @@ import java.io.IOException;
  *    Cookie[] cookies = req.getCookies();             # 服务器端获取保存的cookie
  *
  * 【cookie值的修改】
- *  方案一：
- *   1、先创建一个要修改的同名（key）的 Cookie 对象
- *   2、在构造器，同时赋于新的 Cookie 值。
- *   3、调用 response.addCookie( Cookie )
- *  方案二：
- *   1、先查找到需要修改的 Cookie 对象
- *   2、调用 setValue()方法赋于新的 Cookie 值。
- *   3、调用 response.addCookie()通知客户端保存修改
+ *  方案一：创建cookie
+ *    new Cookie("key", "value");                   # 先创建一个要修改的同名（key）的 Cookie 对象
+ *    response.addCookie( Cookie )                  # 通知客户端保存 Cookie
+ *  方案二：修改cookie
+ *    Cookie[] cookies = req.getCookies()           # 查找到需要修改的 Cookie 对象
+ *     Cookie iWantCookie = CookieUtils.findCookie("key1", cookies);
+ *    iWantCookie.setValue()                        # 修改cookie值
+ *    response.addCookie( Cookie )                  # 通知客户端保存 Cookie
  *  注：修改的cookie值不能为中文
  *   若需要保存中文值，需要使用base64编码（文件上传时讲过）
  *
  * 【Cookie的生命控制】
  *  指的是如何管理 Cookie 什么时候被销毁（删除）
- *     setMaxAge()
- *      正数，表示在指定的秒数后过期
- *      负数，表示浏览器一关，Cookie 就会被删除（默认值是-1）
- *      零，表示马上删除 Cookie
+ *     cookie.setMaxAge(-1);                   # 负数，表示浏览器一关，Cookie 就会被删除（默认值是-1）
+ *     cookie.setMaxAge(1);                    # 正数，表示在指定的秒数后过期
+ *     cookie.setMaxAge(0);                    # 零，表示马上删除 Cookie
  *
  * 【cookie的path属性】
+ *  cookie.setPath()
  *  Cookie的path属性是通过请求的地址来进行有效的过滤。过滤哪些 Cookie可以发送给服务器。哪些不发。
  *                              如：CookieA的path=/工程路径（默认）
  *                                  CookieB的path=/工程路径/abc
  *                              若请求地址为：http://ip:port/工程路径/a.html。cookieB将不会被客户端存储
  *                              若请求地址为：http://ip:port/工程路径/abc/a.html。cookieA和cookieB都会被客户端存储
- *  path属性的默认值为当前工程的web路径
+ *  path属性的默认值为当前工程的web路径(上下文路径)
  *
  @author Alex
  @create 2023-02-13-13:06

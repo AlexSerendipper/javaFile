@@ -32,7 +32,7 @@ import java.util.List;
  * （2）MyBatis的 核心配置文件 中配置插件
 -------------------------
 <plugins>
-    <!--设置分页插件-->
+    <!--设置分页插件1-->
     <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
 </plugins>
 
@@ -53,6 +53,7 @@ pagehelper.reasonable=true
  *                                            希望导航栏分页的页码数，顾名思义。当设置为5时，正常显示为（当前页码-2 当前页码 当前页码+2）
  *                                            当然，若总共10页，访问第1 2页时，一定显示的是1 2 3 4 5。访问第9 10页时，一定显示的是6 7 8 9 10
  *  (4)常用数据
+ *   list:当前页数据
  *   pageNum：当前页的页码
  *   pageSize：每页显示的条数
  *   size：当前页显示的真实条数（主要针对最后一页）

@@ -3,109 +3,110 @@ package useio;
 import org.junit.Test;
 
 import java.io.*;
-import java.util.HashMap;
 
 /**
- *【缓冲流】属于处理流的一种，能够提高 流 读写文件的效率
- * BufferedInputStream(.read(byte[] b))
- * BufferedReader(.read(byte[] b)) (.readline())  # 新增了readline()，可以读取一行数据
- * BufferedOutputStream(.write(byte[],0,len))
- * BufferedWriter(.write(char[],0,len))
+ * 【对象流】ObjectInputStream和OjbectOutputSteam
+ *  用于存储和读取基本数据类型数据或对象的处理流。它的强大之处就是可以把Java中的对象写入到数据源中，也能把对象从数据源中还原回来。
+ *  序列化：用ObjectOutputStream类保存基本类型数据或对象的机制
+ *  ✔对象序列化机制：允许把内存中的Java对象转换成平台无关的二进制流，从
+ *   而允许把这种二进制流持久地保存在磁盘上，或通过网络将这种二进制流传输到另一个网络节点。
+ *  反序列化：用ObjectInputStream类读取基本类型数据或对象的机制
+ *  ✔对象反序列化机制：当其它程序获取了这种二进制流，就可以恢复成原来的Java对象
+ *  对象流不能序列化static和transient修饰的成员变量
+
+ *  【自定义类可序列化的条件】
+ * （1）实现接口Serializable
+ * （2）提供一个全局常量：序列版本号private static final long serialVersionUID;
+ * （3）✔如果类没有显示定义这个静态常量，系统会自动生成。
+ *      ✔若类的实例变量做了修改，serialVersionUID 可能发生变化。故建议显式声明
+ * （4）必须保证其内部的所有属性都可序列化（默认情况下，基本数据类型可以序列化）
+ * （5）ObjectOutputStream和ObjectInputStream不能序列化static和transient修饰的成员变量
  *
- *【缓冲流能提高读写速度的原因】
- *  使用缓冲流读取文件时，会一次性从文件中读取8192个(8Kb)，存在缓冲区中，直到缓冲区装满了，才重新从文件中读取下一个8192个字节数组。
- *  使用缓冲流写入字节时，不会直接写到文件，先写到缓冲区中直到缓冲区写满，才会把缓冲区中的数据一次性写到文件里。
- *  使用方法flush()可以强制将缓冲区的内容全部写入输出流
+ * 【常用方法】
+ *   ObjectOutputStream.writeObject(对象)            # 输出可序列化对象。✔注意写出一次，操作flush()一次
+ *   readObject()                                    # 读取流中的对象
  *
+ * 【谈谈你对java.io.Serializable接口的理解，我们知道它用于序列化，是空方法接口，还有其它认识吗？】
+ *  实现了Serializable接口的对象，可将它们转换成一系列字节，并可在以后完全恢复回原来的样子。
+ *   这一过程亦可通过网络进行。这意味着序列化机制能自动补偿操作系统间的差异。
+ *   换句话说，可以先在Windows机器上创建一个对象，对其序列化，然后通过网络发给一台Unix机器，然后在那里
+ *   准确无误地重新“装配”。不必关心数据在不同机器上如何表示，也不必关心字节的顺序或者其他任何细节。
+ *  由于大部分作为参数的类如String、Integer等都实现了java.io.Serializable的接口，也可以利用多态的性质，作为参数使接口更灵活。
  @author Alex
- @create 2022-12-17-15:14
+ @create 2022-12-19-10:50
  */
+
 public class UseIO05 {
-    // 使用缓冲流实现对图片的加密
-    @Test
-    public void test1() throws IOException {
-        BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(new File("111.png")));
-        int len;
-        byte[] b = new byte[20];
-        // 写入
-        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(new File("222.png")));
-        while ((len = bufferedInputStream.read(b)) != -1) {
-            // 对字节数据进行修改，加密
-            //  for(byte b : len){  // 错误，增强for循环会创造一个新变量，不会对原变量进行修改
-            //      b = (byte) (b ^ 5);
-            //  }
-            for (int i = 0; i < len; i++) {
-                b[i] = (byte) (b[i] ^ 5);
-            }
-            bufferedOutputStream.write(b, 0, len);
-        }
-        // 关闭流,关闭外层流的同时，内层流会自动关闭(所以fileInputStream和fileOutputStream不需要关闭了)
-        bufferedOutputStream.close();
-        bufferedInputStream.close();
-    }
-
-
-    // 使用缓冲流实现对文本文件的复制。新方法readline()的使用
+    // 序列化自定义类, 注意写出一次，操作flush()一次
+    // 正常开发时，一般只会写入同一种类型的数据
     @Test
     public void test2() throws IOException {
-        // 1. 处理流
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("hello.txt")));
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File("hello1.txt")));
+        // 1. 创建对象流
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(new File("object.dat")));
 
-        // 2. 读取一行的数据，不再包含换行符
-        String data;
-        while ((data = bufferedReader.readLine()) != null) {
-            // data中不再包含换行符,需要拼接上转义字符
-            bufferedWriter.write(data + "\n");
-            // 或者使用bufferedWriter.newline()方法，和直接加换行效果一致
-        }
+        // 2. 操作
+        objectOutputStream.writeObject(new Person("zzj",17));  // String已经重写过serialize方法，可以直接用
+        objectOutputStream.flush();  // 刷新操作
+        objectOutputStream.writeObject(new String("zzj"));
+        objectOutputStream.flush();  // 刷新操作
 
-        // 3. 关闭流,关闭外层流的同时，内层流会自动关闭~~~
-        bufferedReader.close();
-        bufferedWriter.close();
-
+        // 3. 关闭资源
+        objectOutputStream.close();
     }
 
-    // 使用缓冲流实现对图片的解密
+    // ✔自定义类的反序列化,按照序列化写入的顺序进行反序列化
     @Test
-    public void test3() throws IOException{
-        BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(new File("222.png")));
-        int len;
-        byte[] b = new byte[20];
-        // 写入
-        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(new File("33.png")));
-        while ((len = bufferedInputStream.read(b)) != -1) {
-            for (int i = 0; i < len; i++) {
-                b[i] = (byte) (b[i] ^ 5);  // 对加密的数据再次异或就是复原解密了
-            }
-            bufferedOutputStream.write(b, 0, len);
-        }
+    public void test3() throws IOException, ClassNotFoundException {
+        // 1. 创建对象流
+        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(new File("object.dat")));
 
-        // 关闭流,关闭外层流的同时，内层流会自动关闭(所以fileInputStream和fileOutputStream不需要关闭了)
-        bufferedOutputStream.close();
-        bufferedInputStream.close();
+        // 2. 操作
+        Object o = objectInputStream.readObject();
+        System.out.println(o);
+        Object o1 = objectInputStream.readObject();
+        System.out.println(o1);
+
+        // 3. 关闭资源
+        objectInputStream.close();
+    }
+}
+
+
+// Serializable没有抽象方法，这种接口一般称为标识接口
+class Person implements Serializable{
+    public static final long serialVersionUID = 1234125134L;  // 如果不定义该变量，系统自动生成，当你改变属性时，可能反序列化会出错
+    private String name;
+    private int age;
+
+    public Person() {
     }
 
-    // 获取文本上每个字符出现的次数
-    // 提示：遍历文本的每一个字符；字符及出现的次数保存在Map中（键存字符，值存次数）；将Map中数据写入文件
-    // 建议：使用泛型
-    @Test
-    public void test4() throws IOException{
-        File file = new File("hello.txt");
-        FileReader fileReader = new FileReader(file);
-        HashMap<Character, Integer> hashMap = new HashMap<>();
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
 
-        int data;
-        int count;
-        while((data=fileReader.read())!=-1){
-            char d = (char) data;
-            if(!hashMap.containsKey(d)){
-                hashMap.put(d,1);
-            }else{
-                count = hashMap.get(d);
-                hashMap.put(d,++count);
-            }
-        }
-        System.out.println(hashMap);
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

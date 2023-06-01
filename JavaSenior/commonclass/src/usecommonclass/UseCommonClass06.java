@@ -2,42 +2,62 @@ package usecommonclass;
 
 import org.junit.Test;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.*;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 
 /**
- *
- *
+ * 【jdk1.8时间api中的其他api，这些api不常用，了解即可】
  * @author Alex
- * @create 2022-11-21-20:23
+ * @create 2022-12-01-13:12
  */
 public class UseCommonClass06 {
-    // 练习一：将字符串“2020-09-08”转换为java.sql.Date
+    // Duration:用于计算两个“时间”间隔，以秒和纳秒衡量
+    // between():静态方法，返回Duration对象，表示两个时间的间隔
     @Test
-    public void test() throws ParseException {
-        String str = "2020-09-08";
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  // 设定好对应格式的解析器
-        Date date = sdf.parse(str);
-        java.sql.Date date1 = new java.sql.Date(date.getTime());
-        System.out.println(date1);
+    public void test1() {
+        LocalDateTime localDateTime = LocalDateTime.of(2016, 6, 12, 15, 23, 32);
+        LocalDateTime localDateTime1 = LocalDateTime.of(2017, 6, 12, 15, 23, 32);
+        Duration duration1 = Duration.between(localDateTime1, localDateTime);
+        System.out.println(duration1.toDays());
+        System.out.println(duration1.getSeconds());
+        System.out.println(duration1.getNano());
     }
 
-    // 练习2：从1990-01-01开始，"三天打鱼两天晒网"，问 xxxx-xx-xx是在打鱼还是在晒网
-    // 思路: xxxx-xx-xx距离1990-01-01多少天，然后除5的余数为 1，2，3打鱼，4，0晒网
+    //Period:用于计算两个“日期”间隔，以年、月、日衡量
     @Test
-    public void test2() throws ParseException {
-        // 我就算今天是打鱼还是晒网了
-        String str = "1990-01-01";
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  // 设定好对应格式的解析器
-        Date date = sdf.parse(str);
-        long time = new Date().getTime() - date.getTime();
-        long day = time / (1000*60*60*24) + 1;  // 求总天数，大概率除不尽，所以加1
-        System.out.println(day);
-        if(day%5 == 4 || day%5 == 0){
-            System.out.println("我在打渔");
-        }else{
-            System.out.println("我在晒网");
-        }
+    public void test2() {
+        LocalDate localDate = LocalDate.now();
+        LocalDate localDate1 = LocalDate.of(2028, 3, 18);
+        Period period = Period.between(localDate, localDate1);
+        System.out.println(period);
+        System.out.println(period.getYears());
+        System.out.println(period.getMonths());
+        System.out.println(period.getDays());
+    }
+
+    // TemporalAdjuster:时间校正器
+    @Test
+    public void test3() {
+        // 获取当前日期的下一个周日是哪天？
+        TemporalAdjuster temporalAdjuster = TemporalAdjusters.next(DayOfWeek.SUNDAY);
+        LocalDateTime localDateTime = LocalDateTime.now().with(temporalAdjuster);
+        System.out.println(localDateTime);
+        // 获取下一个工作日是哪天？
+        LocalDate localDate = LocalDate.now().with(new TemporalAdjuster() {
+            @Override
+            public Temporal adjustInto(Temporal temporal) {
+                LocalDate date = (LocalDate) temporal;
+                if (date.getDayOfWeek().equals(DayOfWeek.FRIDAY)) {
+                    return date.plusDays(3);
+                } else if (date.getDayOfWeek().equals(DayOfWeek.SATURDAY)) {
+                    return date.plusDays(2);
+                } else {
+                    return date.plusDays(1);
+                }
+            }
+        });
+        System.out.println("下一个工作日是：" + localDate);
     }
 }

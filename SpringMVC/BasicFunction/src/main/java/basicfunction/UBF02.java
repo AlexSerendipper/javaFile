@@ -53,6 +53,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *               超链接拼接写法2："@{'/employee/' + ${employee.id}}"
  * （3）共享域数据（数据回显）：对于 文本标签（需要显示文本的标签, 如a标签、p标签等）, 使用 th:text="${}" 的方式，将需要回显的文本内容用 ${} 包裹 (不同于EL表达式可以直接写在标签中）。
  *                                                                                 th:utext="${}" 的方式，普通text不会翻译特殊字符（如<会翻译成&lt） utext会自动翻译特殊字符
+ *                              对于 request域中的数据，使用th:value="${param.username}"，相当于 req.getParameter()
  *                              对于 input标签，使用 th:value="${}" 的方式。见RESTful-template-employee_update
  *                              对于 单选框标签，使用 th:filed="${}" 的方式。若单选框的value值和回显内容的值一致，则自动添加checked="checked"属性！
  * （4）公共页抽取：类似于jsp:include，用于引入公共页面。如：首先将公共部分放在公共页面 /template/commons/footer.html中（不同于jsp的是，可以把引用css、js和html的内容分别放在header和body标签中）
@@ -63,10 +64,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * （6）循环语法，如： th:each="employee,status : ${employeeList}" ，将被循环的存储在域中的数据使用${}包裹，status表示被遍历的状态（存储着当前遍历的次数和索引等信息）
  * （7）循环语法2，如：<div th:switch="${user.role}">
  *                          <p th:case="'admin'">User is an administrator</p>
+ *  (7) 数据复用，首先，为模板标签取名，如为index.html的头部取名，th:fragment="header" ，
+ *                然后，在其他html文件中复用，如 th:replace="index::header"
  *  (7) 动态样式：如 th:class="page-item active" ,当前页码是否高亮取决于activa样式，我们可以用||包裹静态样式，并使用${}加上动态样式
  *                th:class="|page-item ${pageNo==pageInfo.pageNum?'active':''}|
- *  (7) 时间格式化，thymeleaf内置时间格式化工具，可以直接引用使用，如：th:text="${#dates.format(时间信息,'yyyy-MM-dd')
  *
+ *  (7) 时间格式化，thymeleaf内置时间格式化工具，可以直接引用使用，如：th:text="${#dates.format(时间信息,'yyyy-MM-dd  HH:mm:ss')}"
+ *      对于java8的事件格式数据，如localdatetime,需要额外导入thymeleaf-extras-java8time包。语法如 th:text="${#temporals.format(时间信息,'yyyy-MM-dd  HH:mm:ss')}"
+ *      
  @author Alex
  @create 2023-03-01-15:30
  */

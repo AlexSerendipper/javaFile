@@ -4,11 +4,13 @@ import java.io.FileInputStream;
 import java.util.Properties;
 
 /**
- *
- * 【Properties测试】
+ * 【Properties】
  *  Properties类是 Hashtable的子类，该对象用于处理属性文件
  *  由于属性文件里的 key、value 都是字符串类型，所以Properties里的 key和value都是字符串类型
- *  存取数据时，建议使用setProperty(String key,String value)方法和getProperty(String key)方法
+ *  load(InputStream is)                       # 读取配置文件
+ *  setProperty(String key,String value)       # 取数据
+ *  getProperty(String key)                    # 存数据
+ *
  @author Alex
  @create 2022-12-11-15:21
  */

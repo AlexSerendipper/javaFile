@@ -19,15 +19,17 @@ import javax.servlet.http.HttpSession;
  *  req.getParameterValues(key)         # 若有多个同名参数，使用该方法获取
  * 注意：若使用路径占位符的方式请求，无法使用方式一，因为此时没有请求的键值
  *
- * (2) ✔✔方式二：通过 控制器方法的形参 获取请求参数（基于原生API封装）
+ * (2) ✔方式二：通过 控制器方法的形参 获取请求参数（基于原生API封装）
  *  在控制器方法的形参位置，设置和请求参数同名的形参，当浏览器发送请求，DispatcherServlet中就会将请求参数赋值给相应的形参
- *  ✔若请求所传输的请求参数中有多个同名的请求参数，可以在控制器方法的形参中设置 字符串类型的形参 或者 字符串数组 接收
+ *   ✔✔✔并且，会将这些请求参数全都放入request域中！
+ *  若请求所传输的请求参数中有多个同名的请求参数，可以在控制器方法的形参中设置 字符串类型的形参 或者 字符串数组 接收
  *    若使用字符串类型的形参，此参数的值为每个数据中间使用逗号拼接的结果
  *    若使用字符串数组类型的形参，此参数的数组中包含了每一个数据
  *
- *（3）✔✔方式三： 通过POJO获取请求参数
+ *（3）✔方式三： 通过POJO获取请求参数
  *  若客户端传输的 请求参数的参数名 和 某实体类（通常对应一个数据库表） 中的属性名一致
  *   则可以通过在控制器方法的形参位置设置一个 实体类类型的形参 的方式，此时请求参数会自动为该属性赋值
+ *   ✔✔✔并且，会将该实体类形参存入model中！
  *
  * 【获取请求参数映射问题 及 特殊请求参数获取】
  *（1）@RequestParam：设置 控制器方法的形参 与 请求参数之间的映射关系
@@ -45,7 +47,8 @@ import javax.servlet.http.HttpSession;
  *
  *（3）@CookieValue：用法同@RequestParam
  *  cookie 与 控制器方法的形参没有默认的映射关系，故，若想获得cookie信息，必须使用该注解创建映射关系
- *  还可以 拿到具体的cookie对象，如 @CookieValue("JSESSIONID") Cookie jsessionID
+ *  可以拿到cookie的值，如 @CookieValue("JSESSIONID") String jsessionID
+ *   还可以 拿到具体的cookie对象，如 @CookieValue("JSESSIONID") Cookie jsessionID
  *  三个属性与用法和@RequestParam相同
  *
  *（4）@RequestBody：用法同@RequestParam
@@ -53,6 +56,10 @@ import javax.servlet.http.HttpSession;
  *
  *（5）@RequestPart：用法同@RequestParam
  *  设置 控制器方法的形参 与 上传的文件 的映射关系
+ *
+ * (6) @DateTimeFormat(pattern = "yyyy-MM-dd")
+ *  当浏览器传入指定格式字符串的日期时，使用该注解可以转换为Date类型。如@DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate
+ *
  *
  * 【获取请求参数乱码问题】springMVC的编码过滤器CharacterEncodingFilter
  *  get请求若出现乱码通常与tomcat设置有关。tomcat8及以上都默认使用utf-8，不会出现乱码问题

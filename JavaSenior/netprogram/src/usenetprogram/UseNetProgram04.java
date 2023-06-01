@@ -2,79 +2,86 @@ package usenetprogram;
 
 import org.junit.Test;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.*;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
- * 【基于UDP协议的网络编程,作为了解】
- *  类DatagramSocket和DatagramPacket实现了基于UDP协议网络程序。
- *  UDP数据报通过DatagramSocket发送和接收，系统不保证UDP数据报一定能够安全送到目的地，也不能确定什么时候可以抵达✔
- *  DatagramPacket对象封装了UDP数据报✔，在数据报中包含了发送端的IP地址和端口号以及接收端的IP地址和端口号。
- *  UDP协议中每个数据报都给出了完整的地址信息，因此无须建立发送方和接收方的连接。如同发快递包裹一样。
- *  可以发现，UDP不打开接收端，直接打开发送端也不会报错，因为它只管发送，不管接收，这是和TCP最大的区别
+ *【URI、URL和URN的区别】
+ *  URI，是uniform resource identifier，统一资源标识符，用来唯一的标识一个资源。
+ *  URL是uniform resource locator，统一资源定位符，它是一种具体的URI，即URL可以用来标识一个资源，而且还指明了如何locate这个资源。
+ *  URN，uniform resource name，统一资源命名，是通过名字来标识资源，比如 mailto:java-net@java.sun.com。
+ *   也就是说，URI是以一种抽象的，高层次概念定义统一资源标识，而URL和URN则是具体的资源标识的方式。
+ *   URL和URN都是一种URI。在Java的URI中，一个URI实例可以代表绝对的，也可以是相对的，只要它符合URI的语法规则。
+ *   而URL类则不仅符合语义，还包含了定位该资源的信息，因此它不能是相对的。
  *
- * 【DatagramPacket类的常用方法】
- *  ✔public DatagramPacket(byte[] buf,int offset,int length,InetAddress address,int port)
- *    构造数据报包，用来将长度为 length 的包发送到指定主机上的指定端口号。length参数必须小于等于 buf.length。
- *  public InetAddress getAddress()返回某台机器的 IP 地址，此数据报将要发往该机器或者是从该机器接收到的。
- *  public int getPort()返回某台远程主机的端口号，此数据报将要发往该主机或者是从该主机接收到的。
- *  public byte[] getData()返回数据缓冲区。接收到的或将要发送的数据从缓冲区中的偏移量 offset 处开始，持续 length 长度。
- *  public int getLength()返回将要发送或接收到的数据的长度。
+ * 【URL编程概述】
+ *  URL(Uniform Resource Locator)：统一资源定位符，它表示 Internet上某一资源的地址。
+ *  URL就是“种子”，通过它定位网络上某处的资源
+ *  通过 URL 我们可以访问 Internet 上的各种网络资源，比如最常见的 www，ftp站点。浏览器通过解析给定的 URL 可以在网络上查找相应的文件或其他资源。
+ *  URL的基本结构由5部分组成：
+ *     <传输协议>://<主机名>:<端口号>/<文件名>#片段名?参数列表
+ *  例如:http://192.168.1.100:8080/helloworld/index.jsp#a?username=shkstart&password=123
+ *  #片段名：即锚点，例如看小说，直接定位到章节
+ *  参数列表格式：参数名=参数值&参数名=参数值....
  *
- * 【DatagramSocket类的常用方法】
- *  public DatagramSocket()创建数据报套接字
- *  public void close()关闭此数据报套接字。
- *  ✔public void send(DatagramPacket p)从此套接字发送数据报包。DatagramPacket包含的信息指示：将要发送的数据、其长度、远程主机的 IP 地址和远程主机的端口号。
- *  public void receive(DatagramPacket p)从此套接字接收数据报包。当此方法返回时，DatagramPacket
- *    的缓冲区填充了接收的数据。数据报包也包含发送方的 IP 地址和发送方机器上的端口号。 此方法
- *    在接收到数据报前一直阻塞。数据报包对象的 length 字段包含所接收信息的长度。如果信息比包的
- *    长度长，该信息将被截短。
- *  public InetAddress getLocalAddress()获取套接字绑定的本地地址。
- *  public int getLocalPort()返回此套接字绑定的本地主机上的端口号。
- *  public InetAddress getInetAddress()返回此套接字连接的地址。如果套接字未连接，则返回 null。
- *  public int getPort()返回此套接字的端口。如果套接字未连接，则返回 -1。
+ * 【URL编程常用方法】
+ *  public URL (String spec)：通过一个表示URL地址的字符串可以构造一个URL对象。例如：URL url = new URL("http://www. atguigu.com/");
+ *  public String getProtocol()    # 获取该URL的协议名
+ *  public String getHost()        # 获取该URL的主机名
+ *  public String getPort()        # 获取该URL的端口号
+ *  public String getPath()        # 获取该URL的文件路径
+ *  public String getFile()        # 获取该URL的文件名
+ *  public String getQuery()       # 获取该URL的查询名
  *
- * 【流程】：
- * DatagramSocket与DatagramPacket
- * 建立数据包
- * 调用Socket的发送、接收方法
- * 关闭Socket
+ * 【URLConnection】若希望从URL端接收/发送信息，需要与URL建立连接，此时需要使用URLConnection
+ *  openConnection()：                                                    # 生成对应的URLConnection对象
+ *  InputStream getInputStream( )throws IOException                       # 获得输入流
+ *  OutputSteram getOutputStream( )throws IOException                     # 获得输出流
+ *  Object getContent( ) throws IOException
+ *  int getContentLength( )
+ *  String getContentType( )
+ *  long getDate( )
+ *  long getLastModified( )
  *
  @author Alex
- @create 2022-12-21-14:48
+ @create 2022-12-21-15:06
  */
 public class UseNetProgram04 {
-    // 发送端
-    @Test
-    public void test() throws IOException {
-        // UDP就不在socket里指明ip和端口号了
-        DatagramSocket socket = new DatagramSocket();
-        String s = new String("我是UDP方式传递的数据");
-        byte[] data = s.getBytes();
-        InetAddress localhost = InetAddress.getByName("localhost");
-        // 把数据，ip和端口号都放在Packet里
-        DatagramPacket datagramPacket = new DatagramPacket(data,0,data.length,localhost,8090);
-        // 发送数据
-        socket.send(datagramPacket);
-        // 关闭流
-        socket.close();
+    /**
+     * URL编程的常用方法
+     */
+    public static void main(String[] args) throws MalformedURLException {
+        URL url = new URL("http://192.168.1.100:8080/helloworld/index.jsp?username=shkstart&password=123");
+        System.out.println(url.getProtocol());
+        System.out.println(url.getHost());
+        System.out.println(url.getPort());
+        System.out.println(url.getPath());
+        System.out.println(url.getFile());
+        System.out.println(url.getQuery());
     }
 
-
-    // 接收端
     @Test
-    public void test1() throws IOException {
-        // 接收端要指定一下端口号
-        DatagramSocket socket = new DatagramSocket(8090);
-
-        byte[] b = new byte[100];
-        // 这里就先体会一下，所以接收的数据特别长
-        DatagramPacket packet = new DatagramPacket(b,0,b.length);
-        // 接收数据
-        socket.receive(packet);
-        System.out.println(new String(packet.getData(),0,packet.getLength()));
+    public void test() throws IOException {
+        URL url = new URL("https://img2.woyaogexing.com/2021/08/29/e08b324dbe554519a69e79f44bc44d80.jpeg");
+        // 得到连接，实际上获取的是http的连接
+        URLConnection urlConnection = url.openConnection();
+        // 与URL建立连接
+        urlConnection.connect();
+        // 得到输入输出流
+        InputStream inputStream = urlConnection.getInputStream();
+        FileOutputStream fileOutputStream = new FileOutputStream(new File("111.png"));
+        byte[] b = new byte[20];
+        int len;
+        while((len= inputStream.read(b))!=-1){
+            fileOutputStream.write(b,0,len);
+        }
         // 关闭流
-        socket.close();
-
+        fileOutputStream.close();
+        inputStream.close();
     }
 }

@@ -2,51 +2,53 @@ package useio;
 
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 /**
+ * 【转换流概述】
+ * （1）Java API提供了两个转换流：属于字符流（操作的都是char型数组）
+ *     InputStreamReader：将InputStream转换为Reader（实现将字节的输入流按指定字符集转换为字符的输入流）（解码）
+ *       public InputStreamReader(InputStream in)
+ *       public InputSreamReader(InputStream in,String charsetName)
+ *     OutputStreamWriter：将Writer转换为OutputStream（实现将字符的输出流按指定字符集转换为字节的输出流。）（编码）
+ *       public OutputStreamWriter(OutputStream out)
+ *       public OutputSreamWriter(OutputStream out,String charsetName)
+ * （2）很多时候我们使用转换流来处理文件乱码问题。实现编码和解码的功能。
+ * （3）字符集
+ *     ASCII：美国标准信息交换码。 用一个字节的7位可以表示。
+ *     ISO8859-1：拉丁码表。欧洲码表 用一个字节的8位表示。
+ *     GB2312：中国的中文编码表。最多两个字节编码所有字符
+ *     GBK：中国的中文编码表升级，融合了更多的中文文字符号。最多两个字节编码
+ *     Unicode：国际标准码，融合了目前人类使用的所有字符。为每个字符分配唯一的字符码。所有的文字都用两个字节来表示。
+ *     UTF-8：变长的编码方式，可用1-4个字节来表示一个字符。
  *
- * ✔字符流不能处理图片、视频等非文本文件，需要使用字节流
- * ✔字节流也不能处理字符的文本数据，需要使用字符流
- * 【注】
- * 用字节流也可以实现对文本文件的复制（但是用字符流是不可能实现对非文本文件的复制的），
- * 因为有的中文5个字节存不下，byte[] b = new byte[5]，这种情况下如果只是搬运不会出错，如果要看输出可能会出错
+ * 【转换流的编码应用】
+ *  可以将字符按指定编码格式 存储
+ *  可以将字符按指定编码格式来 解读
  *
  @author Alex
- @create 2022-12-17-14:43
+ @create 2022-12-18-11:02
  */
 public class UseIO04 {
-    // 测试字节流无法处理文本数据的情况(能够处理英文字符，因为底层一个英文字符用一个字节能存)
-    // 无法处理中文等其他字符
+    // 用了UTF-8读取文件，然后以GBK文件格式写出
     @Test
     public void test() throws IOException {
-        File file = new File("hello.txt");
-        FileInputStream fileInputStream = new FileInputStream(file);
-        byte[] b = new byte[5];
+        // 1. 转换流
+        // 不声明则使用系统默认的字符集
+        // 具体使用哪个字符集，取决于当初文件保存时使用的字符集
+        InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(new File("hello.txt")),"UTF-8");
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(new File("hello1.txt")), "GBK");
+        // 2. 文件操作
+        char[] c = new char[5];
         int len;
-        while ((len = fileInputStream.read(b)) != -1) {
-            String str = new String(b, 0, len);
+        while ((len = inputStreamReader.read(c))!=-1){
+            outputStreamWriter.write(c,0,len);
+            String str = new String(c,0,len);
             System.out.print(str);
         }
+        // 3. 关闭流
+        inputStreamReader.close();
+        outputStreamWriter.close();
     }
 
-    // 使用字节流复制图片
-    @Test
-    public void test1() throws IOException {
-        File file = new File("111.png");
-        FileInputStream fileInputStream = new FileInputStream(file);
-        byte[] b = new byte[7];
-        int len;
-        // 写入操作
-        File file1 = new File("222.png");
-        FileOutputStream fileOutputStream = new FileOutputStream(file1);
-        while ((len = fileInputStream.read(b)) != -1) {
-            fileOutputStream.write(b, 0, len);
-        }
-        fileInputStream.close();
-        fileOutputStream.close();
-    }
 }

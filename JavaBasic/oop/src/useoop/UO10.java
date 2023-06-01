@@ -35,7 +35,7 @@ public class UO10 {
     @Test
     public void test1(){
         Object o1 = true ? new Integer(1) : new Double(2.0);
-        // 三元运算符要求输出为同一个类型，所以先进行了自动类型提升，并且string重写过toString方法，故输出1.0
+        // ✔✔✔三元运算符要求输出为同一个类型，所以先进行了自动类型提升，并且string重写过toString方法，故输出1.0
         System.out.println(o1);
         System.out.println("*****************");
         // 没有自动类型提升，故输出1

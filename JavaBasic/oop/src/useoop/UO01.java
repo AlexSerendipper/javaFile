@@ -2,6 +2,7 @@ package useoop;
 
 import org.junit.Test;
 
+
 /**
  *【面向过程(POP) 与 面向对象(OOP)】
  *  二者都是一种思想，面向对象是相对于面向过程而言的。面向过程，强调的是功能行为，以函数为最小单位，考虑怎么做。
@@ -31,8 +32,8 @@ import org.junit.Test;
  *  属性名属于标识符，符合命名规则和规范即可。
  *  在一个类中声明属性为一个类的对象，称为关联(对象属性)！
  *
- *【变量的分类2】按声明的位置的不同
- *  1）在方法体外，类体内声明的变量称为成员变量
+ *【变量的分类2】变量分类1见java基础，按声明的位置的不同
+ *  1）在方法体外，类 内声明的变量称为成员变量
  *      实例变量（不以static修饰）
  *      类变量（以static修饰）
  *  2）在方法体内部声明的变量称为局部变量
@@ -42,11 +43,11 @@ import org.junit.Test;
  *
  *【成员变量与局部变量】
  * 1）区别：
- *                    成员变量                                        局部变量
- * 声明的位置：     直接声明在类中                           形参、方法局部变量、代码块局部变量
- * 修饰符：  private、public、static、final等             不能用权限修饰符修饰，可以用final修饰
- * 初始化值：   有默认初始化值（与一维数组中的初始值相同）   没有默认初始化值，必须显式赋值，方可使用
- * 内存加载位置：      堆空间                                       静态域内 栈空间
+ *                                             成员变量                                                    局部变量
+ * 声明的位置：                              直接声明在类中                                       形参、方法局部变量、代码块局部变量
+ * 修饰符：                           private、public、static、final等                         不能用权限修饰符修饰，可以用final修饰
+ * 初始化值：                            有默认初始化值（与一维数组中的初始值相同）               没有默认初始化值，必须显式赋值，方可使用
+ * 内存加载位置：                               堆空间                                                   静态域内 栈空间
  * 2）相同点：
  * 二者定义格式相同，数据类型1 变量名1 = 变量值1
  * 二者都有其对应的作用域，成员变量在类中属性，局部变量在方法、代码块、构造器内使用
@@ -65,43 +66,47 @@ public class UO01 {
     @Test
     public void test(){
         // 非匿名对象
-        son son = new son();
+        Son son = new Son();
         show(son);
         System.out.println("*****************");
         // 匿名对象
-        show(new son());
+        show(new Son());
         System.out.println("*****************");
         // 匿名类+非匿名对象
-        father f = new father() {
+        Father f = new Father() {
             @Override
-            void show() {
+            public void show() {
                 System.out.println("匿名类");
             }
         };
         show(f);
         System.out.println("*****************");
         // 匿名类+匿名对象
-        show(new father() {
+        show(new Father() {
             @Override
-            void show() {
+            public void show() {
                 System.out.println("匿名类+匿名对象");
             }
         });
     }
 
 
-    public void show(father f){
-        f.show();
+    public void show(Father father){
+        father.show();
+    }
+
+
+    public abstract class Father{
+        public abstract void show();
+    }
+
+    public class Son extends Father{
+        @Override
+        public void show() {
+            System.out.println("son");
+        }
     }
 }
 
-abstract class father{
-    abstract void show();
-}
 
-class son extends father{
-    @Override
-    void show() {
-        System.out.println("son");
-    }
-}
+

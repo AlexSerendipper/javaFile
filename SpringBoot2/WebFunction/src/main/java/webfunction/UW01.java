@@ -34,6 +34,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * 【favicon支持】注意：favicon支持不可以配置静态资源的访问前缀。否则将导致失效✔
  *  把 favicon.ico（名字固定） 放在静态资源目录下（static文件夹）。此时访问页面将使用对应的favicon
  *
+ * 【配置当前项目的上下文路径】
+ *  server.servlet.context-path=/web
+ *
  @author Alex
  @create 2023-03-19-16:42
  */

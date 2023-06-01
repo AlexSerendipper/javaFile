@@ -1,54 +1,41 @@
 package useio;
 
-import org.junit.Test;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
- * 【转换流概述】
- * （1）Java API提供了两个转换流：属于字符流（操作的都是char型数组）
- *     InputStreamReader：将InputStream转换为Reader（实现将字节的输入流按指定字符集转换为字符的输入流）（解码）
- *       public InputStreamReader(InputStream in)
- *       public InputSreamReader(InputStream in,String charsetName)
- *     OutputStreamWriter：将Writer转换为OutputStream（实现将字符的输出流按指定字符集转换为字节的输出流。）（编码）
- *       public OutputStreamWriter(OutputStream out)
- *       public OutputSreamWriter(OutputStream out,String charsetName)
- * （2）很多时候我们使用转换流来处理文件乱码问题。实现编码和解码的功能。
- * （3）字符集
- *     ASCII：美国标准信息交换码。 用一个字节的7位可以表示。
- *     ISO8859-1：拉丁码表。欧洲码表 用一个字节的8位表示。
- *     GB2312：中国的中文编码表。最多两个字节编码所有字符
- *     GBK：中国的中文编码表升级，融合了更多的中文文字符号。最多两个字节编码
- *     Unicode：国际标准码，融合了目前人类使用的所有字符。为每个字符分配唯一的字符码。所有的文字都用两个字节来表示。
- *     UTF-8：变长的编码方式，可用1-4个字节来表示一个字符。
- *
- * 【转换流的编码应用】
- *  可以将字符按指定编码格式存储
- *  可以对文本数据按指定编码格式来解读
- *  指定编码表的动作由构造器完成
+ * 【标准的输入、输出流】
+ * (1) System.in  代表了系统标准的输入，默认输入设备是：键盘
+ *     System.out代表了系统标准的输入输出，默认输出设备是：控制台，显示器
+ *     System.out返回的是一个PrintStream的实例
+ * (2)重定向：通过System类的setIn，setOut方法对默认设备进行改变。
+ *     public static void setIn(InputStream in)
+ *     public static void setOut(PrintStream out)
  @author Alex
- @create 2022-12-18-11:02
+ @create 2022-12-18-12:01
  */
 public class UseIO06 {
-    // 用了UTF-8读取文件，然后以GBK文件格式写出
-    @Test
-    public void test() throws IOException {
-        // 1. 转换流
-        // 不声明则使用系统默认的字符集
-        // 具体使用哪个字符集，取决于当初文件保存时使用的字符集
-        InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(new File("hello.txt")),"UTF-8");
-        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(new File("hello1.txt")), "GBK");
-        // 2. 文件操作
-        char[] c = new char[5];
-        int len;
-        while ((len = inputStreamReader.read(c))!=-1){
-            outputStreamWriter.write(c,0,len);
-            String str = new String(c,0,len);
-            System.out.print(str);
+    // 需求：从键盘输入字符串，要求将读取到的整行字符串转成大写输出。然后继续
+    // 进行输入操作，直至当输入“e”或者“exit”时，退出程序。
+    public static void main(String[] args) throws IOException {
+        // 方法1：使用scanner实现,调用next(),返回一个字符串
+        // 方法2：使用system.in实现， ==> 转换流 ==> 调用.readline方法
+        // 1. 创建转换流（不是操作文件，操作的是键盘输入）✔
+        InputStreamReader inputStreamReader = new InputStreamReader(System.in);  // 将输入流转换为字符流
+        // 2. 创建缓冲流
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);  // 调用.readline方法
+        // 3. 操作程序
+        while(true){
+            System.out.println("请输入数据：");
+            String data = bufferedReader.readLine();
+            if("e".equalsIgnoreCase(data) || "exit".equalsIgnoreCase(data)){
+                System.out.println("程序结束");
+                break;
+            }
+            System.out.println(data.toUpperCase());
         }
-        // 3. 关闭流
-        inputStreamReader.close();
-        outputStreamWriter.close();
+        // 4. 关闭流
+        bufferedReader.close();
     }
-
 }

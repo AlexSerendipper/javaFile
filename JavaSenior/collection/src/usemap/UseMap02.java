@@ -10,6 +10,7 @@ import java.util.TreeMap;
  * 【treeMap】
  *  底层使用红黑树结构存储数据
  *  treeMap是对key进行排序（自然排序、定制排序），所以向treemap中添加key-value时，要保证key必须是同一个类创建的对象
+ *
  @author Alex
  @create 2022-12-11-14:52
  */
@@ -59,60 +60,66 @@ public class UseMap02 {
             System.out.println(o);
         }
     }
-}
 
 
-class Slave implements Comparable {
-    public String name;
-    public int age;
 
-    public Slave() {
-    }
 
-    public Slave(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
 
-    @Override
-    public String toString() {
-        return "Slave{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                '}';
-    }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    class Slave implements Comparable {
+        public String name;
+        public int age;
 
-        Slave slave = (Slave) o;
+        public Slave() {
+        }
 
-        if (age != slave.age) return false;
-        return Objects.equals(name, slave.name);
-    }
+        public Slave(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
 
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + age;
-        return result;
-    }
+        @Override
+        public String toString() {
+            return "Slave{" +
+                    "name='" + name + '\'' +
+                    ", age=" + age +
+                    '}';
+        }
 
-    // 按照姓名从大到小排序，年龄从小到大排序
-    @Override
-    public int compareTo(Object o) {
-        if (o instanceof Slave) {
-            Slave o1 = (Slave) o;
-            int compare = -this.name.compareTo(o1.name);
-            if (compare != 0) {
-                return compare;
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Slave slave = (Slave) o;
+
+            if (age != slave.age) return false;
+            return Objects.equals(name, slave.name);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = name != null ? name.hashCode() : 0;
+            result = 31 * result + age;
+            return result;
+        }
+
+        // 按照姓名从大到小排序，年龄从小到大排序
+        @Override
+        public int compareTo(Object o) {
+            if (o instanceof Slave) {
+                Slave o1 = (Slave) o;
+                int compare = -this.name.compareTo(o1.name);
+                if (compare != 0) {
+                    return compare;
+                } else {
+                    return Integer.compare(this.age, o1.age);
+                }
             } else {
-                return Integer.compare(this.age, o1.age);
+                throw new RuntimeException("输入数据类型异常");
             }
-        } else {
-            throw new RuntimeException("输入数据类型异常");
         }
     }
 }
+
+

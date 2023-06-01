@@ -40,26 +40,28 @@ public class UO09 {
         System.out.println(i);
         System.out.println(c);  // 理论上这里输出的是地址值的，但是这个println方法重载了，变成遍历数组了
     }
-}
 
-// 体会重写equals的思路
-class Person{
-    String name;
-    int age;
 
-    @Override
-    public boolean equals(Object obj) {
-        if(this == obj) {
-            return true;
+    // 体会重写equals的思路
+    class Person{
+        String name;
+        int age;
+
+        @Override
+        public boolean equals(Object obj) {
+            if(this == obj) {
+                return true;
+            }
+
+            if(obj instanceof Person) {  // 避免传入的都不是子类，那就没法比了
+                Person objj = (Person)obj;
+                // 比较两个对象的属性是否完全相同
+                // 注意这里name比较的是两个字符串是否相同，不是比较地址值是否相同，比较的是内容，要用string中重写的equals方法
+                return this.age == objj.age && this.name.equals(objj.name);
+            }
+
+            return false;
         }
-
-        if(obj instanceof Person) {  // 避免传入的都不是子类，那就没法比了
-            Person objj = (Person)obj;
-            // 比较两个对象的属性是否完全相同
-            // 注意这里name比较的是两个字符串是否相同，不是比较地址值是否相同，比较的是内容，要用string中重写的equals方法
-            return this.age == objj.age && this.name.equals(objj.name);
-        }
-
-        return false;
     }
 }
+

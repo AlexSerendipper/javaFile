@@ -42,19 +42,19 @@ import static com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY;
  * 【谷歌验证码kaptcha的使用】见index.html
  * 1、添加jar包
  * 2、在 web.xml中去配置用于生成验证码的Servlet程序
- * 3、访问KaptchaServlet，就能够生成验证码及验证码图片，并且会将验证码保存到session域当中
+ * 3、访问KaptchaServlet，就能够生成验证码及验证码图片，并且会将验证码保存到session域当中 !!
  * 4、在表单中使用img标签去显示验证码图片并使用它
  * 5、在服务器获取session域中的验证码（谷歌生成的）和客户端发送过来的验证码进行比较。然后删除session中的验证码
  *     String token = (String) req.getSession().getAttribute(KAPTCHA_SESSION_KEY);  # 获取 Session 中的验证码
  *     req.getSession().removeAttribute(KAPTCHA_SESSION_KEY);   # 删除 Session 中的验证码
  ------------------------------------------
  <servlet>
- <servlet-name>KaptchaServlet</servlet-name>
- <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+     <servlet-name>KaptchaServlet</servlet-name>
+     <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
  </servlet>
  <servlet-mapping>
- <servlet-name>KaptchaServlet</servlet-name>
- <url-pattern>/kaptcha.jpg</url-pattern>
+     <servlet-name>KaptchaServlet</servlet-name>
+     <url-pattern>/kaptcha.jpg</url-pattern>
  </servlet-mapping>
  -------------------------------------------
 

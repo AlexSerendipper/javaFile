@@ -4,15 +4,15 @@ package basicfunction;
  * 【redis安装】
  * (1) redis强烈建议安装在linux中
  * (2) gcc是linux下的c语言编译程序，要安装redis需要确保具备gcc编译环境，
- *      gcc --version                            # 查看当前linux的gcc版本
+ *      gcc --version                            # 查看当前linux的gcc版本(sudo apt install gcc)
  * (3) 配置gcc所需要的c++库环境。Ubuntu提供了一个build-essential软件包，安装了该软件包，编译c/c++所需要的软件包也都会被安装
  *      sudo apt install build-essential
  * (4) 下载redis7.0.9.tar.gz后放入Linux目录/opt
  *      tar -zxvf redis-7.0.10.tar.gz            # 在/opt目录下进行解压操作
- * (5) 进入到文件目录中
+ * (5) 进入到文件目录中 (/opt目录下)
  *      sudo -s                                  # 使用root用户权限进行安装
  *      make && make install                     # 进行编译和安装操作（默认ubuntu安装到当前目录的src目录下）
- *                                                   (默认CentOS安装到user/local/bin目录下)
+ *                                                                   (默认CentOS安装到user/local/bin目录下)
  * (6) 安装后，src目录下多出一下内容
  *      redis-benchmark: 性能测试工具，服务启动后运行该命令 可以查看自己电脑性能如何
  *      redis-check-aof: 修复有问题的AOF文件

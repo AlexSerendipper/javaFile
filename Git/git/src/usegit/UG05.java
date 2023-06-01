@@ -48,9 +48,14 @@ target
  *
  *【在IDEA配置Git】
  *  File ==> setting ==> version control ==> git ==> path to git(选择GIT安装包下 BIN目录的git.exe)
+ * （1）初始化本地git仓库
+ *  如果导航栏没有VCS选项，需要进行如下操作，file-version control-directory mappings-新增当前项目路径为根路径，VCS选择subversion即可
  *  工具栏 ==> VCS(version control setting) ==> create git repository(默认选中的目录为当前项目的根目录，可以更改)
+ * （2）提交到本地仓库
  *  上述操作完成后，目录下的文件将受到GIT追踪，文件依据当前状态变色（未受跟踪红色..），可以右键文件-git进行add和commit操作，
- *   也可以右键项目-git-将项目下的所有文件进行add和commit操作。add后文件变为绿色，commit后文件变为黑色，修改后的文件是蓝色
+ *   也可以右键项目git-git directory将项目下的所有文件进行add和commit操作。add后文件变为绿色，commit后文件变为黑色，修改后的文件是蓝色
+ *   (注意提交时写一下提交的备注)
+ *（3）版本切换功能
  *  在IDEA中，蓝色的文件可以直接commit不用add到暂存区
  *     查看版本信息：在IDEA左下角有个git，里面的log可以查看每次版本的提交信息
  *     版本切换：log中 右键提交信息-checkout revision 指定版本-可以很方便的切换不同版本
@@ -63,13 +68,14 @@ target
  * （1）登录github
  *  File ==> setting ==> version control ==> github ==> log in via github              # 使用账号密码登录，IDEA用该方法出奇的慢
  *  File ==> setting ==> version control ==> github ==> log in with token              # 使用密钥登录，token见下
- *   github网站 ==> 头像 ==>  Developer settings ==> generate new token（把权限打满）      # token
- *   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                                           # 我的token，我把时间设置为无限了
- * (2)分享项目到github：正常需要现在github中创建远程库，IDEA可以直接创建远程库
- *  创建远程库并上传项目：工具栏 ==> VCS ==> share project on github ==> 输入远程库的名称以及别名（remote）
- *  使用SSH PUSH项目（默认使用https push）：工具栏 ==> git==> push ==> master origin:master ==> 点击origin定义SSH连接（输入当前库的SSH的网址并取名） ==> 将origin修改为我们取的别名 ==> 此时push即为SSH push
+ *   github网站 ==> 头像 ==> setting ==> Developer settings ==> generate new token（把权限打满）     # token
+ *   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                                           # 我的token，我把时间设置为无限了
+ * (2)分享项目到github：正常需要先在github中创建远程库 (IDEA可以直接创建远程库，但我个人习惯直接在网页端创建好)
+ *  创建远程库(可选)：工具栏 ==> git ==> github ==> share project on github ==> 输入远程库的名称以及别名（remote）
+ *  使用SSH PUSH项目（默认使用https push）：工具栏 ==> git==> push ==> master origin:master ==> 点击origin并输入输入当前库的SSH链接（默认本地分支为origin，可以不修改） ==> push
  *  pull代码：工具栏 ==> git ==> pull ==> 选择SSH拉取
  *  clone代码：File ==> new ==> project from version control ==> 直接输入SSH的网址就可以克隆代码到本地库
+ *
  *
  @author Alex
  @create 2023-01-24-20:11

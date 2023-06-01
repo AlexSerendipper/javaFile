@@ -96,7 +96,7 @@ public class UEF03 {
         // 处理上传文件重名的问题（通过lastindexof获取上传文件的后缀，UUID为32为随机字符）
         String hzName = fileName.substring(fileName.lastIndexOf("."));
         fileName = UUID.randomUUID().toString() + hzName;
-        // 获取 服务器中 存放图片的路径（实际上，上传的文件是存放在target目录中）
+        // 存放图片的路径（实际上，这里是希望将 上传的文件 存放在web路径中，即存放在target目录中（./static/img对应的上下文路径））
         ServletContext servletContext = session.getServletContext();
         String photoPath = servletContext.getRealPath("./static/img");
         // 如果目录不存在，创建目录

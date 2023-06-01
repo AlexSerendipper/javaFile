@@ -51,7 +51,7 @@ import java.util.*;
  *
  * 【四、LinkedHashMap的底层实现原理（了解）】
  *   底层使用的结构与hashmap基本相同，因为Linkedhashmap继承于hashmap, 只是重写了newNode方法，
- *   新造了内部类Entry的对象,该Entry对象继承自Node，实现了双向链表，所以就可以根据添加的顺序实现遍历
+ *   并且 新造了内部类Entry,该Entry对象继承自Node，实现了双向链表，所以LinkedHashMap就可以根据添加的顺序实现遍历
  *
  * 【五、hashset】
  *  在new HashSet的时候，实际上底层是new了一个HashMap

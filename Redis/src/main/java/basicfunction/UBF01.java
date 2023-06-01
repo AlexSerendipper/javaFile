@@ -27,7 +27,7 @@ package basicfunction;
  *  Redis支持数据的备份，即master-slave模式的数据备份
  * 生成dump.rpb文件(可以在配置文件中改) 默认生成在redis.conf同级目录
  *
- * 【redis下载】在https://redis.io/中下载redis7
+ * 【redis下载】在https://redis.io/中下载redis7。。。。https://github.com/microsoftarchive/redis中是微软提供的windows安装包
  *  https://try.redis.io           # redis在线测试使用网址
  *  https://doc.redisfans.com      # redis命令参考手册
  *

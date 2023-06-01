@@ -18,14 +18,22 @@ import java.util.Map;
  *  HttpServletResponse类通过流的形式回传数据给客户端
  *    不能同时使用字节流和字符流，否则报错
  *
- *【HttpServletResponse类的使用】
+ *【HttpServletResponse解决乱码】
  *  resp.setContentType("text/html; charset=UTF-8");         # 解决乱码方式一（推荐使用）：默认使用的字符集为ISO-8859字符集，
  *                                                            # ✔该方法可以同时设置服务器和客户端都使用UTF-8字符集，还设置了响应头
  *                                                            # 注意：此方法一定要在获取流对象之前调用才有效
  *  resp.setCharacterEncoding("UTF-8");                            # 解决乱码方式二（不推荐使用）: 设置服务器使用UTF-8字符集
  *   resp.setHeader("Content-Type", "text/html; charset=UTF-8");    # 通过响应头，设置浏览器也使用 UTF-8 字符集
- *  resp.getOutputStream();                                 # ✔获取字节流（传递二进制数据）
- *  resp.getWriter();                                       # ✔获取字符流（回传字符串）
+ *
+ *
+ *【HttpServletResponse的使用】
+ *  response.setContentType("image/" + ".png");                    # （1）当给客户端响应图片数据时，需要设置
+ *  resp.setContentType("text/html; charset=UTF-8");                 （2）当给客户端响应html数据时，需要设置
+ *  response.setContentType("application/json"; charset=UTF-8");      (3) 当给客户端相应json数据时，需要设置（客户端收到数据会自动转换为json对象）
+ *  response.setContentType("application/plain; charset=UTF-8");      (4) 当给客户端相应json数据时，需要设置（客户端收到数据需要手动转换为json对象）
+ *
+ *  resp.getOutputStream();                                 # 获取字节流（传递二进制数据）
+ *  resp.getWriter();                                       # 获取字符流（回传字符串）
  *
  * 【请求重定向】
  *  请求重定向：是指客户端给服务器发请求，然后服务器告诉客户端说。我给你一些地址。你去新地址访问。

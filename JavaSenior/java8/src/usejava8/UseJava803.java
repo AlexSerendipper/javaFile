@@ -12,14 +12,14 @@ import java.util.stream.Stream;
  *【StringAPI(java.util.stream)】Java8中有两大最为重要的改变。第一个是 Lambda 表达式；另外一个则是 Stream API。
  *
  *【Stream和Collection集合的区别】Collection是一种静态的内存数据结构，存储数据，和内存打交道！而Stream是有关计算的，和cpu打交道！
- *   1） Stream 自己不会存储元素。
- *   2） Stream 不会改变源对象。相反，他们会返回一个持有结果的新Stream。
- *   3) Stream 操作是延迟执行的。这意味着他们会等到需要结果的时候才执
+ *  Stream 自己不会存储元素。
+ *  Stream 不会改变源对象。相反，他们会返回一个持有结果的新Stream。
+ *  Stream 操作是延迟执行的。这意味着他们会等到需要结果的时候才执
  *
  *【Stream执行流程】、
- *   1) Stream的实例化：通过数据源（如：集合、数组）获取Stream
- *   2) 一系列的中间操作（过滤、映射....）: 对数据源进行处理
- *   3) 终止操作（延迟操作）：一旦执行终止操作，就执行中间操作链，并产生结果。之后中间操作和Stream都不会再被使用，该流被关闭
+ *  Stream的实例化：通过数据源（如：集合、数组）获取Stream
+ *  一系列的中间操作（过滤、映射....）: 对数据源进行处理
+ *  终止操作（延迟操作）：一旦执行终止操作，就执行中间操作链，并产生结果。之后中间操作和Stream都不会再被使用，该流被关闭
  *
  *【创建Stream的四种方式】
  *   1）通过集合，调用Collection的如下方法
@@ -45,6 +45,7 @@ import java.util.stream.Stream;
  *  3)中间操作三：排序
  *      sorted() 产生一个新流，其中按自然顺序排序。注意，若使用sorted()，要求被排序的对象要实现comparable接口
  *      sorted(Comparator com) 产生一个新流，其中按比较器顺序排序
+ *
  @author Alex
  @create 2022-12-28-18:07
  */

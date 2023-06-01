@@ -9,9 +9,12 @@ import java.io.IOException;
 /**
  * 【session】
  *  Session是一个接口（HttpSession）。是四大域对象之一
- *  Session就是会话。是用来维护一个客户端和服务器之间关联的一种技术。
+ *   Session就是会话。是用来维护一个客户端和服务器之间关联的一种技术。
  *  每个客户端都有自己的一个Session会话（即通常一个session代表着一个客户端）
- *  Session会话中，我们经常用来保存用户登录之后的信息。即当客户端关闭后失效✔
+ *  cookie和session实际上都是解决同样的问题，只是解决问题的角度不同。
+ *   因为cookie中的信息是保存在客户端的，很多时候不够安全。
+ *   session中的数据保存在服务器端，所以在Session会话中，我们经常保存用户登录之后的信息。使其在客户端关闭后失效。
+ *   但是要注意这样也会增加服务端的内存压力
  *
  * 【Session常用方法】每个会话都有一个唯一的ID值
  *  request.getSession()                                  # Session的创建和获取
@@ -33,7 +36,7 @@ import java.io.IOException;
  *  【session底层原理】见xmind
  *  为什么当关闭浏览器，不论生命周期设置了多少，当前session都会无效？
  *  原因是：当我们创建session时，都会将session的id以cookie的形式保存在客户端（所以session的底层是cookie）
- *   并且cookie的声明周期为默认。当我们再次创建session，服务器会通过cookie中的id值找到之前创建好的session对象~
+ *   并且cookie的声明周期为默认（浏览器关闭后删除）。即当我们再次创建session，服务器会通过cookie中的id值找到之前创建好的session对象~
  *   所以当关闭浏览器，亦或是删除了cookie，无法再找到先前的session，再次创建session就会创建一个新的session
  ---------------------------------------------------------------------
  <!--设置当前web工程创建出的所有Session默认是20分钟超时时长-->

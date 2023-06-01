@@ -1,13 +1,14 @@
 package corefunction;
 
-import corefunction.boot.pojo.Car;
+import corefunction.pojo.Car;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 【主程序使用】了解
- *  @SpringBootApplication(scanBasePackages="")                                                 # 设置于主启动类上，设置包扫描位置
+ *  @SpringBootApplication(scanBasePackages="",exclude = {})                                    # 设置于主启动类上，设置包扫描位置
+ *                                                                                                  可以设置不加载某些自动配置类，如DataSourceAutoConfiguration.class
  *  @MapperScan(value = "")                                                                     # 设置mapper接口的包扫描路径
 ------------
 @SpringBootApplication(scanBasePackages = "")
@@ -73,10 +74,14 @@ System.out.println(uc03config.pp() == uc03config.pp());;
  * （5）@ImportResource("classpath:UC01.xml")
  *      可能某些公司仍在使用老式装配bean对象的方式（.xml），使用该注解标记配置类 能够很方便的将.xml文件中bean全部装配到容器中
  *
- * （6）@ConfigurationProperties(prefix = "mycar") ：用于读取到properties文件中的内容，并且把它封装到JavaBean中（即 自动绑定）
+ * （6）@ConfigurationProperties(prefix = "mycar") ：标记于javabean之上，用于读取到 properties文件中的内容，并且把它封装到JavaBean中（即 自动绑定）
  *      与 application.properties 中指定前缀的内容进行绑定。如 mycar.price = 100
  *      方式一： 为容器中的组件 (@Component) 添加 @ConfigurationProperties。就可以实现为 car 的price属性注入 100 这个值
  *      方式二： 为配置类(@Configuration) 添加 @EnableConfigurationProperties(Car.class)，即 开启 car 的自动绑定功能，并将 car 装配到容器中
+ *
+ * （7）@value: 可以读取到 properties文件中的内容(使用${}包裹)，并将其赋值给一个变量
+ *      @Value("${wk.image.storage}")
+ *       private String wkImageStorage;
  *
  @author Alex
  @create 2023-03-18-13:08

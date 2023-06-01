@@ -2,124 +2,138 @@ package usecommonclass;
 
 import org.junit.Test;
 
-import java.time.*;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.time.temporal.TemporalAccessor;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
- * 【JDK8之前的时间API面临的问题】
- * (1)可变性：像日期和时间这样的类应该是不可变的。(calendar是可变的，调用set方法)
- * (2)偏移性：Date中的年份是从1900开始的，而月份都从0开始。
- * (3)格式化：格式化只对Date有用，Calendar则不行。
- * (4)此外，它们也不是线程安全的；不能处理闰秒等。
+ *  由于java的对象正常情况下只能进行==比较其地址值，无法比较出大小。所以需要排序操作
+ * 【自然排序】
+ *   ✔✔让被排序的类实现 java.lang.Comparable 接口，并重写其中的 compareTo(obj)方法，指明如何进行排序
+ *   实现Comparable接口的对象（列表list1和数组array1），✔可以直接通过 Collections.sort(list1) 或 Arrays.sort(array1)进行自动排序
+ *   重写规则：(默认按照从小到大继续排序)
+ *               如果当前对象this大于形参对象obj，则返回正整数
+ *               如果当前对象this小于形参对象obj，则返回负整数，
+ *               如果当前对象this等于形参对象obj，则返回零
+ *   注意：String、包装类等已经默认实现了comparable接口 (看源码string比的是第一个不同的字母的进行排序)
  *
- * 【jdk8.0中引入的时间API基本解决了上述的所有问题】实际上在引入了新API后，旧的API都被抛弃了，当然新版和旧版是可以互相转换
- * (1)LocalDate代表IOS格式（yyyy-MM-dd）的日期
- *    LocalTime表示一个时间
- *    LocalDateTime表示日期和时间,这是最常用的类之一
- * (2)常用方法(创建)
- *  LocalDateTime ldt = LocalDateTime.now() ：创建当前的日期的本地日期实例
- *  LocalDateTime ldt = LocalDateTime.of() ：创建指定日期的实例化对象
- * (3)常用方法(获取)
- *  getDayOfMonth()/getDayOfYear() ： 获得月份天数(1-31) /获得年份天数(1-366)
- *  getDayOfWeek() ： 获得星期几(返回一个DayOfWeek枚举值)
- *  getMonth() ： 获得月份,返回一个 Month枚举值
- *  getMonthValue() / getYear() ： 获得月份(1-12) /获得年份
- *  getHour()/getMinute()/getSecond() ： 获得当前对象对应的小时、分钟、秒
- * (4)常用方法(修改)
- *  withDayOfMonth()/withDayOfYear()/withMonth()/withYear() 将月份天数、年份天数、月份、年份修改为指定的值并返回新的对象
- *  plusDays()/plusWeeks()/plusMonths()/plusYears()/plusHours() 向当前对象添加几天、几周、几个月、几年、几小时
- *  minusMonths()/minusWeeks()/minusDays()/minusYears()/minusHours() 从当前对象减去几月、几周、几天、几年、几小时
- *
- * 【instant类】用于计算时间戳。instant类精度可以达到纳秒级
- *  now() 静态方法，返回默认UTC时区的Instant类的对象
- *  ofEpochMilli(long epochMilli) 静态方法，返回在1970-01-01 00:00:00基础上加上指定毫秒数之后的Instant类的对象
- *  atOffset(ZoneOffset offset) 结合即时的偏移来创建一个 OffsetDateTime。如中国时区和默认时区差8小时
- *  toEpochMilli() 返回1970-01-01 00:00:00到当前时间的毫秒数，即为时间戳！
- *
- * 【java.time.format.DateTimeFormatter类】
- *  提供了三种格式化的方法
- *   方式1：预定义的标准格式：.ISO_LOCAL_DATE_TIME;ISO_LOCAL_DATE;ISO_LOCAL_TIME
- *   方式2：本地化相关的格式：.ofLocalizedDateTime(FormatStyle.LONG)
- *   方式3：自定义的格式：.ofPattern(“yyyy-MM-dd hh:mm:ss”)
- *   format(TemporalAccessor t) 格式化LocalDateTime为时间字符文本
- *   parse(CharSequence text) 将指定格式的时间字符文本解析为一个日期、时间
+ * 【定制排序】
+ *   定制排序常用于 当元素的类型没有实现java.lang.Comparable接口而又不方便修改代码，
+ *     或者实现了java.lang.Comparable接口的排序规则不适合当前的操作，那么可以考虑实现 Comparator 接口来实现排序
+ *   ✔✔创建 java.util.Comparator 定制化排序器，并重写其中的compare(Object o1,Object o2)方法，比较o1和o2的大小
+ *   可以传入定制化排序器后，✔通过 Collections.sort(list1,comparator1) 或 Arrays.sort(array1,comparator1)进行排序
+ *   重写规则如下：
+ *     如果方法返回正整数，则表示o1大于o2；
+ *     返回负整数，表示o1小于o2
+ *     如果返回0，表示相等；
+ *   可以将 Comparator 传递给 sort 方法（如 Collections.sort 或 Arrays.sort），从而允许在排序顺序上实现精确控制
  *
  * @author Alex
- * @create 2022-11-29-15:31
+ * @create 2022-12-01-13:28
  */
 
 public class UseCommonClass07 {
-    // java.time包下几个常用类的使用LocalDate、LocalTime、LocalDateTime
-    // 以LocalDateTime为例
-    @Test
-    public void test() {
-        // 创建当前的日期的实例化对象
-        LocalDateTime dateTime = LocalDateTime.now();
-        System.out.println(dateTime);
-        System.out.println("********************");
-        // 创建指定的日期的实例化对象
-        LocalDateTime ldt = LocalDateTime.of(1997, 9, 20, 17, 17, 17);
-        System.out.println(ldt);
-        System.out.println("********************");
-        // get相关操作，获取当前年月日时间
-        System.out.println(ldt.getYear());
-        System.out.println(ldt.getMonth());
-        System.out.println(ldt.getDayOfMonth());
-        System.out.println("*****************");
-        // 修改操作1
-        LocalDateTime ldt1 = ldt.withYear(2000);
-        System.out.println(ldt1);
-        System.out.println("*****************");
-        // 修改操作2
-        LocalDateTime ldt2 = ldt1.plusYears(1);
-        System.out.println(ldt2);
-    }
-
-
-    // java.time包下几个常用类之instant瞬时类，获取时间戳
+    // string已经重写过comparable方法了
     @Test
     public void test1() {
-        // 返回默认UTC时区对应时间的瞬时点实例
-        Instant ins = Instant.now();
-        System.out.println(ins);
-        // 补偿时区的偏移量8h(中国和默认时区差8h)
-        OffsetDateTime ins1 = ins.atOffset(ZoneOffset.ofHours(8));
-        System.out.println(ins1);
-        // 计算当前实例的时间戳
-        System.out.println(ins.toEpochMilli());
-        // 根据毫秒数。返回瞬时点实例
-        Instant ins2 = Instant.ofEpochMilli(1669808725779L);
-        System.out.println(ins2);
+        String[] arr = new String[]{"aa", "cc", "bb"};
+        Arrays.sort(arr);
+        System.out.println(Arrays.toString(arr));
     }
 
-    // java.time.format.DateTimeFormatter 类，，用来格式化，解析时间和日期
+    // comparable接口的使用
     @Test
     public void test2() {
-        LocalDateTime localDateTime = LocalDateTime.now();  // 处理对象
-        DateTimeFormatter formatter1 = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-        // 方式1：
-        String str1 = formatter1.format(localDateTime);  // 格式化
-        System.out.println(str1);
-        TemporalAccessor parse = formatter1.parse("2022-11-30T19:58:03.24");  // 解析
-        System.out.println(parse);
-        System.out.println("*****************");
+        Good[] arr = new Good[5];
+        arr[0] = new Good("lianxiang", 34);
+        arr[1] = new Good("dell", 43);
+        arr[2] = new Good("xiaomi", 12);
+        arr[3] = new Good("huawei", 65);
+        arr[4] = new Good("zhongxin", 12);
+        Arrays.sort(arr);
+        System.out.println(Arrays.toString(arr));
+    }
 
-        // 方式2：
-        DateTimeFormatter formatter2 = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG);
-        String str2 = formatter2.format(localDateTime);
-        System.out.println(str2);
-        TemporalAccessor parse1 = formatter2.parse("2022年12月1日 下午01时00分54秒");
-        System.out.println(parse1);
-        System.out.println("*****************");
+    // comparator接口的使用
+    @Test
+    public void test4(){
+        Good[] arr = new Good[6];
+        arr[0] = new Good("lianxiang", 34);
+        arr[1] = new Good("dell", 43);
+        arr[2] = new Good("xiaomi", 12);
+        arr[3] = new Good("huawei", 65);
+        arr[4] = new Good("zhongxin", 12);
+        arr[5] = new Good("lianxiang", 22);
+        Arrays.sort(arr, new Comparator<Good>() {  // 定制化排序, 这里指定按照名字从低到高排序,二级排序为价格从高往低排
+            @Override
+            public int compare(Good o1, Good o2) {
+                if(o1.getName().equals(o2.getName())){
+                    return -Double.compare(o1.getPrice(),o2.getPrice());
+                }else{
+                    return o1.getName().compareTo(o2.getName());
+                }
+            }
+        });
+        System.out.println(Arrays.toString(arr));
+    }
 
-        // 方式3：自定义格式
-        DateTimeFormatter formatter3 = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
-        String str3 = formatter3.format(localDateTime);
-        System.out.println(str3);
-        TemporalAccessor parse3 = formatter3.parse("2022-12-01 01:04:00");
-        System.out.println(parse3 );
+
+
+    // 商品类
+    class Good implements Comparable {
+        private String name;
+        private double price;
+
+        public Good() {
+        }
+
+        public Good(String name, double price) {
+            this.name = name;
+            this.price = price;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public void setPrice(double price) {
+            this.price = price;
+        }
+
+        @Override
+        public String toString() {
+            return "Good{" +
+                    "name='" + name + '\'' +
+                    ", price=" + price +
+                    '}';
+        }
+
+        // 指明按照何种方式进行排序
+        // 这里指定按照价格从低到高排序，二级排序按照名字进行排序
+        @Override
+        public int compareTo(Object o) {
+            if (o instanceof Good) {
+                Good good = (Good) o;
+                if (this.price > good.price) {
+                    return 1;
+                } else if (this.price < good.price) {
+                    return -1;
+                } else {
+                    // return 0;
+                    return this.name.compareTo(good.name);  // 二级按照名字进行排序
+                }
+            }
+            throw new RuntimeException("传入的数据类型不一致");
+        }
     }
 }
+
+
 

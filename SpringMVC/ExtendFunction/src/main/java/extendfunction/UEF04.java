@@ -8,12 +8,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *  根据SpringMVC的执行过程
  *   过滤器是在前端控制器dispatchServlet之前的
  *   而SpringMVC拦截器，是作用在前端控制器dispatchServlet之后，负责对控制器方法执行的拦截
+ *   原因是 dispatchServlet 满足javaEE的规范，其本质上还是属于servlet，故拦截器可以对其进行拦截！
  *
  * 【拦截器的三个方法】
  *  preHandle：控制器方法执行之前执行preHandle()，
+ *              该方法中的Object handler对象，代表的是被拦截的对象
  *              ✔✔preHandle方法的返回值（boolean类型）表示是否拦截或放行，返回true为放行，即调用控制器方法；返回false表示拦截，即不调用控制器方法
  *  postHandle：控制器方法执行之后执行postHandle()
  *  afterCompletion：处理完视图和模型数据，渲染视图完毕之后执行afterComplation()
+ *
+ * 【Object handler对象的妙用】
+ *  handler instanceof HandlerMethod                         # 判断拦截到的对象是不是一个方法，HandlerMethod是Springmvc提供的对象
+ *  HandlerMethod handlerMethod = (HandlerMethod) handler;
+ *   Method method = handlerMethod.getMethod();               # 如果是一个方法，我们可以把这个方法抽取出来进行其他操作
+ *  LoginRequired loginRequired = method.getAnnotation(xxx.class);            # 例如可以获取该方法的注解信息
  *
  * 【拦截器的使用流程】
  * （1）创建的拦截器需要实现HandlerInterceptor接口, 使用alt+shift+p，重写其接口中的方法

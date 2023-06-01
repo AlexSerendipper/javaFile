@@ -10,7 +10,7 @@ import org.junit.Test;
  *  如果一个方法内抛出异常，该异常对象会被抛给调用者方法中处理。如果异常没有在调用者方法中处理，它继续被抛给这个调用
  * 方法的上层方法。这个过程将一直继续下去，直到异常被处理。这一过程称为捕获(catch)异常。
  *  如果一个异常回到main()方法，并且main()也不处理，则程序运行终止。
- * 异常代码后续的代码不会执行
+ *  异常代码后续的代码不会执行
  *
  * 【try-catch-finally与throws】
  *  try-catch-finally是将异常抓住后进行处理。throws是将异常抓住后抛出，实际上并没有处理异常
@@ -37,24 +37,31 @@ import org.junit.Test;
  @create 2023-01-11-16:50
  */
 public class UA03 {
+
+    /**
+     * 抛出自定义异常示例
+     */
     @Test
     public void test1(){
-        throw new PersonalException();  // 抛出自定义异常
+        throw new PersonalException();
         // throw new RuntimeException();  // 也可以抛出已有的异常
     }
 
 
+    /**
+     * 自定义异常
+     */
+    class PersonalException extends RuntimeException{  // 1、必须继承于现有的异常类
+        static final long serialVersionUID = -7034897112345766939L;  // 2、必须提供全局常量serialVersionUID
+
+        public PersonalException() {
+            super();
+        }
+
+        public PersonalException(String message) {  // 3、必须提供重载的构造器
+            super(message);
+        }
+
+    }
 }
 
-class PersonalException extends RuntimeException{  // 1、必须继承于现有的异常类
-    static final long serialVersionUID = -7034897112345766939L;  // 2、必须提供全局常量serialVersionUID
-
-    public PersonalException() {
-        super();
-    }
-
-    public PersonalException(String message) {  // 3、必须提供重载的构造器
-        super(message);
-    }
-
-}

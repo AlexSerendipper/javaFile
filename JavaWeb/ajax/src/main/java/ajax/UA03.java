@@ -4,9 +4,9 @@ package ajax;
  * 【jQuery中的AJAX 请求】见Jquery_Ajax_request.html
  *   url 表示请求的地址
  *   type 表示请求的类型（GET 或 POST 请求）
- *   data 表示发送给服务器的数据，以下两种方式最终都是以（键=值的方式 附在 http://localhost:8080/? 后面）
+ *   data 表示发送给服务器的数据，以下两种方式最终都是以（键=值的方式 附在上下文路径 http://localhost:8080/? 后面）
  *     name=value&name=value
- *     {key:value}
+ *     {key:value}                                        # 其实更推荐这种方式，因为value值可能是一个变量
  *  success 请求成功，响应的回调函数                      # 即原生xml中请求成功后执行的函数
  *  dataType 响应的数据类型
  *     text表示纯文本
@@ -26,11 +26,11 @@ package ajax;
                                 url:"http://localhost:8080/ajax/ajaxServlet",
                                 data:"action=jQueryAjax",
                                 type:"GET",
-                                // 服务器返回的数据就是d，就不用像原生做法一样去做转换了
+                                // 服务器返回的数据就是d，不用像原生做法那也去做转换了
                                 success:function (d) {
-                                $("#msg").html("编号：" + d.id + " , 姓名：" + d.name);
+                                    $("#msg").html("编号：" + d.id + " , 姓名：" + d.name);
                                 },
-                                // 设置了返回的数据类型，就不用像原生做法一样去转换了
+                                // 设置了返回数据类型，根据返回数据类型自动转换为js对象！！就不用像原生做法一样去转换了（json.parse()）
                                 dataType : "json"
                                 });
                          });

@@ -36,7 +36,6 @@ import transaction.service.UserService;
  *    如果把这个注解添加方法上面，为这个方法添加事务
  *
  * 【声明式事务管理参数配置】@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.REPEATABLE_READ)
- *                         @Transactional，这个注解里面可以配置事务相关参数
  *（1）propagation：事务传播行为：当一个事务方法被另外一个事务方法调用时候，这个事务方法如何进行
  *     REQUIRED（默认）:  当事务A中存在方法1，当事务B中存在方法2，当方法1调用方法2。
  *                         默认事务A和事务B都为REQUIRED

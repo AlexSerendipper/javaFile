@@ -11,12 +11,12 @@ import javax.xml.ws.handler.Handler;
  * 【拦截器的使用】与springMVC并无区别
  *  web-starter中已经配置好了文件上拦截器相关配置
  * （1）步骤一：创建拦截器，创建的拦截器需要实现HandlerInterceptor接口, 使用alt+shift+p，重写其接口中的方法
- * （1）步骤二：装配拦截器，需要在配置类中配置拦截器（把拦截器添加到容器中，并指定拦截规则）
+ * （1）步骤二：装配拦截器，创建配置类并实现WebMvcConfigurer接口，通过实现其addInterceptors方法从而在配置类中配置拦截器（实现把拦截器添加到容器中，并指定拦截规则）
 ---------------------
 // 添加拦截器。指定拦截规则。如果是拦截所有/**，静态资源也会被拦截
 @Override
 public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(new UW05())
+    registry.addInterceptor(new UW05())  // 注意，实际中一定要使用自动装配的Interceptor，要把interceptor交给IOC管理
     .addPathPatterns("/success")  // 拦截路径，若拦截所有，静态资源也会被拦截
     .excludePathPatterns("/","/css/**","/js/**");  // 放行路径，不能拦截静态资源
 }

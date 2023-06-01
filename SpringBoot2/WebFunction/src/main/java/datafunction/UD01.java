@@ -110,6 +110,31 @@ spring.datasource.druid.filters=stat,wall
 spring.datasource.druid.aop-patterns=datafunction.*
 ------------
  *
+ * 【数据库事务支持】
+ *   springboot整合了spring中对事务的支持，无需配置事务管理器，直接使用@Transactional注解，就可以使用事务管理
+ *   除了spring传统的声明式事务，springboot还提供了一种编程式事务。只需要自动装配TransactionTemplate
+ *     transactionTemplate.execute()               # 该方法需要传入一个TransactionCallback对象，并重写其中的doInTransaction方法。。。该方法中的代码会被事务管理
+ *   推荐使用spring中的声明式事务，若需要被管理的业务中 只有部分方法需要被管理，使用编程式事务也有其优势
+-------------
+@Autowired
+TransactionTemplate transactionTemplate;
+
+@Autowired
+JdbcTemplate jdbcTemplate;
+
+@Test
+public void test1() {
+transactionTemplate.execute(new TransactionCallback<Object>() {
+    @Override
+    public Object doInTransaction(TransactionStatus transactionStatus) {
+            jdbcTemplate.update("update spring_transaction set money=money-100 where username='lucy'");
+            System.out.println(10/0);
+            jdbcTemplate.update("update spring_transaction set money=money+100 where username='mary'");
+            return "ok";
+            }
+        });
+}
+-------------
  @author Alex
  @create 2023-03-23-14:31
  */

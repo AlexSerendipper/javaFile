@@ -22,7 +22,6 @@ import java.util.Optional;
  * 3）判断Optional容器中是否包含对象
  *     boolean isPresent() : 判断是否包含对象✔
  *      void ifPresent(Consumer<? super T> consumer) ：如果有值，就执行Consumer接口的实现代码，并且该值会作为参数传给它
- *
  @author Alex
  @create 2022-12-28-18:07
  */

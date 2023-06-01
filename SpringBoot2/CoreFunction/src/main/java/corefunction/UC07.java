@@ -10,7 +10,6 @@ package corefunction;
  *    （注意引入的是org.slf4j下的相关类）
  *     此时在类中运行的程序就会自动给输出相关日志
  *  log.info/warn                                   # 手动输出相关级别的日志
- *
  *  logging.level.webfunction=warn                  # 在application.properties中设置测试类包路径的日志级别（代替了log4j2.xml的功能）
  *  logging.file.path=d:/test/                      # 在application.properties中设置输出日志的保存路径（代替了log4j2.xml的功能）
  *

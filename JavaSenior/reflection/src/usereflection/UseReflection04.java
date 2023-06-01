@@ -1,189 +1,115 @@
 package usereflection;
 
-import org.junit.Test;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.*;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 /**
- * 【通过反射获取运行时类的完整结构】该操作在实际操作中并不常用
- * 1） 获取属性Field及相关结构
- *  .getFields():获取当前运行时类及其父类中声明为public访问权限的属性
- *  .getDeclaredFields():获取当前运行时类当中的所有属性（不包含父类中声明的属性）
- *     属性包括下述内容
- *   .getModifiers(),获取权限修饰符。默认返回int值,需要调用modifier类的toString静态方法进行转换
- *   .getType(),获取数据类型
- *   .getName(),获取变量名
- * 2） 获取方法及相关结构
- *  .getMethods():获取当前运行时类及其父类中声明为public访问权限的方法
- *  .getDeclaredMethods():获取当前运行时类当中的所有方法（不包含父类中声明的属性）
- *    方法包含下述内容
- *  .getAnnotations(),只能获取RUNTIME类型的注解
- *  .getModifiers(),获取权限修饰符
- *  .getReturnType(),获取返回值类型
- *  .getName(),获取方法名
- *  .getParameterTypes(),获取形参列表
- *  .getExceptionTypes()，获取抛出的异常
- * 3） 获取运行时类的构造器及相关结构
- *  .getConstructors():获取当前运行时类当中声明为public访问权限的方法（不包含父类中声明的属性）
- *  .getDeclaredMethods():获取当前运行时类当中的所有构造器（不包含父类中声明的属性）
- *    构造器包含下述内容
- *  .getModifiers(),获取权限修饰符
- *  .getName(),获取方法名
- *  .getParameterTypes(),获取形参列表
- * 4） 获取运行时类的父类及相关结构
- *   .getSuperclass()：获取的不带泛型的父类
- *   .getGenericSuperclass():获取带泛型的父类、
- *   获取带泛型父类的泛型：调用带泛型的父类.getActualTypeArguments()方法
- * 5） 其他
- *   .getInterfaces();      获取运行时类实现的接口
- *   .getPackage();         获取运行时类所在的包
- *   .getAnnotations;  获取运行时类声明的注解
+ * 【静态代理复习】
+ *   什么是代理模式：使用一个代理将对象包装起来, 然后用该代理对象取代原始对象。任何对原
+ *    始对象的调用都要通过代理。代理对象决定是否以及何时将方法调用转到原始对象上。
+ *   静态代理的问题：（1）静态代理中，代理类和目标对象的类都是在编译期间确定下来，不利于程序的扩展。
+ *                   （2）同时，每一个代理类只能为一个接口服务，这样一来程序开发中必然产生过多的代理
+ *   静态代理举例（静态代理中，代理类和被代理类通常实现同一套接口）：
+ *      class MyThread implements Runable{}  // 相当于被代理类
+ *      class Thread implements Runable{}  // 相当于代理类
+ *      main{
+ *          MyThread t = new MyThread();
+ *          Thread thread = new Thread(t);
+ *          thread.start()  // 启动线程，实际上其中调用了MyThread中的run方法
+ *      }
+ *
+ * 【反射的应用：动态代理】
+ *   动态代理是指客户通过代理类来调用其它对象的方法，并且是在程序运行时根据需要动态创建目标类的代理对象
+ *   动态代理使用场合:
+ *     调试
+ *     远程方法调用
+ *
+ * 【要想实现动态代理，需要解决的问题】
+ * （1）如何根据加载到内存中的代理类，动态的创建一个代理类及其对象
+ * （2）当通过代理类的对象调用方法时，如何动态的去调用被代理类中的同名方法
+ *
+ * 【动态代理的实现】该部分仅作了解，Spring框架中已高度集成
+ *  1）✔创建一个实现接口InvocationHandler的类：实现传入 被代理类，方法以及形参列表
+ *        实现当代理类被调用时，动态的去调用被代理类中的同名方法（解决问题2）
+ *     public Object invoke(Object theProxy, Method method, Object[] params)
+ *          Object value = method.invoke(targetObj, params);
+ *          return value
+ *       }
+ *  2）通过Proxy的静态方法：实现传入的参数为被代理的类加载器，被代理实现的接口，InvocationHandler实例，返回一个动态代理对象
+ *     这个动态代理对象能实现与传入的 被代理类完全相同功能（解决问题1）
+ *     Proxy.newProxyInstance(ClassLoader loader, Class[] interfaces, InvocationHandler h)        #
  *
  @author Alex
  @create 2022-12-22-10:38
  */
 public class UseReflection04 {
-    //  一、获取属性
-    @Test
-    public void test() {
-        Class clazz = Person.class;
-        Field[] fields = clazz.getFields();  // 获取所有Public属性
-        for (Field f : fields) {
-            System.out.println(f);
-        }
+    public static void main(String[] args) {
+        // 静态代理举例，在编译期间就确定好了代理工厂
+        NikeClothFactory nike = new NikeClothFactory();
+        ProxyClothFactory proxyClothFactory = new ProxyClothFactory(nike);
+        proxyClothFactory.produceCloth();
         System.out.println("*****************");
-        Field[] declaredFields = clazz.getDeclaredFields();  // 获取所有属性
-        for (Field f : declaredFields) {
-            System.out.println(f);
-        }
-        System.out.println("*****************");
-        for (Field f : declaredFields) {
-            // 获取权限修饰符,默认返回int值,需要调用modifier类的toString方法进行转换
-            int modifiers = f.getModifiers();
-            System.out.println("Modifier.toString(modifiers) = " + Modifier.toString(modifiers));
-            // 获取数据类型,默认为保留java.lang.String,用以区分自定义的String类
-            Class<?> type = f.getType();
-            System.out.println("type = " + type.getName());
-            // 获取变量名
-            System.out.println("f.getName() = " + f.getName());
-        }
+        // 动态性就体现在编译期间不需要固定的代理类，根据被代理对象生成代理类
+        NikeClothFactory nikeClothFactory = new NikeClothFactory();
+        ClothFactory proxyInstance1 = (ClothFactory) ProxyFactory.getProxyInstance(nikeClothFactory);  // 都实现了相同的接口，所以肯定可以强转为该接口的实现类
+        proxyInstance1.produceCloth();
+    }
+}
+
+// 动态代理工厂，生成动态代理类
+// 如何根据加载到内存中的代理类，动态的创建一个代理类及其对象。调用Proxy.newProxyInstance
+// 传入的参数为被代理的类加载器，被代理实现的接口，InvocationHandler实例
+class ProxyFactory {
+    public static Object getProxyInstance(Object obj) {  // obj为被代理类的对象
+        MyInvocationHandler handler = new MyInvocationHandler(obj);
+        return Proxy.newProxyInstance(obj.getClass().getClassLoader(), obj.getClass().getInterfaces(), handler);
+    }
+}
+
+// 如何通过代理类的对象调用方法时，如何动态的去调用被代理类中的同名方法
+// 通过InvocationHandler实例，当我们通过代理类的对象，调用方法a时，就会自动的调用如下的invoke方法
+class MyInvocationHandler implements InvocationHandler {
+    // 所以，需要传入被代理类，让被代理类在invoke中执行同名方法
+    private Object obj;
+
+    public MyInvocationHandler(Object obj) {
+        this.obj = obj;
     }
 
-    // 二、✔获取运行时类的获取方法及相关结构
-    @Test
-    public void test1() {
-        Class clazz = Person.class;
-        Method[] methods = clazz.getMethods();
-        for (Method m : methods) {
-            System.out.println(m);
-        }
-        System.out.println("*****************");
-        Method[] declaredMethods = clazz.getDeclaredMethods();
-        for (Method m : declaredMethods) {
-            System.out.println(m);
-        }
-        System.out.println("*****************");
-        for (Method m : declaredMethods) {
-            // 1 获取注解
-            Annotation[] annotations = m.getAnnotations();
-            for (Annotation a : annotations) {
-                System.out.println(a + " ");
-            }
-            // 2 获取权限修饰符
-            int modifiers = m.getModifiers();
-            System.out.print(Modifier.toString(modifiers) + " ");
-            // 3 返回值类型
-            Class returnType = m.getReturnType();
-            System.out.print(returnType.getName() + " ");
-            // 4 返回方法名
-            System.out.print(m.getName());
-            // 5 形参列表
-            System.out.print("(");
-            Class[] parameterTypes = m.getParameterTypes();
-            if (parameterTypes != null && parameterTypes.length != 0) {
-                for (int i = 0; i < parameterTypes.length; i++) {
-                    if (i == parameterTypes.length - 1) {
-                        System.out.print(parameterTypes[i].getName());
-                        break;
-                    }
-                    System.out.print(parameterTypes[i].getName() + ",");
-                }
-            }
-            System.out.print(")" + " ");
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        // 执行被代理类中的方法
+        // 注意被代理类方法可能会有返回值
+        Object value = method.invoke(obj, args);
+        return value;
+    }
+}
 
-            // 6 抛出的异常
-            Class[] exceptionTypes = m.getExceptionTypes();
-            if (exceptionTypes != null && exceptionTypes.length != 0) {
-                System.out.print("throws ");
-                for (int i = 0; i < exceptionTypes.length; i++) {
-                    if (i == exceptionTypes.length - 1) {
-                        System.out.print(exceptionTypes[i].getName());
-                        break;
-                    }
-                    System.out.print(exceptionTypes[i].getName() + ",");
-                }
-            }
-            System.out.println();
-        }
+interface ClothFactory{
+    void produceCloth();
+}
 
+// 代理工厂
+class ProxyClothFactory implements ClothFactory{
+    private ClothFactory factory;
+
+    public ProxyClothFactory(ClothFactory factory) {  // 用被代理对象进行实例化
+        this.factory = factory;
     }
 
-    // 三、获取运行时类的构造器结构
-    @Test
-    public void test2(){
-        Class clazz = Person.class;
-        Constructor[] constructors = clazz.getConstructors();
-        for(Constructor c:constructors){
-            System.out.println(c);
-        }
-        System.out.println("*****************");
-        Constructor[] declaredConstructors = clazz.getDeclaredConstructors();
-        for(Constructor c:declaredConstructors){
-            System.out.println(c);
-        }
+    @Override
+    public void produceCloth() {
+        System.out.println("代理工厂工作..");
+        factory.produceCloth();
+        System.out.println("代理工厂后续工作...");
     }
+}
 
-    // 四、✔获取运行时类的父类
-    // .getSuperclass()：获取的不带泛型的父类
-    // .getGenericSuperclass():获取带泛型的父类、
-    // 获取带泛型父类的泛型：调用带泛型的父类.getActualTypeArguments()方法
-    @Test
-    public void test3(){
-        Class clazz = Person.class;
-        // 获取父类
-        Class superclass = clazz.getSuperclass();
-        System.out.println(superclass);
-        // 获取带泛型的父类
-        Type genericSuperclass = clazz.getGenericSuperclass();
-        System.out.println(genericSuperclass);
-        // 获取带泛型父类的泛型
-        ParameterizedType paramType = (ParameterizedType) genericSuperclass;
-        Type[] actualTypeArguments = paramType.getActualTypeArguments();
-        System.out.println(actualTypeArguments[0].getTypeName());
-        System.out.println(((Class)actualTypeArguments[0]).getName());
+// 被代理工厂
+class NikeClothFactory implements ClothFactory{
+    @Override
+    public void produceCloth() {
+        System.out.println("nike工厂生产一批运动服");
     }
-
-    // 五、其他功能
-    // .getInterfaces();      获取运行时类实现的接口
-    // .getPackage();         获取运行时类所在的包
-    // .getAnnotations;  获取运行时类声明的注解
-    @Test
-    public void test4(){
-        Class clazz = Person.class;
-        Class[] interfaces = clazz.getInterfaces();
-        for(Class i:interfaces){
-            System.out.println(i.getName());
-        }
-        System.out.println("*****************");
-        Package aPackage = clazz.getPackage();
-        System.out.println(aPackage);
-        System.out.println("*****************");
-        Annotation[] annotations = clazz.getAnnotations();
-        for(Annotation a:annotations){
-            System.out.println(a);
-        }
-
-    }
-
 }

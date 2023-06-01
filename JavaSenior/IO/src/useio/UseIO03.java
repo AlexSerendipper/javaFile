@@ -3,154 +3,110 @@ package useio;
 import org.junit.Test;
 
 import java.io.*;
+import java.util.HashMap;
 
 /**
- * 【IO流概述】
- *   I/O是Input/Output的缩写。用于处理设备之间的数据传输。如读/写文件，网络通讯等。
- *   java中对于数据的输入/输出操作都是以“流(stream)” 的方式进行
- *   java.io包下提供了各种“流”类和接口，用以获取不同种类的数据，并通过标准的方法输入或输出数据。
+ *【缓冲流】属于处理流的一种，能够提高 流 读写文件的效率
+ * int BufferedInputStream(.read(byte[] b))
+ * int BufferedReader(.read(byte[] b))
+ * String BufferedReader(.readline())                      # ✔新增了readline()，可以读取一行数据，返回值为string类型，表示返回一行字符串
+ * int BufferedOutputStream(.write(byte[],0,len))
+ * int BufferedWriter(.write(char[],0,len))
  *
- * 【流的分类】
- *  按操作数据单位不同分为：字节流(8 bit)，字符流(16 bit)(以char储存)
- *   字节流操作字节，比如：.mp3，.avi，.rmvb，mp4，.jpg，.doc，.ppt
- *   字符流操作字符，只能操作普通文本文件。最常见的文本文件：.txt，.java，.c，.cpp 等语言的源代码
- *  按数据流的流向不同分为：输入流，输出流
- *   输入input：读取外部数据（磁盘、光盘、网络中等存储设备的数据）到程序（内存）中。（我们是站在程序的视角来看输入输出）
- *   输出output：将程序（内存）数据输出到磁盘、光盘等存储设备中。
- *  按流的角色的不同分为：节点流（直接作用在待处理文件上），处理流（作用在已有的节点流之上的）
+ *【缓冲流能提高读写速度的原因】
+ *  使用缓冲流读取文件时，会一次性从文件中读取8192个(8Kb)，存在缓冲区中，直到缓冲区装满了，才重新从文件中读取下一个8192个字节数组。
+ *  使用缓冲流写入字节时，不会直接写到文件，先写到缓冲区中直到缓冲区写满，才会把缓冲区中的数据一次性写到文件里。
+ *  使用方法flush()可以强制将缓冲区的内容全部写入输出流
  *
- * 【✔抽象基类】（Java的IO流共涉及40多个类)，都是从如下4个抽象基类派生的，方法也是重载了抽象基类的方法
- *  输入流： InputStream(字节流)
- *          Reader（字符流）
- *  输出流： OutputStream(字节流)
- *          Writer（字符流）
- * (1)InputStream常用方法
- *    int read()：从输入流中读取数据的下一个字节。返回0-255范围内的int字节值。若到达流末尾而没有可用的字节，则返回值-1。
- *    int read(byte[] b)：从输入流中一次读取b.length个字节的数据，返回读取的字节数✔。若到达流末尾而没有可用的字节，则返回值-1。
- *    int read(byte[] b, int off, int len)
- * (2)Reader常用方法
- *    int read(): 读取单个字符。若到达流末尾而没有可用的字符，则返回值-1。
- *    int read(char [] c)：从输入流中一次读取c.length个字符的数据，返回读取的字符数✔。若到达流末尾而没有可用的字节，则返回值-1。
- *    int read(char [] c, int off, int len):
- * (3)OutputStream常用方法
- *    void write(int b): 将指定的字节写入此输出流。
- *    void write(byte[] b): 将 b.length个字节写入此输出流
- *    void write(byte[] b,int off,int len): 将指定byte数组中从偏移量off开始的len个字节写入此输出流
- *    void flush():　刷新此输出流并强制写出所有缓冲的输出字节
- * (4)Writer常用方法
- * 　　void write(int c)：写入单个字符
- * 　　void write(char[] cbuf)：写入cbuf.length长度到字符数组中
- * 　　void write(char[] cbuf,int off,int len)：写入字符数组的某一部分。从off开始，写入len个字符
- * 　　void write(String str)：写入字符串。
- * 　　void write(String str,int off,int len)：写入字符串的某一部分。从off开始，写入len个字符
- * 　　void flush()：刷新该流的缓冲，则立即将它们写入预期目标
- *
- *  【✔节点流（或叫文件流）】四个，基本上其余都是处理流，处理流作用在已有的节点流之上的
- *  (1)汇总
- *    FileInputStream(.read(byte[] b))
- *    FileReader(.read(char[] c))
- *    FileOutputStream(.write(char[],0,len))
- *    FileWriter(.write(char[],0,len))
- *  (2)文件写出注意事项
- *   数据写出时，如果文件不存在，会创建一个新的文件
- *   如果文件存在，指定FileWriter为append为true(默认为false)，新增内容(默认覆盖内容)
- *
- * 【✔流的使用流程】
- *  文件==>节点流==>（处理流）==>关闭流（JVM无法自动回收流）
  @author Alex
- @create 2022-1-6
+ @create 2022-12-17-15:14
  */
-
-// 【正规写法都应该用try catch，close操作要放在finally中，防止上述过程出现错误抛出异常后流未被关闭。
-//  为简洁，后续在IO这章我会用throws的方式处理~但是实际中都应该用try-catch
 public class UseIO03 {
-    // 一、数据读取：read()方法单个字符读取(读入的文件一定要存在)
-    @Test
-    public void test() {
-        FileReader fileReader = null;
-        try {
-            // 1. 指明要操作的文件
-            File file = new File("hello.txt");  // junit相对路径，是相对于当前module
-            // 2. 提供具体流
-            fileReader = new FileReader(file);
-            // 3. 数据的读入, 这样不高效
-            // int data = fileReader.read();
-            // while(data != -1){
-            //     System.out.print((char)data);
-            //     data = fileReader.read();
-            // }
-            // 3. 数据读入，这样写比较美
-            int data;
-            while ((data = fileReader.read()) != -1) {
-                System.out.print((char) data);  // data是int，转换为char
-            }
-            // 4. 流的关闭操作(对于其他物理连接，数据库的连接、流的连接，JVM无法自动回收)
-            // 为了防止更早出现异常，先判断是否有filereader对象，再close
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (fileReader != null) {  // 这个一定要加上，避免空指针异常
-                try {
-                    fileReader.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-
-    }
-
-    // 二、✔数据读入，使用read(char[] cbuf)
+    // 使用缓冲流实现对图片的加密
     @Test
     public void test1() throws IOException {
-        File file = new File("hello.txt");
-        FileReader fileReader = new FileReader(file);
-        char[] cbuf = new char[5];  // ✔每次读五个字符
-        int data;
-        while ((data = fileReader.read(cbuf)) != -1) {  // 返回每次读入数组中的字符个数，到文件末尾返回-1
-            // System.out.println(cbuf);  // ✔经典错误，假设八个字符abcdefgh，第一次输出abcde，第二次装的时候是覆盖原先的数据成fghde~~~
-            // 方式一：低效
-            // for (int i = 0; i < data; i++) {  // 正确的做法是读进去几个就输出几个
-            //     System.out.print(cbuf[i]);
-            // }
-            // 方式二：高效
-            String str = new String(cbuf, 0, data);  // 转换成string，每次输出data长度的个数~
-            System.out.print(str);
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(new File("111.png")));
+        int len;
+        byte[] b = new byte[20];
+        // 写入
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(new File("222.png")));
+        while ((len = bufferedInputStream.read(b)) != -1) {
+            // 对字节数据进行修改，加密
+            //  for(byte b : len){  // 错误，增强for循环会创造一个新变量，不会对原变量进行修改
+            //      b = (byte) (b ^ 5);
+            //  }
+            for (int i = 0; i < len; i++) {
+                b[i] = (byte) (b[i] ^ 5);
+            }
+            bufferedOutputStream.write(b, 0, len);
         }
-        fileReader.close();
+        // 关闭流,关闭外层流的同时，内层流会自动关闭(所以fileInputStream和fileOutputStream不需要关闭了)
+        bufferedOutputStream.close();
+        bufferedInputStream.close();
     }
 
-    // 三、数据写出
+
+    // 使用缓冲流实现对文本文件的复制。新方法readline()的使用
     @Test
-    public void test2()throws IOException{
-        // 1.提供文件和处理流
-        FileWriter fileWriter = new FileWriter(new File("hello1.txt"),true);
-        // 2.写出
-        fileWriter.write("i have a dream\n");
-        fileWriter.write("i have a apple");
-        // 3.关闭流
-        fileWriter.close();
+    public void test2() throws IOException {
+        // 1. 处理流
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("hello.txt")));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File("hello1.txt")));
+
+        // 2. 读取一行的数据，不再包含换行符
+        String data;
+        while ((data = bufferedReader.readLine()) != null) {
+            // data中不再包含换行符,需要拼接上转义字符
+            bufferedWriter.write(data + "\n");
+            // 或者使用bufferedWriter.newline()方法，和直接加换行效果一致
+        }
+
+        // 3. 关闭流,关闭外层流的同时，内层流会自动关闭~~~
+        bufferedReader.close();
+        bufferedWriter.close();
+
     }
 
-    // 四、实现文件复制
+    // 使用缓冲流实现对图片的解密
     @Test
     public void test3() throws IOException{
-        // 读取
-        FileReader fileReader = new FileReader(new File("hello.txt"));
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(new File("222.png")));
         int len;
-        char[] c = new char[5];
-
-        // 写出
-        FileWriter fileWriter = new FileWriter(new File("hello1.txt"));
-        while((len=fileReader.read(c))!=-1){
-            String s = new String(c, 0, len);
-            fileWriter.write(s);
+        byte[] b = new byte[20];
+        // 写入
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(new File("33.png")));
+        while ((len = bufferedInputStream.read(b)) != -1) {
+            for (int i = 0; i < len; i++) {
+                b[i] = (byte) (b[i] ^ 5);  // 对加密的数据再次异或就是复原解密了
+            }
+            bufferedOutputStream.write(b, 0, len);
         }
 
-        // 关闭
-        fileWriter.close();
-        fileReader.close();
+        // 关闭流,关闭外层流的同时，内层流会自动关闭(所以fileInputStream和fileOutputStream不需要关闭了)
+        bufferedOutputStream.close();
+        bufferedInputStream.close();
     }
 
-}
+    // 获取文本上每个字符出现的次数
+    // 提示：遍历文本的每一个字符；字符及出现的次数保存在Map中（键存字符，值存次数）；将Map中数据写入文件
+    // 建议：使用泛型
+    @Test
+    public void test4() throws IOException{
+        File file = new File("hello.txt");
+        FileReader fileReader = new FileReader(file);
+        HashMap<Character, Integer> hashMap = new HashMap<>();
 
+        int data;
+        int count;
+        while((data=fileReader.read())!=-1){
+            char d = (char) data;
+            if(!hashMap.containsKey(d)){
+                hashMap.put(d,1);
+            }else{
+                count = hashMap.get(d);
+                hashMap.put(d,++count);
+            }
+        }
+        System.out.println(hashMap);
+    }
+}

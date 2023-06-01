@@ -22,11 +22,14 @@ import java.util.Arrays;
  *  getParameterValues() 获取请求的参数（多个值的时候使用）
  *  req.getParameterMap() 获取请求的参数（以map的形式存储）✔，常用于BeanUtils工具包
  *  getMethod() 获取请求的方式 GET 或 POST
- *  getContextPath() 获取工程路径：http:localhost:8080/javaweb/
+ *  getContextPath() 获取工程路径(上下文路径)：http:localhost:8080/javaweb/
  *
  * 【POST请求时的获取请求参数中文乱码解决】
  *  req.setCharacterEncoding("UTF-8"); 设置服务器字符集为 UTF-8，从而解决 post 请求的中文乱码问题
  *
+ * 【通过request对象，判断当前请求是否为异步请求】
+ * String xRequestedWith = req.getHeader("x-requested-with");   // 获取xRequestedWith
+ * if("XMLHttpRequest".equals(xRequestedWith))==true            // 表示当前请求为异步请求
  @author Alex
  @create 2023-01-29-11:03
  */

@@ -19,35 +19,34 @@ import java.util.Date;
  * 【二、collection接口】单列数据，定义了存取一组对象的方法的集合
  * (1) Collection 接口是 List、Set 和 Queue 接口的父接口，该接口里定义的方法既可用于操作 Set 集合，也可用于操作 List 和 Queue 集合。
  * (2) JDK不提供此接口的任何直接实现，而是提供更具体的子接口(如：Set和List)
- * (3)在 Java5 之前，Java 集合会丢失容器中所有对象的数据类型，把所有对象都
- * 当成 Object 类型处理；从 JDK 5.0 增加了泛型以后，Java 集合可以记住容器中对象的数据类型
+ * (3) 在 Java5 之前，Java 集合会丢失容器中所有对象的数据类型，把所有对象都
+ *     当成 Object 类型处理；从 JDK 5.0 增加了泛型以后，Java 集合可以记住容器中对象的数据类型
  *
  * 【三、collection的14个方法】
- * add()                              # 将元素添加到集合中
- * size()                             # 获取集合中元素的个数
- * addAll()                           # 将另一集合中的元素添加到该集合中
- * isEmpty()                          # 判断集合中是否有元素
- * clear()                            # 清空集合的元素
- * contains(obj)                      # ✔判断当前集合中是否包含obj，判断时会调用obj对象所在类的equals方法，所以需要对类重写equals方法
- * containsAll(Collection coll1)      # 判断coll1中的所有元素是否都包含于当前集合中
- * remove(obj)                        # ✔移除指定的元素（利用equals判断，需要对类重写equals方法）
- * removeAll(Collection coll1)        # 从当前集合中移除coll1中所有的元素
- * retainAll(Collection coll1)        # 从当前集合中找出与coll1共有的元素,并赋值给当前集合
- * equals(Collection coll1)           # 判断coll1与当前集合是否完全相等(注意此时为有序，需完全相等才true)
- * hashcode()                         # 返回当前对象的哈希值
- * toArray()                          # 将当前集合转换为数组，由于添加的是obj类型的元素，所以返回的是obj类型的数组（Arrays.asList(T...t)，将数组类型数据转换为集合）
- * iterator()                         # 返回iterator接口的示例，用于遍历集合的元素（也推荐使用foreach增强for循环）
+ *  add()                              # 将元素添加到集合中
+ *  size()                             # 获取集合中元素的个数
+ *  addAll()                           # 将另一集合中的元素添加到该集合中
+ *  isEmpty()                          # 判断集合中是否有元素
+ *  clear()                            # 清空集合的元素
+ *  contains(obj)                      # ✔判断当前集合中是否包含obj，判断时会调用obj对象所在类的equals方法，所以需要对类重写equals方法
+ *  containsAll(Collection coll1)      # 判断coll1中的所有元素是否都包含于当前集合中
+ *  remove(obj)                        # ✔移除指定的元素（利用equals判断，需要对类重写equals方法）
+ *  removeAll(Collection coll1)        # 从当前集合中移除coll1中所有的元素
+ *  retainAll(Collection coll1)        # 从当前集合中找出与coll1共有的元素,并赋值给当前集合
+ *  equals(Collection coll1)           # 判断coll1与当前集合是否完全相等(注意此时为有序，需完全相等才true)
+ *  hashcode()                         # 返回当前对象的哈希值
+ *  toArray()                          # 将当前集合转换为数组，由于添加的是obj类型的元素，所以返回的是obj类型的数组（Arrays.asList(T...t)，将数组类型数据转换为集合）
+ *  iterator()                         # 返回iterator接口的示例，用于遍历集合的元素（也推荐使用foreach增强for循环）
  *
  * 【总结：】
  * 增：add/删: remove/改: set/查：get/插：add(index,item)/长度:size
  * 遍历: ①iterator迭代器 ②foreach增强for循环 ③对于有序集合list，也可以用普通for循环哦
  *
  * 【四、数组与集合之间的转换】
- *  数组→集合：Arrays.asList(Collection coll),数组类似于list，都属于有序列表，所以转换为集合中的list4
- *  ✔Arrays.asList返回的ArrayList 实际上是Arrays的内部类 属于java.util.Arrays$ArrayList
- *  ✔只是通过数组简单包装成的arraylist，并没有add方法
- *  集合→数组：coll.toArray()，返回一个数组
- *  注意：对于int型数组，转换为集合会识别为一个元素（数组元素为一个对象），建议使用integer类型的数组（每个元素都是一个对象）
+ *  Collection coll = Arrays.asList(array1)          # 将数组 ==> 集合
+ *   ✔Arrays.asList返回的ArrayList实际上是Arrays的内部类，只是通过数组简单包装成的arraylist，并没有add方法
+ *  Array arr = coll.toArray()                       # 集合 ==> 数组
+ *   ✔注意：对于int型数组，转换为集合会识别为一个元素（数组元素为一个对象），建议使用integer类型的数组（每个元素都是一个对象）
  * @author Alex
  * @create 2022-12-03-13:54
  */

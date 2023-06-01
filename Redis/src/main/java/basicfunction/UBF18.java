@@ -59,18 +59,18 @@ spring.redis.lettuce.cluster.refresh.period=2000
 @RestController
 @Slf4j
 public class UBF18 {
-    @Autowired
-    private OrderService orderService;
-
-    @RequestMapping(value = "/addorder", method = RequestMethod.GET)
-    public void addOrder(){
-        orderService.addOrder();
-    }
-
-    @RequestMapping(value = "/getorder/{keyId}", method = RequestMethod.GET)
-
-    public void getOrderId(@PathVariable Integer keyId){
-        log.info("获取的订单号为" + orderService.getOrderId(keyId));
-    }
+//    @Autowired
+//    private OrderService orderService;
+//
+//    @RequestMapping(value = "/addorder", method = RequestMethod.GET)
+//    public void addOrder(){
+//        orderService.addOrder();
+//    }
+//
+//    @RequestMapping(value = "/getorder/{keyId}", method = RequestMethod.GET)
+//
+//    public void getOrderId(@PathVariable Integer keyId){
+//        log.info("获取的订单号为" + orderService.getOrderId(keyId));
+//    }
 
 }

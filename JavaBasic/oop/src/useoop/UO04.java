@@ -13,11 +13,11 @@ package useoop;
  * 【四种权限修饰符】
  *  用来修饰属性、方法、构造器、内部类
  *  对于class的权限修饰只可以用public和default(缺省)
- * 修饰符                类内部        同一个包          不同包的子类          同一个工程
- * private                Yes
- * default(缺省)          Yes           Yes
- * protected              Yes           Yes               Yes
- * public                 Yes           Yes               Yes                  Yes
+ *                       修饰符                类内部        同一个包          不同包的子类          同一个工程
+ *                       private                Yes
+ *                       default(缺省)          Yes           Yes
+ *                       protected              Yes           Yes               Yes
+ *                       public                 Yes           Yes               Yes                  Yes
  *
  @author Alex
  @create 2023-01-10-12:59

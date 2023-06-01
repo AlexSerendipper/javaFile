@@ -36,7 +36,7 @@ import javax.servlet.http.HttpServletRequest;
  *   会出现请求失效的情况，这是由于我们所有的请求都交予SpringMVC的前端控制器统一处理，根据路径去找相应的控制器
  *   要想解决该问题，需要配置 <mvc:default-servlet-handler/>，表示当使用SpringMVC的前端控制器没有找到资源时，使用系统默认servlet进行查找（即直接根据web路径进行查找）
  *   同样的，当配置了default-servlet-handler后，需要配置开启 mvc注解驱动，否则所有的请求都将由default-servlet处理
- *  *原理解释：在tomcat安装目录下的web.xml文件中配置了default-servlet，其 url-pattern 为 /，此处的配置适用于所有使用了tomcat服务器的资源
+ *  原理解释：在tomcat安装目录下的web.xml文件中配置了default-servlet，其 url-pattern 为 /，此处的配置适用于所有使用了tomcat服务器的资源
  *             实际上 webapp中的web.xml 与 tomcat安装目录下的web.xml 是继承关系~
  *             由于 webapp中的web.xml中配置了前端控制器，其 url-pattern 也是 /，相当于重写了tomcat安装目录下的web.xml的相关信息
  *             所以需要进行配置开启静态资源的访问

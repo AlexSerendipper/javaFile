@@ -13,21 +13,22 @@ import java.util.Arrays;
  *  私有化类的构造器，保证不能在类的外部创建其对象，
  *  对象如果有实例变量(属性)，应该声明为private final，并在构造器中初始化
  *  在类的内部创建枚举类的实例。声明为：public static final
- * 2）✔JDK1.5新增的enum关键字用于定义枚举类
- *  必须在枚举类的首行声明枚举类对象，
- *  枚举类的所有实例必须在枚举类中显式列出(, 分隔 ; 结尾)。列出的实例系统会自动添加public static final修饰
+ * 2）✔✔✔JDK1.5新增的enum关键字用于定义枚举类
+ *  在枚举类中 先声明枚举类对象，在声明私有的属性以及构造器
+ *    声明枚举类对象的所有实例 必须显式列出(逗号分隔， 封号结尾)。
+ *    声明枚举类对象的所有实例 会自动添加public static final修饰
  *  枚举类的构造器只能使用 private 权限修饰符，所以private可省略
  *  使用enum定义的枚举类默认继承了java.lang.Enum类，不能再继承其他类
  *  toString被重写过，默认输出常量名。不需要再重写
  *
  * 【Enum类的主要方法】
- *  values()   # 返回枚举类定义常量的数组。该方法可以很方便地遍历所有的枚举值。
- *  valueOf(String str)   # 返回指定常量名的枚举对象。若输入字符串不是枚举类对象的“名字”。会有运行时异常：IllegalArgumentException。
- *  toString()   # (默认方法)返回当前枚举类对象常量的名称
+ *  values()                  # 返回枚举类定义常量的数组。该方法可以很方便地遍历所有的枚举值。
+ *  valueOf(String str)       # 返回指定常量名的枚举对象。若输入字符串不是枚举类对象的“名字”。会有运行时异常：IllegalArgumentException。
+ *  toString()                # (默认方法)返回当前枚举类对象常量的名称
  *
  * 【实现接口的枚举类】
- *  若需要每个枚举值在调用实现的接口方法呈现相同的行为方式，则只要统一实现该方法即可。
- *  若需要每个枚举值在调用实现的接口方法呈现出不同的行为方式, 则可以让每个枚举值分别来实现该方法
+ *  若需要每个枚举值在调用实现的接口方法呈现相同的行为方式，则只要统一实现该方法即可。
+ *  若需要每个枚举值在调用实现的接口方法呈现出不同的行为方式, 则可以让每个枚举值分别来实现该方法
  *
  * @author Alex
  * @create 2022-12-01-17:14
@@ -89,6 +90,7 @@ class Season {
 // 自定义枚举类（jdk5.0之后）
 enum Season1 implements Info{
     // 1. 声明枚举类对象
+    // 每个枚举对象呈现不同的行为方式
     SPRING("春天", "春暖花开"){
         public void show(){
             System.out.println("这是春天");
@@ -122,6 +124,8 @@ enum Season1 implements Info{
         this.seasonName = seasonName;
         this.seasonDesc = seasonDesc;
     }
+
+    // 每个枚举对象呈现相同的行为方式
 //    @Override
 //    public void show() {
 //        System.out.println("这是一个季节");

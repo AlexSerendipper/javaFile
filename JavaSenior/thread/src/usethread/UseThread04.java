@@ -1,47 +1,56 @@
 package usethread;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+
 /**
- * 【要求概述】
- * 例题：使用继承Thread的方式创建三个窗口卖票。总票数为100张
- * 体会：1）多个线程之间无法处理同一份资源，除非将其属性设置为静态！
- *      2）当多个线程操作共享数据时，一个线程还没有执行完，另一个线程参与进来执行。导致共享数据的错误。
+ * 【创建多线程3：实现callable接口】
+ *  相比run()方法，可以有返回值
+ *  方法可以抛出异常
+ *  支持泛型的返回值
+ *  需要借助FutureTask类，比如获取返回结果
  *
- * 【同步问题引入】
- * Java对于多线程的安全问题提供了专业的解决方式：同步机制
- * 同步：多个线程进入，一个线程工作，其余线程等待
- * 异步：多个线程进入，各个线程各自工作互不影响
+ * 【使用流程】
+ *（1）创建一个实现了Callable接口的实现类
+ *（2）实现类实现Callable中的抽象方法
+ *（3）创建实现类的对象
+ *（4）创建futuretask类，传入实现了Callable接口的实现类对象
+ *（4）将futuretask类作为参数传递到Thread类的构造器中，并调用start方法
+ *（5）调用futureTask.get()，获取callable中的返回值
  *
  * @author Alex
- * @create 2022-1-3
+ * @create 2022-11-19-11:03
  */
-
-public class UseThread04 {
-    public static void main(String[] args) {
-        window w1 = new window();
-        window w2 = new window();
-        window w3 = new window();
-        w1.setName("窗口1");
-        w2.setName("窗口2");
-        w3.setName("窗口3");
-        w1.start();
-        w2.start();
-        w3.start();
-    }
-}
-
-class window extends Thread{
-    private static int ticket = 100;
-
+public class UseThread04 implements Callable {
     @Override
-    public void run() {
-        while (true){
-            if(ticket>=0){
-                System.out.println("当前窗口为： " + getName() + "  当前剩余票数为：" + ticket--);
-            }else{
-                break;
+    public Object call() throws Exception {  // 可以抛异常，可以有返回值
+        // 遍历100以内偶数，并返回偶数的和
+        int sum = 0;
+        for (int i = 0; i <= 100; i++) {
+            if (i % 2 == 0) {
+                System.out.println(i);
+                sum = sum + i;
             }
+        }
+        return sum;
+    }
+
+
+    public static void main(String[] args) {
+        UseThread04 u = new UseThread04();
+
+        FutureTask futureTask = new FutureTask(u);
+
+        new Thread(futureTask).start();
+
+        try {
+            Object sum = futureTask.get();  // get方法的返回值为futuretask构造器参数callable实现类重写的call方法的返回值
+            System.out.println("总和为" + sum);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
         }
     }
 }
-
-

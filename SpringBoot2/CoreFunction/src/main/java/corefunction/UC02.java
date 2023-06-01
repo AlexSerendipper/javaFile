@@ -22,6 +22,7 @@ package corefunction;
     <version>${druid.version}</version>
 </dependency>
 -------------------
+
  * 【场景启动器 starter】
  *  引用依赖时可以直接使用 场景启动器starter，只要引入starter，这个场景的所需要的依赖都自动引入。。。目前starter几乎已经支持所有常用的场景
  *  spring-boot-starter-*                       # 官方提供的场景启动器。 *就代表某种场景。如web等..
@@ -39,6 +40,16 @@ package corefunction;
  *      默认配置最终都是映射到某个类上，如：MultipartProperties
  *      配置文件的值最终会绑定每个类上，这个类会在容器中创建对象
  *
+ * 【常见场景启动器】
+ * （1）AOP启动器，集成了aspectJ, 引入后无需进行配置（配置类或xml方式），可以直接使用AOP功能
+--------------------
+<!--面向切面-->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-aop</artifactId>
+</dependency
+--------------------
+
  @author Alex
  @create 2023-03-18-11:01
  */

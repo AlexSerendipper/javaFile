@@ -1,5 +1,6 @@
 package aop.bean;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
@@ -20,8 +21,11 @@ public class UserProxy {
 
     // 前置通知
     @Before(value = "execution(* aop.bean.User.add(..))")
-    public void before() {
+    public void before(JoinPoint joinPoint) {
+        // 除环绕通知外，其他通知也可以声明JoinPoint对象，代表当前执行的方法！！！并可以通过如下方法获取其类路径和方法名
+        String method = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
         System.out.println("前置通知UserProxy before......");
+        System.out.println(method + "被执行了");
     }
 
     // 后置通知（返回通知）

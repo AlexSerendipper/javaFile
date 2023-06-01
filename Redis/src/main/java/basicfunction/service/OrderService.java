@@ -3,7 +3,10 @@ package basicfunction.service;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SessionCallback;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -41,4 +44,23 @@ public class OrderService {
     public String getOrderId(Integer keyId){
         return (String) redisTemplate.opsForValue().get(ORDER_KEY + keyId);
     }
+
+    public Object testTransaction(){
+        Object obj = redisTemplate.execute(new SessionCallback() {
+            @Override
+            public Object execute(RedisOperations redisOperations) throws DataAccessException {
+                redisOperations.multi();
+                redisOperations.opsForSet().add("set1", "刘备");
+                redisOperations.opsForSet().add("set1", "关羽");
+                redisOperations.opsForSet().add("set1", "张飞");
+                // 事务，语句队列执行，所有肯定是查询不到值的
+                System.out.println(redisOperations.opsForSet().members("set1"));
+                // 输出了每条执行语句影响的行数 + 所有数据
+                return redisOperations.exec();
+            }
+        });
+
+        return obj;
+    }
+
 }

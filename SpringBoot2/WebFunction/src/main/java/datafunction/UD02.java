@@ -2,8 +2,8 @@ package datafunction;
 
 import datafunction.pojo.Dept;
 import datafunction.pojo.Emp;
-import webfunction.pojo.service.DeptService;
-import webfunction.pojo.service.EmpService;
+import datafunction.service.DeptService;
+import datafunction.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,15 +40,22 @@ mybatis.mapper-locations=classpath:mybatis/mapper/*.xml
  *
  * 【mybatis整合2】注解方式
  * （1）创建mapper接口，使用@Select等标签进行增删改操作，如 @Select("select * from springboot_dept where did=1")
+ *      还可以使用{}的方式，此时{}内的字符串会自动完成拼接操作，增加可读性。如@Insert({"insert into user(user_id,status) "
+ *                                                                              "values(#{userId},#{ticket})"})
+ * （2）设置自动递增的主键
  *      原先在select标签中属性设置，使用@option标签进行配置 @Options(useGeneratedKeys = true,keyProperty = "did")
- *  (2) 注解方式不需要创建mapper接口映射文件。但是 处理复杂sql语句困难
- *     （故推荐简单sql语句时使用注解方式，复杂sql时使用手动配置方式，混合开发✔✔✔）
+ *  (3) 动态sql：若使用动态sql，必须写在script标签中。如@Insert({"<script>"
+ *                                                           "insert into user(user_id,status) "
+ *                                                           "values(#{userId},#{ticket})"})"
+ *                                                           "<if test="ticket!=null">"
+ *                                                           "and 1=1"
+ *                                                           "<if/>"
+ *                                                           "</script>"
+ *  注解方式不需要创建mapper接口映射文件。但是 处理复杂sql语句困难
+ *  （故推荐简单sql语句时使用注解方式，复杂sql时使用手动配置方式，混合开发✔✔✔）
  *
  * 【mybatis整合3】spring initializr
  *  使用初始化向导，sql-mybatis framework 自动进行配置
- *
- *
- *
  *
  * 【springboot2整合mybatisplus】见mybatisplus.xmind
  *  其中数据源 使用的是 自己配置的数据源（如使用druid-spring-boot-starter引入的数据源）

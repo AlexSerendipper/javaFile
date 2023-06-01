@@ -1,8 +1,6 @@
 package corefunction.boot;
 
-import corefunction.boot.config.UC03config;
-import corefunction.boot.pojo.Pet;
-import corefunction.boot.pojo.User;
+import corefunction.pojo.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;

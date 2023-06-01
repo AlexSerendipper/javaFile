@@ -2,124 +2,125 @@ package usecommonclass;
 
 import org.junit.Test;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.time.temporal.TemporalAccessor;
 
 /**
- * 【JDK8之前日期和时间API】了解即可，实际上在引入了calendar后，java.util.date类基本被抛弃了
- * 【一. java.lang.System类】
- *   public static long currentTimeMillis()
+ * 【JDK8之前的时间API面临的问题】
+ * (1) 可变性：像日期和时间这样的类应该是不可变的。(calendar是可变的，调用set方法)
+ * (2) 偏移性：Date中的年份是从1900开始的，而月份都从0开始。
+ * (3) 格式化：格式化只对Date有用，Calendar则不行。
+ * (4) 此外，它们也不是线程安全的；不能处理闰秒等。
  *
- * 【二. java.util.Date类】
- *      ----【三. java.sql.Date类】是 java.util.Date类的子类，对应数据库中的时间，二者构造器与方法相同
- *   Date():无参构造器创建的对象可以获取本地当前时间。
- *   Date(long date)
- *   getTime():返回时间戳
- *   toString():把此 Date对象转换为时间形式的String
+ * 【jdk8.0中引入的时间API基本解决了上述的所有问题】实际上在引入了新API后，旧的API都被抛弃了，当然新版和旧版是可以互相转换
+ * (1) LocalDate代表IOS格式（yyyy-MM-dd）的日期
+ *     LocalTime表示一个时间
+ *     LocalDateTime 表示日期和时间,这是最常用的类之一
+ * (2) 常用方法(创建)
+ *      LocalDateTime ldt = LocalDateTime.now() ：# ✔创建当前的日期的本地日期实例
+ *      LocalDateTime ldt = LocalDateTime.of() ： # 创建指定日期的实例化对象
+ * (3)常用方法(获取)
+ *      getDayOfMonth()/getDayOfYear() ：         # 获得月份天数(1-31) /获得年份天数(1-366)
+ *      getDayOfWeek() ：                         # 获得星期几(返回一个DayOfWeek枚举值)
+ *      getMonth() ：                             # 获得月份,返回一个 Month枚举值
+ *      getMonthValue() / getYear() ：            # 获得月份(1-12) /获得年份
+ *      getHour()/getMinute()/getSecond() ：      # 获得当前对象对应的小时、分钟、秒
+ * (4)常用方法(修改)
+ *      withDayOfMonth()/withDayOfYear()/withMonth()/withYear()             # 将月份天数、年份天数、月份、年份修改为指定的值并返回新的对象
+ *      plusDays()/plusWeeks()/plusMonths()/plusYears()/plusHours()         # 向当前对象添加几天、几周、几个月、几年、几小时
+ *      minusMonths()/minusWeeks()/minusDays()/minusYears()/minusHours()    # 从当前对象减去几月、几周、几天、几年、几小时
+ *      LocalDateTime.toInstant(ZoneOffset.of("+8"))                        # 将LocalDateTime转换为 补偿了时区的偏移量8h 的instant对象（方便计算时间戳）
  *
- * 【四. SimpleDateFormat】主要用于对Date类的格式化和解析
- *   SimpleDateFormat(pattern) : 可以将date对象转换为指定的pattern格式的文本String
- *   public String format(Date date)：格式化-时间对象date成文本
- *   public Date parse(String source)：解析-将给定字符串文本解析成一个日期对象
+ * 【instant类】用于计算时间戳。instant类精度可以达到纳秒级
+ *  now()                                 # 静态方法，返回当前时间的 以默认UTC时区为标准的 Instant类的对象
+ *  ofEpochMilli(long epochMilli)         # 静态方法，返回在1970-01-01 00:00:00基础上加上指定毫秒数之后的Instant类的对象
+ *  atOffset(ZoneOffset offset)           # 结合即时的偏移来创建一个 OffsetDateTime。如中国时区和默认时区差8小时
+ *  toEpochMilli()                        # 返回1970-01-01 00:00:00到当前时间的毫秒数，即为时间戳！
  *
- * 【五. Calendar类】
- *  Calendar.getInstance()：获取Calendar实例
- *  public void set(int field,int value)：field为传入的常量，可以直接更改Calendar类中的属性
- *  public void add(int field,int amount)：field为传入的常量，可以让Calendar的属性加上一个值
- *  public final Date getTime() ：可以将Calendar类 ==> Date类
- *  public final void setTime(Date date) ：可以将Date类 ==> Calendar类
- *
- * 【Calendat类中有许多常量可以调用】
- * Calendar.YEAR ：返回当前年份
- * Calendar.MONTH： 返回当前月份，注意一月是0
- * DAY_OF_WEEK: 返回当前是一周中的第几天，注意周一是2
- * HOUR_OF_DAY:
- * MINUTE:
- * SECOND
+ * 【java.time.format.DateTimeFormatter类】
+ *  提供了三种格式化的方法
+ *   方式1：预定义的标准格式：.ISO_LOCAL_DATE_TIME;ISO_LOCAL_DATE;ISO_LOCAL_TIME
+ *   方式2：本地化相关的格式：.ofLocalizedDateTime(FormatStyle.LONG)
+ *   方式3：自定义的格式：.ofPattern(“yyyy-MM-dd hh:mm:ss”)
+ *   format(TemporalAccessor t) 格式化LocalDateTime为时间字符文本
+ *   parse(CharSequence text) 将指定格式的时间字符文本解析为一个日期、时间
  *
  * @author Alex
- * @create 2022-11-21-14:01
+ * @create 2022-11-29-15:31
  */
 
-
 public class UseCommonClass05 {
-    // 一. java.lang.System类
-    // public static long currentTimeMillis()用来返回当前时间与1970年1月1日0时0分0秒之间以毫秒为单位的时间差
+    // java.time包下几个常用类的使用LocalDate、LocalTime、LocalDateTime
+    // 以LocalDateTime为例
     @Test
     public void test() {
-        System.out.println("System.currentTimeMillis() = " + System.currentTimeMillis());
-    }
-
-    // 二. java.util.Date类
-    // |---三. java.sql.Date类  # 这个是上面的子类，对应数据库中的时间，暂时不用
-    @Test
-    public void test1(){
-        Date date1 = new Date();
-        System.out.println("date1.toString() = " + date1.toString());
-        System.out.println("date1.getTime() = " + date1.getTime());
-        System.out.println("**************************");
-        // sql.date的实例化
-        java.sql.Date date2 = new java.sql.Date(1231231231L);
-        System.out.println(date2);
+        // 创建当前的日期的实例化对象
+        LocalDateTime dateTime = LocalDateTime.now();
+        System.out.println(dateTime);
+        System.out.println("********************");
+        // 创建指定的日期的实例化对象
+        LocalDateTime ldt = LocalDateTime.of(1997, 9, 20, 17, 17, 17);
+        System.out.println(ldt);
+        System.out.println("********************");
+        // get相关操作，获取当前年月日时间
+        System.out.println(ldt.getYear());
+        System.out.println(ldt.getMonth());
+        System.out.println(ldt.getDayOfMonth());
         System.out.println("*****************");
-        // 将sql.date与util.date转换
-           // 情况1: sql.date → util.date
-        Date date3 = new java.sql.Date(1669012674083L);
-        Date date4 = new Date(date3.getTime());
-        System.out.println("date4.toString() = " + date4.toString());
-           // 情况2：util.date → sql.date
-        Date date5 = new Date();
-        java.sql.Date date6 = new java.sql.Date(date5.getTime());
-        System.out.println("date6.toString() = " + date6.toString());
+        // 修改操作1
+        LocalDateTime ldt1 = ldt.withYear(2000);
+        System.out.println(ldt1);
+        System.out.println("*****************");
+        // 修改操作2
+        LocalDateTime ldt2 = ldt1.plusYears(1);
+        System.out.println(ldt2);
     }
 
-    // 四. SimpleDateFormat，主要用于对Date类的格式化和解析
-       // （1）格式化：日期 ==> 字符串
-       //  (2) 解析：字符串==>日期
+
+    // java.time包下几个常用类之instant瞬时类，获取时间戳
     @Test
-    public void test2() throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat();
-        Date date = new Date();
-        System.out.println(date);
-        //（1）格式化：日期 ==> 字符串
-        String formate = sdf.format(date);
-        System.out.println(formate);
-        // (2) 解析：字符串==>日期
-        String str = "2019-08-09 上午8:01";
-        Date date1 = sdf.parse(str);
-        System.out.println(date1);
-        System.out.println("********************************");
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");  // （3）查看源码，构造器中可以调用不同的转换格式
-        Date date2 = new Date();
-        String formate2 = sdf1.format(date2);
-        System.out.println(formate2);
+    public void test1() {
+        // 返回默认UTC时区对应时间的瞬时点实例
+        Instant ins = Instant.now();
+        System.out.println(ins);
+        // 补偿时区的偏移量8h(中国和默认时区差8h)
+        OffsetDateTime ins1 = ins.atOffset(ZoneOffset.ofHours(8));
+        System.out.println(ins1);
+        // 计算当前实例的时间戳
+        System.out.println(ins.toEpochMilli());
+        // 根据毫秒数。返回瞬时点实例
+        Instant ins2 = Instant.ofEpochMilli(1669808725779L);
+        System.out.println(ins2);
     }
 
-    // 五. 日历类（抽象类）的使用
+    // java.time.format.DateTimeFormatter 类，，用来格式化，解析时间和日期
     @Test
-    public void test5(){
-        Calendar calendar = Calendar.getInstance();
-        System.out.println(calendar.getClass());  // 其实这个方法，也是返回子类的对象
+    public void test2() {
+        LocalDateTime localDateTime = LocalDateTime.now();  // 处理对象
+        DateTimeFormatter formatter1 = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        // 方式1：
+        String str1 = formatter1.format(localDateTime);  // 格式化
+        System.out.println(str1);
+        TemporalAccessor parse = formatter1.parse("2022-11-30T19:58:03.24");  // 解析
+        System.out.println(parse);
+        System.out.println("*****************");
 
-        // calendar.get
-        System.out.println("calendar.get(Calendar.DAY_OF_YEAR) = " + calendar.get(Calendar.DAY_OF_YEAR));
+        // 方式2：
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG);
+        String str2 = formatter2.format(localDateTime);
+        System.out.println(str2);
+        TemporalAccessor parse1 = formatter2.parse("2022年12月1日 下午01时00分54秒");
+        System.out.println(parse1);
+        System.out.println("*****************");
 
-        // calendar.set
-        calendar.set(Calendar.DAY_OF_YEAR,22);  // 直接更改了它的静态属性
-        System.out.println("calendar.get(Calendar.DAY_OF_YEAR) = " + calendar.get(Calendar.DAY_OF_YEAR));
-
-        // calendar.add();  // 让Calendar的属性加上一个值
-        calendar.add(Calendar.DAY_OF_YEAR,3);
-        System.out.println("calendar.get(Calendar.DAY_OF_YEAR) = " + calendar.get(Calendar.DAY_OF_YEAR));
-
-        // calendar.getTime();
-        Date time = calendar.getTime(); // Calendar类 ==> Date类
-
-        // calendar.setTime();
-        Date date = new Date();  // Date类 ==> Calendar类
-        calendar.setTime(date);
-        System.out.println("calendar.get(Calendar.DAY_OF_YEAR) = " + calendar.get(Calendar.DAY_OF_YEAR));
+        // 方式3：自定义格式
+        DateTimeFormatter formatter3 = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+        String str3 = formatter3.format(localDateTime);
+        System.out.println(str3);
+        TemporalAccessor parse3 = formatter3.parse("2022-12-01 01:04:00");
+        System.out.println(parse3 );
     }
 }
+

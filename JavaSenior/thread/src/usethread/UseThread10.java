@@ -1,10 +1,6 @@
 package usethread;
-
-
-
 /**
  * 【演示线程的死锁问题】
- *
  * @author Alex
  * @create 2022-11-17-9:55
  */
@@ -12,7 +8,6 @@ public class UseThread10 {
     public static void main(String[] args) {
         StringBuffer s1 = new StringBuffer();
         StringBuffer s2 = new StringBuffer();
-
         new Thread(){ // 匿名实现类1,继承
             @Override
             public void run() {

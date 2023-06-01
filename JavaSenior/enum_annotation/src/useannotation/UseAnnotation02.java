@@ -3,17 +3,17 @@ package useannotation;
 import java.lang.annotation.*;
 
 /**
- * 【如何自定义注解：参照@suppressWarnings】
- * 1）注解声明为@interface
- * 2）Annotation的成员变量（属性）在 Annotation定义中以无参数方法的形式来声明。我们称为配置参数。类型只能是八种基本数据类型。
- * 3）可以使用default关键字在定义 Annotation的成员变量时为其指定初始值
- * 4）如果只有一个参数成员，建议使用参数名为value
- * 5）如果定义的注解含有配置参数，那么使用时必须指定参数值（除非它有默认值），✔
- * 格式是“参数名 =参数值”，如果只有一个参数成员，且名称为value，可以省略“value=”
- * 6）没有成员变量的Annotation称为标记; 包含成员变量的注解称为元数据注解✔
- * 7）注意：自定义注解必须配上注解的信息处理流程才有意义（反射）
+ * 【如何自定义注解：参照 @suppressWarnings】
+ * 1）注解声明：public @interface UseAnnotation02 {}
+ * 2）注解的成员变量（属性）：
+ *    注解的成员变量以 "无参数方法" 的形式来声明。我们称为配置参数。类型只能是八种基本数据类型。 如int id(), 在使用的时候我们应该为它们进行赋值✔
+ *    如果只有一个成员变量，建议使用参数名为value
+ *    在使用的时候，格式为"参数名 =参数值"，若成员变量名称为value，可以省略"value="。 如 @UseAnnotation02(id = 7)
+ *    可以使用default关键字在定义 Annotation的成员变量时为其指定初始值。如int id() default 6
+ * 3）没有成员变量的Annotation称为标记; 包含成员变量的注解称为元数据注解✔
+ * 4）自定义注解必须配上注解的信息处理流程才有意义（反射）
  *
- * 【元注解】注解是对现有注解进行修饰的注解
+ * 【元注解meta-annotation】元注解是对现有注解进行修饰的注解
  *  1）理解：String name = "zzj",这里string和name是元数据，是对现有数据zzj进行修饰的一个数据
  *     同理：元注解是对现有注解进行修饰的注解
  *  2）JDK5.0提供了4个标准的meta-annotation类型，分别是：
@@ -29,7 +29,6 @@ import java.lang.annotation.*;
  *          ElementType.TYPE,  用于描述类、接口或enum声明
  *          ElementType.METHOD  用于描述方法
  *          ElementType.PACKAGE  用于描述包
-
  *      @Documented
  *          用于指定被该元 Annotation 修饰的 Annotation 类将被javadoc工具提取成文档。默认情况下，javadoc是不包括注解的。
  *          定义为Documented的注解必须设置Retention值为RUNTIME

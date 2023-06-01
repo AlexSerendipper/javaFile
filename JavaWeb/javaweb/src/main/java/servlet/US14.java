@@ -2,12 +2,13 @@ package servlet;
 
 /**
  * 【ThreadLocal】工具类。实现在同一个线程下的操作都可以共享同一个数据，map实现见US13
- *  ThreadLocal可以解决多线程的数据安全问题。
- *  ThreadLocal可以给当前线程关联一个数据（可以是普通变量，可以是对象，也可以是数组，集合），避免了其他线程访问该数据
- *  ✔ThreadLocal关联的数据可以像Map一样存取，key为当前线程
- *  ✔每个ThreadLocal对象，只能为当前线程关联一个数据，如果要为当前线程关联多个数据，就需要使用多个ThreadLocal对象实例。
+ *  ThreadLocal 可以解决多线程的数据安全问题。即通过可以给当前线程关联一个数据（普通变量、对象、数组、集合等），避免了其他线程访问该数据
+ *  ThreadLocal底层原理：实际上，可以在ThreadLocal底层的get、set源码中看到，它是创建了当前线程的一个map，然后向map中存值，从而实现了数据的线程隔离
+ *    所以ThreadLocal关联的数据可以像Map一样存取，key为当前线程✔
+ *    并且每个ThreadLocal对象，只能为当前线程关联一个数据，如果要为当前线程关联多个数据，就需要使用多个ThreadLocal对象实例✔
  *  每个ThreadLocal对象实例定义的时候，一般都是static类型
  *  ThreadLocal中保存数据，在线程销毁后。会由 JVM 虚拟自动释放。
+ *   ✔✔✔通常浏览器关闭，线程销毁，所以Threadlocal实际上代替了session域的功能（session域的存取对象也是线程隔离的，但是敏感数据不适合存储在session中）
  *
  * 【ThreadLocal使用流程】
  *  ThreadLocal<Object> threadLocal = new ThreadLocal<>();               # 创建threadlocal实现类, 与map不同的是,threadlocal默认传入了key为当前线程，所以只需要传入value的类型

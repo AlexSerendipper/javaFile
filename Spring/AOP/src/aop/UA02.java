@@ -29,24 +29,27 @@ import java.lang.annotation.Annotation;
  *    举例2：对com.atguigu.dao包里面所有类，类里面所有方法进行增强
  *            execution(* com.atguigu.dao.*.* (..))
  *
- * 【AOP操作流程】常用。基于AspectJ注解
+ * 【AOP操作流程】常用见UserProxy。基于AspectJ注解
  * (1) 创建被增强类(被代理类): User
  * (2) 创建增强类（编写增强逻辑）: UserProxy，在增强类中创建方法，让不同方法代表不同通知类型
- * (3) 通知的配置
- *      通过配置文件 或 配置类开启注解扫描
- *      为增强类和被增强类添加创建对象注解
- *      在增强类上添加@Aspect注解
+ * (3) AOP使用配置
  *      引入aspect名称空间，并在spring配置文件中利用 <aop:aspectj-autoproxy> 开启生成代理对象
+ *      通过配置文件 或 配置类开启注解扫描（增强类和被增强类需要交由IOC管理）
+ *      增强类上添加 @Aspect 注解
  * (4) 在增强类中，为作为 通知的方法上面 添加通知类型注解，使用切入点表达式配置
  *      @Before(value = "execution(* aop.bean.User.add(..))")           # 前置通知，增强User中的add方法
  *      @AfterReturning(value = )                                       # 后置通知
  *      @After(value = )                                                # 最终通知
  *      @AfterThrowing(value = )                                        # 异常通知
  *      @Around(value = )                                               # 环绕通知
- * (5)其他操作1：相同切入点抽取
+ * (5)其他操作0：环绕通知中需要声明ProceedingJoinPoint proceedingJoinPoint，代表被增强的方法！使用如下方法执行被增强的方法
+ *                 proceedingJoinPoint.proceed();
+ *               其他所有通知中可以声明JoinPoint对象，代表被增强的方法！！！并可以通过如下方法获取其类路径和方法名
+ *                String method = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
+ * (6)其他操作1：相同切入点抽取✔
  *      在增强类中创建一个方法，并添加注解 @Pointcut(value = "execution(* aop.bean.User.add(..))")
  *      为作为 通知的方法上面 添加通知类型注解时，使用该方法作为值即可。@Before(value = "方法")
- * (6)其他操作2：当有多个增强类对同一个方法进行增强（如userproxy和personproxy都对user类的add方法进行增强），可以设置增强类优先级
+ * (7)其他操作2：当有多个增强类对同一个方法进行增强（如userproxy和personproxy都对user类的add方法进行增强），可以设置增强类优先级
  *      在增强类上面添加注解 @Order(数字类型值)，数字类型值越小优先级越高
 -------------------------------------------------
  <?xml version="1.0" encoding="UTF-8"?>
@@ -64,6 +67,35 @@ import java.lang.annotation.Annotation;
  <!-- 开启 Aspect 生成代理对象-->
  <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 --------------------------------------------------
+--------------------------------------------------
+ @Component
+ @Aspect  // 生成代理对象
+ public class UserProxy {
+     @Pointcut(value = "execution(* aop.bean.User.add(..))")
+     public void pointdemo() {
+
+     }
+
+     // 前置通知
+     @Before(value = "execution(* aop.bean.User.add(..))")
+     public void before(JoinPoint joinPoint) {
+         // 除环绕通知外，其他通知也可以声明JoinPoint对象，代表当前执行的方法！！！并可以通过如下方法获取其类路径和方法名
+         String method = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
+         System.out.println("前置通知UserProxy before......");
+         System.out.println(method + "被执行了");
+     }
+
+     // 环绕通知
+     @Around(value = "pointdemo()")
+     public void around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+         System.out.println("环绕之前Around.........");
+         // 执行被增强的方法
+         proceedingJoinPoint.proceed();
+         System.out.println("环绕之后Around.........");
+     }
+ }
+--------------------------------------------------
+ *
  *
  * 【纯注解开发】创建建配置类，替代xml配置文件，从而实现纯注解开发（实际开发中，常用springboot实现纯注解开发）
  *   @Configuration                                                # 在配置类上使用该注解

@@ -48,7 +48,7 @@ import java.nio.charset.Charset;
  xhr.send()                                                                                                                                                         3. 调用send函数
  xhr.onreadystatechange = function () {                                                                                                           4. 监听onreadystatechange事件
      if (xhr.readyState === 4 && xhr.status === 200) {               # 判断是否成功获取数据
-        var jsonObj = JSON.parse(xmlhttprequest.responseText);       # 把回传的数据(JSON对象）转换为json字符串
+        var jsonObj = JSON.parse(xmlhttprequest.responseText);       # 把回传的数据(JSON字符串）转换为js对象，
         }
  }
  --------------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ import java.nio.charset.Charset;
  xhr.send(data)                                                                                                                                        # 区别是在此处传入输入的数据
  xhr.onreadystatechange = function () {
      if (xhr.readyState === 4 && xhr.status === 200) {
-        var jsonObj = JSON.parse(xmlhttprequest.responseText);                   # 把回传的数据(JSON对象）转换为json字符串
+        var jsonObj = JSON.parse(xmlhttprequest.responseText);                   # 把回传的数据(JSON字符串）转换为js对象，
         }
  }
  --------------------------------------------------------------------------------------

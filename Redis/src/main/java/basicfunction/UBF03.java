@@ -13,10 +13,11 @@ package basicfunction;
  *  9、redis 位图（bitfiled）：了解，可以一次操作多个比特位域（多个连续的比特位）
  *  10、redis 流（Stream）：了解, 主要用于消息队列
  *
- * 【redis常见命令】http://www.redis.cn/commands
+ * 【redis常见命令————通用命令】http://www.redis.cn/commands
  *  ✔命令不区分大小写，而key是区分大小写的
  *  ✔帮助命令 help @类型
  *   keys *  		              # 当前库的所有key
+ *   get key                    # 获取value
  *   exists key                 # 判断某个key是否存在
  *   type key                   # 查看你的key是什么类型
  *   del key                    # 删除指定的key数据
@@ -54,7 +55,7 @@ package basicfunction;
  *   strlen k1                    # 获取当前字符串长度
  *    append k1 value              # 在当前k1后追加value字符串
  *
- * 【redis常见命令————List】
+ * 【redis常见命令————List】list1表示键，value表示值
  *   单key多value结构
  *   lpush [list1] [value] ...     # 往列表（左边）放入元素
  *   Rpush [list1] [value] ...     # 往列表（右边）放入元素
@@ -70,7 +71,7 @@ package basicfunction;
  *   lset [list1] [index] [value]                    # 将 list1 的第 index 个索引值改为value
  *   linsert [key] brfore/after [value]              # 在list某个已有值的 前/后 再添加具体值
  *
- * 【redis常见命令————Hash】购物车
+ * 【redis常见命令————Hash】购物车。key表示键，file value为键值对
  *   k-v 模式不变，但v 又是一个新的键值对。类似于java中的Map<String, Map<Object,Object>
  *   hset key field value [field value]              # 如hset user name zzj age 17
  *    hget key field                                   # 如hget user age
@@ -84,7 +85,7 @@ package basicfunction;
  *   hincrbyfloat [key] field1 [step]                # key里面field1的值增长 step 小数
  *   hsetnx [key] field1 [value]                     # 不存在field1,则赋值，若存在了field1则赋值无效
  *
- * 【redis常见命令————Set】猜你喜欢
+ * 【redis常见命令————Set】猜你喜欢。set1表示键，member表示值
  *   单key多value结构，与list的区别是 无重复数据
  *     SADD Set1 member                        # 添加元素
  *     SMEMBERS Set1                           # 遍历key中所有元素
@@ -100,10 +101,10 @@ package basicfunction;
  *     SINTER Set1 Set2                            # A ∩ B, 属于A同时属于B
  *     SINTERCARD numkeys Set1 Set2 [LIMIT limit]  # 了解，不返回结果集，只返回结果的基数（numkeys设定set个数，limit设置显示基数的限制）
  *
- * 【redis常见命令————ZSet】根据销量对商品进行排序
+ * 【redis常见命令————ZSet】根据销量对商品进行排序。zset1表示键，score表示分数，member表示值
  *  Zset就是在set的基础上加了一个score分数值。  Set1 v1 v2 v3  ==> ZSet1 score1 v1 score2 v2
  *    ZADD zset1 score member [score member]      # 添加元素
- *    ZRANGE zset1 start stop [WITHSCORES]        # 返回元素分数从小到大的顺序。返回索引从start到stop之间的所有元素（withscopes会将分数一同遍历）
+ *    ZRANGE zset1 start stop [WITHSCORES]        # 遍历：返回元素分数从小到大的顺序。返回索引从start到stop之间的所有元素（withscopes会将分数一同遍历）
  *    ZREVRANGE zset1 0 - 1 [WITHSCORES]          # 反序。返回元素分数从大到小的顺序
  *    ZRANGEBYSCORE zset1 min max [WITHSCORES] [LIMIT offset count]      # 获取指定分数范围的元素（左开右开） 。limit是返回个数限制
  *    ZSCORE zset1 member                         # 获取指定元素member的分数

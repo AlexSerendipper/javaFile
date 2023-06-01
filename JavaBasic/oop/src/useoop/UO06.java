@@ -27,12 +27,12 @@ import org.junit.Test;
  *  包帮助管理大型软件系统：将功能相近的类划分到同一个包中。比如：MVC的设计模式
  *
  * 【MVC设计模式】
- * MVC是常用的设计模式之一，将整个程序分为三个层次：视图模型层，控制器层，与数据模型层。
- * 这种将程序输入输出、数据处理，以及数据的展示分离开来的设计模式使程序结构变的灵活而且清晰，
- * 同时也描述了程序各个对象间的通信方式，降低了程序的耦合性。
- *  模型层 model 主要处理数据
- *  控制层 controller 处理业务逻辑
- *  视图层 view 显示数据
+ *  MVC是常用的设计模式之一，将整个程序分为三个层次：视图模型层，控制器层，与数据模型层。
+ *   这种将程序输入输出、数据处理，以及数据的展示分离开来的设计模式使程序结构变的灵活而且清晰，
+ *   同时也描述了程序各个对象间的通信方式，降低了程序的耦合性。
+ *  模型层 model 主要处理数据
+ *  控制层 controller 处理业务逻辑
+ *  视图层 view 显示数据
  *
  * 【JDK中主要的包介绍】
  * 1. java.lang----包含一些Java语言的核心类，如String、Math、Integer、 System和Thread，提供常用功能
@@ -83,13 +83,9 @@ public class UO06 {
     @Test
     public void test1(){
         Wolf wolf = new Wolf();
-        // 注意，这里wolf重写了sleep方法，所以this指向子类重写的方法
-        // ✔✔✔.getClass方法也应当如此理解，所以this指向的是子类wolf，而不是父类animal
+        // 注意，这里wolf重写了sleep方法，所以this指向子类重写的方法✔✔✔
+        // ✔✔✔.getClass方法也应当如此理解，子类也同样重写了.getClass方法， 故该this指向的是子类wolf，而不是animal
     }
-
-
-
-
 
 
     class Creature {
@@ -109,7 +105,6 @@ public class UO06 {
             this.sleep();
             System.out.println(this.getClass().getName());
         }
-
         public void sleep(){
             System.out.println("animal sleep now~");
         }

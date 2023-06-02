@@ -3,7 +3,7 @@ package usegit;
 /**
  *【Idea集成Git】
  *
- *【配置GIT忽略文件】针对IDEA的全局配置
+ *【配置GIT忽略文件】针对IDEA的全局配置，✔✔注意，全局配置对所有的git管理文件都生效！
  *  有一些文件与项目的实际功能无关，不参与服务器上部署运行。把它们忽略掉能够屏蔽 IDE 工具之间的差异。
  *（1）创建忽略规则文件 xxxx.ignore（前缀名随便起，建议是 git.ignore），这个文件的存放位置原则上在哪里都可以，
  *    为了便于让~/.gitconfig 文件引用，建议也放在用户家目录下（C:\Users\Administrator）
@@ -43,7 +43,7 @@ target
  [core]
  excludesfile = C:/Users/Administrator/git.ignore              # 注意：这里要使用“正斜线（/）”，不要使用“反斜线（\）” （这里不要复制进去）
  *
- *【.gitignore的使用】针对项目的局部配置
+ *【.gitignore的使用】针对项目的局部配置，✔✔注意：局部配置是在全局配置下的补充
  *  在被git管理的文件夹根目录下，可以创建.gitignore文件。不想让GIT跟踪哪个文件，就写哪个文件名，即可被自动忽略
  *
  *【在IDEA配置Git】

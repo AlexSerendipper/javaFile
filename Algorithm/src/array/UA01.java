@@ -1,52 +1,48 @@
 package array;
 
-import java.util.Arrays;
 
 /**
- * 合并两个有序数组！
-https://www.nowcoder.com/practice/89865d4375634fc484f3a24b7fe65665?tpId=117&&tqId=34943&rp=1&ru=/ta/job-code-high&qru=/ta/job-code-high/question-ranking
+ * 二分查找：https://leetcode.cn/problems/binary-search/
  *
+ * 给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1
  @author Alex
- @create 2023-06-02-16:46
+ @create 2023-06-03-21:55
  */
-public class UA01 {
-    // 方法一
-    // A 和 B 中初始的元素数目分别为 m 和 n，，所以后台会自动输入m和n
-    // 后台程序会预先将A扩容为[4,5,6,0,0,0]
-    // 且后台会自动将合并后的数组 A 的内容打印出来
-    public void merge1(int A[], int m, int B[], int n) {
-        System.arraycopy(B, 0, A, m, n);
-        Arrays.sort(A);
-    }
 
-    // 方法二：分别比较两个数组，由于都是有序数组，直接从第一个开始比较，把较小的数放入新数组，最后将新数组赋值给A
-    public void merger2(int A[], int m, int B[], int n){
-        int[]res = new int[m+n];
-        int i = 0;
-        int j = 0;
-        int f = 0;
-
-        while(i<m && j<n){
-            if(A[i] > B[j]){
-                res[f++] = B[j++];
+class UA01 {
+    // 若定义 target 是在一个在左闭右闭的区间里，也就是[left, right] （这个很重要非常重要）。
+    public int search(int[] nums, int target) {
+        int left = 0;  // 定义左指针
+        int right = nums.length-1;  // 定义右指针，即形成了一个 [left,right]的一个区间。注意索引是比length-1的
+        while(left<=right){
+            int middle = left + ((right-left) >>1);  // 防止溢出，>>1相当于除2操作，只不过是只针对整数的除2操作，所以免去了floor操作
+            if(nums[middle]<target){
+                left = middle + 1;  // target 在右区间，在[middle + 1, right)中
+            }else if(nums[middle]>target){
+                right = middle - 1;   // target 在左区间，在[left, middle)中
             }else{
-                res[f++] = A[i++];
+                return middle;
             }
         }
-
-        while (i < m) {
-            res[f++] = A[i++];
-        }
-
-        while (j < n) {
-            res[f++] = B[j++];
-        }
-
-        for (int k = 0; k < res.length; k++) {
-            A[k] = res[k];
-        }
-
+        return -1;
     }
 
 
-}
+    // 如果说定义 target 是在一个在左闭右开的区间里，也就是[left, right) ，那么二分法的边界处理方式则截然不同。
+    public int search2(int[] nums, int target) {
+        int left = 0;  // 定义左指针
+        int right = nums.length;  // 定义右指针，即形成了一个 [left,right)的一个区间
+        while(left<right){  // 因为left == right的时候，在[left, right)是无效的空间，所以使用 <
+            int middle = left + ((right-left) >>1);  //  防止溢出，>>1相当于除2操作，只不过是只针对整数的除2操作，所以免去了floor操作
+            if(nums[middle]<target){
+                left = middle + 1;  // target 在右区间，在[middle + 1, right)中
+            }else if(nums[middle]>target){
+                right = middle;   // target 在左区间，在[left, middle)中
+            }else{
+                return middle;
+            }
+        }
+        return -1;
+    }
+};
+

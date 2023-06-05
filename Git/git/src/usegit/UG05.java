@@ -1,5 +1,7 @@
 package usegit;
 
+import java.util.Arrays;
+
 /**
  *【Idea集成Git】
  *
@@ -81,4 +83,30 @@ target
  @create 2023-01-24-20:11
  */
 public class UG05 {
+    public static void main(String[] args) {
+        int[] arr1 = {1, 5, 2};
+        int[] arr2 = {4, 5, 1};
+
+        // 定义结果数组
+        int[] result = new int[arr1.length + arr2.length];
+
+        // 将两个数组合并到结果数组中
+        // System.arraycopy() 方法的第一个参数是要复制的源数组，第二个参数是目标数组的起始索引位置，
+        // 第三个参数是要复制的源数组的结束索引位置(不包括该位置上的元素),第四个参数是要复制的元素数量。如果要复制的元素数量不足源数组中的元素数量，则会复制所有可用的元素。
+        System.arraycopy(arr1, 0, result, 0, arr1.length);
+        System.arraycopy(arr2, 0, result, arr1.length, arr2.length);
+
+        Arrays.sort(result);
+        // 输出结果
+        System.out.println(Arrays.toString(result)); // [1, 2, 3, 4, 5, 6]
+    }
+    public static void merge(int[] A, int[] B){
+        System.arraycopy(B, 0, A, A.length, B.length);
+
+        // 对A数组进行排序
+        Arrays.sort(A);
+        // 输出排序后的A数组
+        System.out.println(Arrays.toString(A));
+    }
+
 }

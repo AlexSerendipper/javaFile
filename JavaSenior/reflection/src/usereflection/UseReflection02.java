@@ -38,7 +38,7 @@ import java.util.Properties;
  *【类加载器classloader】
  * （1）作用，见xmind图
  *    classloader把 .Class文件 装载进内存的, 主要用于 类的加载过程中的 运行阶段！
- *     ✔具体功能就是将 class文件字节码 内容加载到内存中，即 将这些静态数据转换成方法区的运行时数据结构（一个代表这个类的java.lang.Class对象（运行时类对象））
+ *     ✔具体功能就是将 class文件字节码 内容加载到内存中，即 将这些静态数据（静态常量池等）转换成方法区的运行时数据结构（运行时常量池等），最终生成一个代表这个类的java.lang.Class对象（运行时类对象）
  *                                                      以及 将这些静态数据转换成堆空间的实例数据（对象具体的实例）
  * （2）分类
  *    对于自定义类，使用系统类/应用程序类加载器(AppClassloader)                                           # 系统类加载器位置，jre/lib/rt.jar/java.lang.ClassLoader，只要实现了该抽象类的都为自定义类(object类也实现了)。。。例如：Car.getClass.getClassLoader

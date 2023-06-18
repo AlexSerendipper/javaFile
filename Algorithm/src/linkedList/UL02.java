@@ -169,7 +169,7 @@ class MyLinkedList2{
 
     // 如果下标有效，则删除链表中下标为 index 的节点。
     public void deleteAtIndex(int index) {
-        if(index < 0 || index>=size){
+        if (index < 0 || index >= size) {
             return;
         }
         size--;

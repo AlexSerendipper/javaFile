@@ -32,8 +32,17 @@ package usegit;
  *    ✔ 已经上传文件的仓库可以点击CODE选项获取SSH/HTTPS的地址
  *     git remote -v                               # 查看当前远程仓库的别名
  *     git push 远仓别名 分支别名                   # 推送分支到远程仓库，push最小以分支为单位。可以不使用别名直接输入地址
- *     git pull 远仓别名 分支别名                   # 拉取远程仓库的文件合并到本地库（当远程仓库被别人更新后使用）（同样可能出现合并冲突的问题）
- *     git clone 远仓别名                           # 公共库的克隆操作是完全不需要登录的！使用SSH/HTTPS的地址均可
+ *                                                    如果远程主机的版本比本地版本更新，推送时Git会报错，要求先在本地做git pull合并差异，再推送到远程仓库。
+ *                                                    ✔✔所以为了避免远程仓库直接被本地仓库覆盖，统一在push前，先pull一下，先保证远仓与本地无冲突！！再进行Push！！
+ *
+ *     git fetch 远仓别名 分支别名                  # 相当于是从远程获取最新版本到本地，不会自动merge合并！！（不会出现合并冲突），本地的文件不会有变化
+ *      git log -p FETCH_HEAD                       # 取回更新后，会返回一个FETCH_HEAD ，指的是远仓的branch在服务器上 与 本地的branch的差异，使用该命令可以查看差别信息
+ *      git merge FETCH_HEAD                        # 将拉取下来的最新内容合并到当前所在的分支中
+ *
+ *     git pull 远仓别名 分支别名                   # 拉取远程仓库的文件，合并到本地库！！（可能出现合并冲突）
+ *                                                    git pull的操作可以直接理解为 git fetch + git merge！！！
+ *
+ *     git clone 远仓别名                          # 公共库的克隆操作是完全不需要登录的！使用SSH/HTTPS的地址均可
  *                                                    ✔克隆会完成三个操作 1、拉取代码 2、初始化本地仓库。3、创建别名（默认创建为origin）
  *     git remote rm 远仓别名                       # 为远仓起的别名可以通过该命令删除
  *     github页面 - repository - setting - delete   # 删除github中的远程仓库

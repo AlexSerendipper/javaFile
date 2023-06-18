@@ -1,6 +1,7 @@
 package usethread;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 
 /**
  * 【线程通信】例题见Q2

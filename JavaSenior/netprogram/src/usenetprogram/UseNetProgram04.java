@@ -13,15 +13,14 @@ import java.net.URLConnection;
 /**
  *【URI、URL和URN的区别】
  *  URI，是uniform resource identifier，统一资源标识符，用来唯一的标识一个资源。
- *  URL是uniform resource locator，统一资源定位符，它是一种具体的URI，即URL可以用来标识一个资源，而且还指明了如何locate这个资源。
- *  URN，uniform resource name，统一资源命名，是通过名字来标识资源，比如 mailto:java-net@java.sun.com。
- *   也就是说，URI是以一种抽象的，高层次概念定义统一资源标识，而URL和URN则是具体的资源标识的方式。
- *   URL和URN都是一种URI。在Java的URI中，一个URI实例可以代表绝对的，也可以是相对的，只要它符合URI的语法规则。
- *   而URL类则不仅符合语义，还包含了定位该资源的信息，因此它不能是相对的。
+ *  URL是uniform resource locator，统一资源定位符，是通过地址来标识资源，它是一种具体的URI。。。即URL可以用来标识一个资源，而且还指明了如何locate这个资源。
+ *  URN，uniform resource name，统一资源命名，是通过名字来标识资源，它是一种具体的URI。。。比如 mailto:java-net@java.sun.com。
+ *                               也就是说，URI是以一种抽象的，高层次概念定义统一资源标识，而URL和URN则是具体的资源标识的方式。
+ *                               URL和URN都是一种URI。在Java的URI中，一个URI实例可以代表绝对的，也可以是相对的，只要它符合URI的语法规则。
+ *                               而URL类则不仅符合语义，还包含了定位该资源的信息，因此它不能是相对的。
  *
  * 【URL编程概述】
- *  URL(Uniform Resource Locator)：统一资源定位符，它表示 Internet上某一资源的地址。
- *  URL就是“种子”，通过它定位网络上某处的资源
+ *  URL(Uniform Resource Locator)：统一资源定位符，它表示 Internet上某一资源的地址。URL就是“种子”，通过它定位网络上某处的资源
  *  通过 URL 我们可以访问 Internet 上的各种网络资源，比如最常见的 www，ftp站点。浏览器通过解析给定的 URL 可以在网络上查找相应的文件或其他资源。
  *  URL的基本结构由5部分组成：
  *     <传输协议>://<主机名>:<端口号>/<文件名>#片段名?参数列表

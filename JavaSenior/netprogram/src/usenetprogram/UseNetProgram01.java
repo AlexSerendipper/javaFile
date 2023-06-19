@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
  *  找到主机后如何可靠高效地进行数据传输 ==> 网络通信协议TCP/IP协议（应用层、传输层、）
  *
  * 【IP地址】
- * (1) 作为internet上计算机的唯一标识
+ * (1) 作为internet上计算机的唯一标识。。。IP地址 = 网络地址 + 主机地址
  * (2) 在java中使用inetAddress类，来代表IP
  * (3) 分类： ①IPV4（4个字节组成）和 IPV6（16个字节组成）
  *            ②公网地址(万维网使用www)和私有地址(局域网使用192.168.)。

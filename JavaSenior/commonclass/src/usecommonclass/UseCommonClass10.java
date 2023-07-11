@@ -22,8 +22,12 @@ import java.util.Scanner;
  * 【scanner类】
  *  Scanner scanner = new Scanner(System.in);   # 获取键盘输入
  *  scanner.nextInt();                          # 获取输入整数数据。
+ *  scanner.next();                             # 获取输入字符串数据，不能输入带有空格的数据（会只读取空格前的数据，因为默认的分隔符是空格）。
  *  scanner.nextLine()；                        # 读取本行的的输入（包括单词之间的空格和除回车以外的所有符号）。读取输入后，将光标定位在下一行
+ *  scanner.hasNextInt()                        # 判断控制台接收是否为整型，返回布尔型数据，如果是，再执行其他操作
  *
+ * 如果用了nextInt(),那么后边一定要用next()。。。如果此时用nextLine()，会出现第一次使用nextLine()方法获取到的是空数据
+ * 如果用nextLine()，就一直使用nextLine()
  @author Alex
  @create 2023-01-04-18:47
  */

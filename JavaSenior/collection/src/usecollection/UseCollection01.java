@@ -44,9 +44,12 @@ import java.util.Date;
  *
  * 【四、数组与集合之间的转换】
  *  Collection coll = Arrays.asList(array1)          # 将数组 ==> 集合
- *   ✔Arrays.asList返回的ArrayList实际上是Arrays的内部类，只是通过数组简单包装成的arraylist，并没有add方法
+ *   ✔ Arrays.asList返回的ArrayList实际上是Arrays的内部类，只是通过数组简单包装成的arraylist，并没有add方法
+ *   ✔ 注意：对于int型数组，转换为集合会识别为一个元素（数组元素为一个对象），建议使用integer类型的数组（每个元素都是一个对象）
  *  Array arr = coll.toArray()                       # 集合 ==> 数组
- *   ✔注意：对于int型数组，转换为集合会识别为一个元素（数组元素为一个对象），建议使用integer类型的数组（每个元素都是一个对象）
+ *   ✔ toArray()的返回值是Object[]，而toArray(T[])的返回值为T[]。
+ *      形参数组T[]的大小可以随意指定，且不需要有值，只要是个实例对象即可
+ *
  * @author Alex
  * @create 2022-12-03-13:54
  */

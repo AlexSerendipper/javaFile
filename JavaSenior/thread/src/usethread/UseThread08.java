@@ -11,10 +11,11 @@ import java.util.concurrent.locks.ReentrantLock;
       public void m(){
          lock.lock();  ② 开锁
   try{
-      //保证线程安全的代码;
+      // 保证线程安全的代码;
   }
   finally{
-      lock.unlock();  ③ 关锁
+      lock.unlock();  ③ 关锁，为什么关锁一定要在finally中？✔
+                              答：为了避免当我们的业务逻辑出现问题时，锁出现未关闭的情况，从而造成死锁
   }}}
 -------------------------------------
  *
@@ -25,7 +26,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  *  【推荐使用优先顺序】
  *  Lock  同步代码块（已经进入了方法体，分配了相应资源）同步方法（在方法体之外）
- *
+ *  
  * @author Alex
  * @create 2022-11-17-10:16
  */

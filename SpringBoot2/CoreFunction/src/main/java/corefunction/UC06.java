@@ -41,7 +41,7 @@ import org.springframework.web.util.HtmlUtils;
  *  StringUtils.isBlank()              # 判断是否为空值（包括null,""等）
  *  CharUtils.isAsciiAlphanumeric(c)   # 判断字符是否为普通字符（普通字符返回true,特殊字符返回false）
  *
- *  HtmlUtils.htmlEscape(json1)        # 将json字符串中的特殊符号进行转义（org.springframework.web.util.HtmlUtils）
+ *  HtmlUtils.htmlEscape(json1)        # 将json字符串中的特殊符号进行转义，就是原先title中不能有标签，如<p>，会对页面造成破坏，所以要进行转义！！！（org.springframework.web.util.HtmlUtils）
  *  HtmlUtils.htmlUnescape(json1)      # 将json字符串中的特殊符号进行反转义（org.springframework.web.util.HtmlUtils）
 --------------------
 <dependency>

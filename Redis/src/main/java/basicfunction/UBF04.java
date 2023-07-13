@@ -13,7 +13,6 @@ package basicfunction;
  *     BITOP XOR destKey key1 key2    # 对一个或多个 key 求逻辑异或，并将结果保存到 destkey
  *     BITOP NOT destKey key1 key2    # 对一个或多个 key 求逻辑非，并将结果保存到 destkey
  *
- *
  * 【redis常见命令————HyperLogLog】了解，在输入元素的数量或体积非常大时，计算基数所需的空间总是固定且很小的（如计算网站的访客数时）
  *   用String类型作为底层数据结构
  *   基数：是一种数据集，去重复后的真实个数
@@ -24,7 +23,6 @@ package basicfunction;
  *     PFADD loglog1 element[element]         # 添加元素
  *     PFCOUNT loglog1                        # 返回基数
  *     PFMERGE distResult  loglog1,loglog2    # 将多个hyperloglog合并为一个 并 返回基数
- *
  *
  * 【redis常见命令————GEO】了解，主要存储地理位置信息
  *   用zset类型作为底层数据结构
@@ -45,7 +43,6 @@ package basicfunction;
  *   Stream流实现消息队列，它支持消息的持久化、支持自动生成全局唯一 ID、支持ack确认消息的模式、支持消费组模式等，让消息队列更加的稳定和可靠
  *
  * 【redis常见命令————bitfiled】了解！！！，可以一次操作多个比特位域（多个连续的比特位）。这里先不学了，感觉根本用不到P27集
- *
  @author Alex
  @create 2023-03-30-14:36
  */

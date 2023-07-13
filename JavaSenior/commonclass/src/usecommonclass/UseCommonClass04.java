@@ -33,9 +33,10 @@ import java.util.Date;
  *  public final void setTime(Date date) ：         # 可以将Date类 ==> Calendar类
  *
  * 【Calendar类中有许多常量可以调用】
- *  Calendar.YEAR ：返回当前年份
- *  Calendar.MONTH： 返回当前月份，注意一月是0
- *  DAY_OF_WEEK: 返回当前是一周中的第几天，注意周一是2
+ *  Calendar.YEAR ： // 返回当前年份
+ *  Calendar.MONTH： // 返回当前月份，注意一月是0
+ *  Calendar.DATE:   // 表示当前时间为多少号
+ *  DAY_OF_WEEK:     // 返回当前是一周中的第几天，注意周一是2
  *  HOUR_OF_DAY:
  *  MINUTE:
  *  SECOND

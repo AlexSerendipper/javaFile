@@ -1,7 +1,6 @@
 package linkedList;
 
 /**
- *
  * 反转链表:https://leetcode.cn/problems/reverse-linked-list/
  * 给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
  * 输入：head = [1,2,3,4,5]

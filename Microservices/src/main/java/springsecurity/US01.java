@@ -77,14 +77,14 @@ public boolean isEnabled() {
 public Collection<? extends GrantedAuthority> getAuthorities() {
    ArrayList<GrantedAuthority> list = new ArrayList<>();
    list.add(new GrantedAuthority() {
-      @Override
-      public String getAuthority() {
-      switch (type){
-      case 1:
-      return "ADMIN";
-      default:
-      return "USER";
-      }
+          @Override
+          public String getAuthority() {
+          switch (type){
+          case 1:
+          return "ADMIN";
+          default:
+          return "USER";
+          }
       }
    });
    return list;
@@ -97,7 +97,7 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
     return userMapper.selectByName(username);
 }
 -------------------
- * （4）✔spring security配置类SecurityConfig (代码见下方)
+ * （4）✔spring security配置类SecurityConfig (代码见SpringConfig,或下方)
  *
  *  (5) 配置表单
  *  配置用户提交登录信息的controller请求(按照security配置类中指定的)(login.html)

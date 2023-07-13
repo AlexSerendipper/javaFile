@@ -51,8 +51,7 @@ private ThreadPoolTaskScheduler threadPoolTaskScheduler;
  *   @Scheduled(initialDelay = 10000,fixedRate = 1000)         # 定时任务线程池的快速调用，使用该注解，指定延迟时间和频率，当该方法的组件被装配时，该方法自动被调用！！
  *
  * 【分布式多线程】
- *  当服务器采用分布式部署时，每个服务器上都有（controller 以及 scheduler），当服务器启动，若采用传统的多线程的方式
- *   scheduler自动运行，将可能产生冲突。
+ *  当服务器采用分布式部署时，每个服务器上都有（controller 以及 scheduler），当服务器启动，若采用传统的多线程的方式scheduler自动运行，将可能产生冲突。
  *  使用Quartz代替scheduler可以解决上述问题，jdk以及spring的定时任务组件是基于内存的，因为各个服务器 内存之间数据不共享（配置scheduler多久运行一次，配置参数也是存储在内存中），
  *   所以无法解决分布式部署时存在的问题。而Quartz定时任务的配置参数是存储在数据库中，各个服务器共享同一个数据库，由此解决了上述问题
  *  quartz底层的四大接口
@@ -60,7 +59,7 @@ private ThreadPoolTaskScheduler threadPoolTaskScheduler;
  *    Job                   # 定义任务
  *    JobDetail             # 配置任务（对应qrtz_job_details表）
  *    trigger               # 触发器，配置job什么时候运行，以什么频率运行（对应qrtz_triggers表）
- *   这些配置信息在首次启动后存储在数据库中~
+ *   以上这些配置信息在首次启动后存储在数据库中~
  *                            # qrtz_scheduler_status表，存储了定时器的状态信息
  *                            # qrtz_locks表，锁名，当多个quartz访问数据表，以设定的锁名对数据表进行加锁
  *
@@ -85,27 +84,29 @@ public class QuartzConfig {
     // 1. FactoryBean 中封装了某些bean的实例化过程
     // 2. 将 FactoryBean 装配到spring容器中后， 将 FactoryBean 注入给其他的bean，则该bean得到的是FactoryBean所管理的对象实例
 
+
     // 配置 JobDetail
     @Bean
     public JobDetailFactoryBean jobDetailFactoryBean(){
         JobDetailFactoryBean JobDetail = new JobDetailFactoryBean();
-        JobDetail.setJobClass(Job.class);  // 管理的job
-        JobDetail.setName("jobTest");  // 为job取名
-        JobDetail.setGroup("jobTest");  // 为job设定一个组（多个Job可以在同一个组中）
-        JobDetail.setDurability(true);  // job是否永久保存（job被废弃后，相关信息仍保存）
+        JobDetail.setJobClass(Job.class);     // 管理的job
+        JobDetail.setName("jobTest");         // 为job取名
+        JobDetail.setGroup("jobTest");        // 为job设定一个组（多个Job可以在同一个组中）
+        JobDetail.setDurability(true);        // job是否永久保存（job被废弃后，相关信息仍保存）
         JobDetail.setRequestsRecovery(true);  // job出现异常，是否可恢复
         return JobDetail;
     }
+
 
     // 配置 Trigger
     @Bean
     public SimpleTriggerFactoryBean simpleTriggerFactoryBean(JobDetail jobDetailFactoryBean){  // 如此处，注入的并不是JobDetailFactoryBean对象，而是其所管理的JobDetail对象
         SimpleTriggerFactoryBean Trigger = new SimpleTriggerFactoryBean();
         Trigger.setJobDetail(jobDetailFactoryBean);   // 指定为哪个job设定的触发器
-        Trigger.setName("jobTestTrigger");  // 为当前trigger取名
-        Trigger.setGroup("jobTestGroup");  // 为当前trigger设定一个组
-        Trigger.setRepeatInterval(3000);  // 触发器执行的时间，多长时间触发一次
-        Trigger.setJobDataMap(new JobDataMap());  // 使用JobDataMap存储触发器的运行状态
+        Trigger.setName("jobTestTrigger");            // 为当前trigger取名
+        Trigger.setGroup("jobTestGroup");             // 为当前trigger设定一个组
+        Trigger.setRepeatInterval(3000);              // 触发器执行的时间，多长时间触发一次
+        Trigger.setJobDataMap(new JobDataMap());      // 使用JobDataMap存储触发器的运行状态
         return Trigger;
     }
 }
@@ -132,7 +133,7 @@ spring.quartz.properties.org.quartz.threadPool.threadCount=5
 --------------
  * (5) 如何删除表中job : 当数据表中存在数据后，quartz将根据表中配置运行，可以根据scheduler删除表中job以及trigger的相关数据
  *   boolean b = scheduler.deleteJob(new JobKey("jobTest", "jobTest"));    # 自动装配scheduler后，根据要删除job的Name以及GroupName确定唯一的Job(以JobKey的形式)，返回删除结果
- * 
+ *
  @author Alex
  @create 2023-04-25-10:55
  */

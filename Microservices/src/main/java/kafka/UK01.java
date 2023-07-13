@@ -5,7 +5,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 /**
- * 【kafka简介】
+ * 【kafka简介】
  *  kafka是一个消息队列框架（java大数据的内容），作为一个消息中间件，用于构建TB级的异步消息系统
  *
  * 【阻塞队列】

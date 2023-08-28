@@ -26,6 +26,11 @@ public interface DynamicSQLMapper {
     List<Emp> getEmpByTrim(Emp emp);
 
     /**
+     * 多条件修改之使用Trim
+     */
+    int updateEmpByTrim(Emp emp);
+
+    /**
      * 多条件查询之使用choose
      */
     List<Emp> getEmpByChoose(Emp emp);

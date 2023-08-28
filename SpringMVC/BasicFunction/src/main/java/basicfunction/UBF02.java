@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
      <property name="order" value="1"/>
      <property name="characterEncoding" value="UTF-8"/>
      <property name="templateEngine">
-     <!--使用内部bean赋值-->
+     <!-- 使用内部bean赋值 -->
      <bean class="org.thymeleaf.spring5.SpringTemplateEngine">
          <property name="templateResolver">
              <bean class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
@@ -28,15 +28,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
      </property>
  </bean>
  ------------------------------------------
+ *
  * 【SpringMVC使用流程】
  * （1）配置视图解析器
- * （2）创建请求 控制器
- *   传统的方式，是创建不同servlet类处理不同的请求
- *   在Spring MVC中，由于前端控制器对浏览器发送的请求进行了统一的处理，但是具体的请求有不同的处理过程，因此需要创建处理具体请求的类，即请求控制器
- *   请求控制器类需要交给Spring的IoC容器管理（@controller），此时SpringMVC才能够识别控制器的存在
- *   在请求控制器中创建处理请求的方法，使用@RequestMapping注解：处理请求和控制器方法之间的映射关系
- *      @RequestMapping(value = "/")注解。value属性可以根据配置的请求地址 匹配 不同的请求，/表示的当前工程的上下文路径（当前工程在web中的路径，浏览器输入的地址）
- * （3）创建页面，需要添加th名称空间于html页面中 xmlns:th="http://www.thymeleaf.org,才能使用th语法
+ * （2）创建请求 控制器controller
+ *      传统的方式，是创建不同servlet类处理不同的请求
+ *        在Spring MVC中，由于前端控制器对浏览器发送的请求进行了统一的处理，但是具体的请求有不同的处理过程，因此需要创建处理具体请求的类，即请求控制器controller
+ *        请求控制器类需要交给Spring的IoC容器管理（@controller），此时SpringMVC才能够识别控制器的存在
+ * （3）@RequestMapping(value = "/")：
+ *      使用该注解标记具体的控制器方法，处理请求 和 控制器方法之间的映射关系
+ *       value属性可以根据配置的请求地址 匹配 不同的请求，其中/表示的当前工程的上下文路径（当前工程在web中的路径，浏览器输入的地址）
+ * （4）创建页面，前端html页面中，需要添加th名称空间于html页面中 xmlns:th="http://www.thymeleaf.org,才能使用th语法
  *
  *  【执行过程】非常重要✔✔✔✔✔
  *  首先请求地址若满足前端控制器设置的<url-pattern>（我们设置/，表示除了.jsp的请求都会被处理），该请求就会被DispatcherServlet处理

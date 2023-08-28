@@ -22,12 +22,6 @@
 
 
     <!-- ********************************查**************************************   -->
-    <!-- 多对一 分布查询第二步：Dept getEmpAndDeptTwo(Integer did)  -->
-    <select id="getEmpAndDeptTwo" resultType="dept">
-        select * from mybatis_dept where did = #{did};
-    </select>
-
-
     <!-- 一对多collection: Dept getDeptAndEmp(Integer did);-->
     <resultMap id="DeptAndEmpResultMap" type="dept">
         <id property="did" column="did"></id>
@@ -61,6 +55,13 @@
 
     <select id="getDeptAndEmpOne" resultMap="DeptEmpResultMap">
         select * from mybatis_dept where mybatis_dept.did = #{did}
+    </select>
+
+
+
+    <!-- 多对一 分布查询第二步：Dept getEmpAndDeptTwo(Integer did)  -->
+    <select id="getEmpAndDeptTwo" resultType="dept">
+        select * from mybatis_dept where did = #{did};
     </select>
 
 

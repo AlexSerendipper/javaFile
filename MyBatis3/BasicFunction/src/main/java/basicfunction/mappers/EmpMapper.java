@@ -29,7 +29,7 @@ public interface EmpMapper {
 
     /**
      * 通过分步查询员工及其对应部门的信息
-     * 第二步：查询员工信息
+     * 第二步：查询员工对应部门信息
      */
     List<Emp> getDeptAndEmpTwo(Integer did);
 

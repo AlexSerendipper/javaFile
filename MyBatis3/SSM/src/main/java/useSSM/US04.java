@@ -64,12 +64,12 @@ package useSSM;
      </bean>
 
      <!--
-     value值 设置mapper接口所对应的包，
-     该功能为mapper接口扫描，由mybatis-spring提供，可以将指定包下所有的mapper接口创建动态代理，并将这些动态代理作为IOC容器的bean管理
-     配置后可以直接获取 mapper接口的实现类 对象(自动装配)
+     mapper接口扫描，
+     由mybatis-spring提供，value值设置为mapper接口所对应的包的位置，
+     可以将指定包下所有的mapper接口创建动态代理，并将这些动态代理作为IOC容器的bean管理。配置后可以直接获取 mapper接口的实现类 对象(自动装配)
      -->
      <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-     <property name="basePackage" value="useSSM.mapper"></property>
+        <property name="basePackage" value="useSSM.mapper"></property>
      </bean>
  </beans>
 ---------------------

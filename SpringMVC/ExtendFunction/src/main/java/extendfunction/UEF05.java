@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * 【SpringMVC异常处理器】
- *  ✔我们希望对异常进行统一的处理，所以当异常出现在数据层和业务层时，我们都将其向上抛到表现层，在表现层进行统一的异常处理
+ *  ✔我们希望对异常进行统一的处理，所以当异常出现在数据层和业务层时，我们都将其向上抛到表现层，在表现层进行统一的异常处理✔
  *  SpringMVC提供了一个处理控制器方法执行过程中所出现的异常的接口：HandlerExceptionResolver。该接口的实现类有：
  *    DefaultHandlerExceptionResolver，默认处理器，springmvc编写，针对会遇到的异常，已经被springmvc处理（如显示404，405）
- *    SimpleMappingExceptionResolver，自定义处理期，自己编写，可以实现针对指定的异常，跳转到指定的页面
+ *    SimpleMappingExceptionResolver✔，自定义处理期，自己编写，可以实现针对指定的异常，跳转到指定的页面
  *
  * 【SimpleMappingExceptionResolver】SpringMVC.xml配置实现
 -----------------------------------
@@ -49,7 +49,6 @@ public class ExceptionController {
     }
 }
 -------------------
-
  * 【SimpleMappingExceptionResolver】配置类实现
  * 见WebConfig
  *

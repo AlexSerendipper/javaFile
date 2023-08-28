@@ -79,13 +79,8 @@ import java.util.List;
  </dependencies>
  ----------------------------
  * （2）创建MyBatis的核心配置文件
- *  核心配置文件习惯上命名为mybatis-config.xml，主要用于配置连接数据库的环境以及MyBatis的全局配置信息
+ *  核心配置文件习惯上命名为 mybatis-config.xml，主要用于配置连接数据库的环境以及MyBatis的全局配置信息
  ----------------------------
- <?xml version="1.0" encoding="UTF-8" ?>
- <!DOCTYPE configuration
- PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
- "http://mybatis.org/dtd/mybatis-3-config.dtd">
-
  <configuration>
      <!--设置连接数据库的环境-->
      <environments default="development">
@@ -112,15 +107,10 @@ import java.util.List;
  *  映射文件用于编写SQL，访问以及操作表中的数据
  *  映射文件的命名规则：通常以 表所对应的实体类类名 + Mapper.xml 命名， 即与mapper接口的名字保持一致。因此一个映射文件对应一个实体类，对应一张表的操作
  *  映射文件存放的位置是src/main/resources/mappers目录下
- *  ✔✔两个一致：映射文件的命名空间（namespace） 需要与 mapper接口的全类名 保持一致
- *               映射文件中编写SQL的标签的id属性 需要与 接口中方法的方法名 保持一致
- *  实际上最终执行时，就是通过 namespace + id，找到对应的唯一的sql语句
+ *  ✔✔✔默认存在两个一致：① 映射文件的命名空间（namespace） 需要与 mapper接口的全类名 保持一致
+ *                           ② 映射文件中编写SQL的标签的id属性 需要与 接口中方法的方法名 保持一致
+ *  ✔实际上最终执行时，就是通过 namespace + id，找到对应的唯一的sql语句
 -------------------------------
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <!--映射文件的命名空间（namespace） 需要与 mapper接口的全类名 保持一致-->
 <mapper namespace="basicfunction.mapper.UserMapper">
 <!--映射文件中编写SQL的标签的id属性 需要与 接口中方法的方法名 保持一致-->
@@ -136,10 +126,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  *
  * 【基本查询功能实现】详见UBF04
  *  查询的标签select必须设置属性resultType或resultMap，输入查询数据结果的类的全类名。用于设置实体类和数据库表的映射关系
- *     resultType：自动映射关系，即用于属性名和表中字段名一致的情况
- *     resultMap：自定义映射关系，即用于一对多或多对一 或 字段名和属性名不一致的情况
- *  当查询的数据只有一条，可以使用 实体类 或 集合 作为返回值✔✔✔
- *     查询的数据为多条时，只能使用集合接收✔✔✔
+ *     resultType：设置返回值为具体类，即将对应字段的查询结果赋值给具体类的属性值（自动映射）
+ *                   ✔此处若不在核心配置文件中设置，需要传入类的全类名！！
+ *                   即适用于 '属性名和表中字段名' 一致的情况
+ *     resultMap：自定义映射关系，即用于 '一对多或多对一' 或 '字段名和属性名不一致' 的情况
+ *  当查询的数据只有一条，可以使用 实体类 或 集合 作为返回值✔
+ *     查询的数据为多条时，只能使用集合接收✔
  *
  @author Alex
  @create 2023-03-10-13:38

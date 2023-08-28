@@ -148,7 +148,7 @@ CREATE INDEX mul_bid_bname_info ON book6(book_id,book_name,info);
     );
 # 在已经存在的表上创建
    CREATE INDEX indexname ON tablename(propname[(length)]) INVISIBLE;
-# 通过ALTER TABLE语句创建
+# 通过ALTER TABLE语句创建下
    ALTER TABLE tablename ADD INDEX indexname (propname [(length)]) INVISIBLE;
 # 修改索引可见状态
    ALTER TABLE tablename ALTER INDEX index_name INVISIBLE;

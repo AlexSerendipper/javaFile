@@ -29,16 +29,24 @@ import java.util.List;
 </resultMap>
 -----------------
  * (2) 使用 分步查询
+ * 如下：根据部门id 获取部门 以及部门中所有员工的信息
 -----------------
 <resultMap id="DeptEmpResultMap" type="dept">
     <id property="did" column="did"></id>
     <result property="deptName" column="dept_name"></result>
     <collection property="emps"
                 select="basicfunction.mappers.EmpMapper.getDeptAndEmpTwo"
-                column="did"
-                >
+                column="did">
     </collection>
 </resultMap>
+
+
+<select id="getDeptAndEmpOne" resultMap="DeptEmpResultMap">
+    select * from mybatis_dept where mybatis_dept.did = #{did}
+</select>
+<select id="getDeptAndEmpTwo" resultType="emp">
+    select * from mybatis_emp where did = #{did};
+</select>
 -----------------
  *
  @author Alex

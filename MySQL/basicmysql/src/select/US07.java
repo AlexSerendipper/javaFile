@@ -58,7 +58,7 @@ package select;
  *  LENGTH(s) 返回字符串s的字节数，和字符集有关✔
  *  CONCAT(s1,s2,......,sn) 连接s1,s2,......,sn为一个字符串
  *  CONCAT_WS(x,s1,s2,......,sn)  同CONCAT(s1,s2,...)函数，但是每个字符串之间用x连接✔
- *  INSERT(str, idx, len,replacestr)  ✔字符串的索引是从1开始的。将字符串str从第idx位置开始，len个字符长的子串替换为字符串replacestr
+ *  INSERT(str, idx, len,replacestr)  ✔字符串的索引是从1开始的✔。将字符串str从第idx位置开始，len个字符长的子串替换为字符串replacestr
  *  REPLACE(str, a, b) 用字符串b替换字符串str中所有出现的字符串a
  *  UPPER(s) 或 UCASE(s) 将字符串s的所有字母转成大写字母
  *  LOWER(s) 或LCASE(s) 将字符串s的所有字母转成小写字母
@@ -75,7 +75,8 @@ package select;
  *  REPEAT(str, n) 返回str重复n次的结果
  *  SPACE(n) 返回n个空格
  *  STRCMP(s1,s2) 比较字符串s1,s2的ASCII码值的大小
- *  SUBSTR(s,index,len)返回从字符串s的index位置其len个字符，作用与SUBSTRING(s,n,len)、MID(s,n,len)相同
+ *  SUBSTR(s,index,len)返回从字符串s的index位置其len个字符（是从第index字符  取len个字符）
+ *                       如果只给了index，默认从index截取到末尾
  *  LOCATE(substr,str)返回字符串substr在字符串str中首次出现的位置，作用于POSITION(substrIN str)、INSTR(str,substr)相同。未找到，返回0
  *  ELT(m,s1,s2,…,sn)返回指定位置的字符串，如果m=1，则返回s1，如果m=2，则返回s2，如果m=n，则返回sn
  *  FIELD(s,s1,s2,…,sn) 返回字符串s在字符串列表中第一次出现的位置

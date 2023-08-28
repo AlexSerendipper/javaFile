@@ -43,6 +43,7 @@ package useSSM;
         <servlet-name>DispatcherServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet
     </servlet-class>
+
     <!-- 设置SpringMVC的配置文件的位置和名称 -->
     <init-param>
         <param-name>contextConfigLocation</param-name>
@@ -55,7 +56,6 @@ package useSSM;
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-
     <!-- 配置Spring的监听器,在服务器启动时加载spring的配置文件 -->
     <listener>
         <!--
@@ -66,7 +66,7 @@ package useSSM;
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <!-- 设置Spring的配置文件自定义的位置和名称 -->
+    <!-- 设置Spring的配置文件 Srping.xml自定义的位置和名称 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:Spring.xml</param-value>

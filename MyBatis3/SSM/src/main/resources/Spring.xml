@@ -38,7 +38,7 @@
         <!-- 方式二：将核心配置文件中的内容，部分在此处进行配置（）。两种方式二选一即可-->
         <!-- 设置数据源 -->
         <property name="dataSource" ref="dataSource"></property>
-        <!--设置类型别名所对应的包-->
+        <!--设置 类名与类的全类名的对应关系-->
         <property name="typeAliasesPackage" value="useSSM.pojo"></property>
         <!--配置全局设置，将表中字段的下划线自动转换为驼峰-->
         <property name="configuration">
@@ -65,7 +65,5 @@
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="useSSM.mapper"></property>
     </bean>
-
-
 
 </beans>

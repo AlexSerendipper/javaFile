@@ -92,4 +92,6 @@ public class UA01 {
         // 二分法查找指定值
         System.out.println(Arrays.binarySearch(array3, 76));
     }
+
+
 }

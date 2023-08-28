@@ -1,7 +1,7 @@
 package datafunction;
 
 /**
- * 【springboot指标监控功能】后续会集成到springcloud中
+ * 【springboot指标监控功能】后续会集成到SpringCloud中
  *  每一个微服务在云上部署以后，我们都需要对其进行监控、追踪、审计、控制等。
  *   SpringBoot就抽取了Actuator场景，使得我们每个微服务快速引用即可获得生产级别的应用监控、审计等功能。
  *

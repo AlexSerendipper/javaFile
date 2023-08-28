@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--映射文件的命名空间（namespace） 需要与 mapper接口的全类名 保持一致-->
+<mapper namespace="useSSM.mapper.HolidayMapper">
+    <!--映射文件中编写SQL的标签的id属性 需要与 接口中方法的方法名 保持一致-->
+    <!-- *******************************增***************************************   -->
+    <!--  -->
+    <insert id="insertHoliday">
+        insert into mybatis_time(date_time) values(#{dateTime})
+    </insert>
+
+    <!-- ********************************删**************************************   -->
+    <!--  -->
+
+
+    <!-- *********************************改*************************************   -->
+    <!--  -->
+
+
+    <!-- ********************************查**************************************   -->
+    <!-- getHolidayByTime -->
+    <select id="getHolidayByTime" resultType="useSSM.pojo.Holiday">
+        select * from mybatis_time where time between #{begin} and #{end}
+    </select>
+
+</mapper>

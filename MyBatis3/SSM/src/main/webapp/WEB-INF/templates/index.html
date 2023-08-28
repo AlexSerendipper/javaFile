@@ -8,5 +8,19 @@
     <h1>我是首页的呢</h1>
     <a th:href="@{/emp}">跳转到员工页面</a><br>
     <a th:href="@{/emp/page/1}">跳转到员工页面（分页）</a>
+
+    <form method="post" th:action="@{/time}">
+        起始时间：<input type="date" id="begin" name="begin">
+        终止时间：<input type="date" id="end" name="end">
+        <button>根据输入的时间查询数据</button>
+    </form>
+
+    <form method="post" th:action="@{/dateTime}">
+        起始时间：<input type="datetime-local" id="dateTime" name="dateTime">
+        <button>插入dateTime数据</button>
+    </form>
+
+
+
 </body>
 </html>

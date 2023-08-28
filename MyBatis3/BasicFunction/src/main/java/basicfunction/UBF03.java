@@ -12,14 +12,14 @@ import java.util.Objects;
 import java.util.TreeSet;
 
 /**
- * 【MyBatis获取参数值】两种方式
+ * 【mapper接口映射文件编写（获取参数值）】即如何将参数传递给sql语句
  *  MyBatis获取参数值的两种方式：${}和#{}
  *   ${}的本质就是字符串拼接, 有sql注入风险，并且若为字符串类型或日期类型的字段进行赋值时，需要手动加单引号
  *   #{}的本质是使用占位符赋值，自动添加单引号。故推荐使用#{}的方式获取参数值
  *   如：select * from mybatis_user where username = #{username}
  *       select * from mybatis_user where username = "${username}"
  *  理论上 ${}、#{} 中可以传入任意的字符串 (但是必须要有传入，idea中在调用方法时会提示我们传入的字符串)
- *   见名知意原则：我们约定 传入的值 与对应的 字段名/属性名 相同，便于见名知意
+ *   建议见名知意原则：我们约定 传入的值 与对应的 字段名/属性名 相同，便于见名知意
  *
  * 【获取参数的各种情况】
  * （1）mapper接口中的方法所需参数为单个
@@ -27,27 +27,33 @@ import java.util.TreeSet;
  *
  * （2）mapper接口中的方法所需参数为多个（自动map）
  *   此时MyBatis会自动将这些参数放在一个map集合中，以arg0,arg1...为键，以参数为值；
- *                                           和 以param1,param2...为键，以参数为值；
- *    因此只需要通过${}和#{}访问 map集合的键 就可以获取相对应的值，如 '${arg0}'
+ *                                             或 以param1,param2...为键，以参数为值；
+ *    因此只需要通过${}和#{}访问 map集合的键(arg1、param1...) 就可以获取相对应的值，如 '${arg0}'
  *
  *  (3) mapper接口中的方法所需参数为 map 类型：极少用！
  *   我们完全可以不使用MyBatis自动创建的map集合，自己手动创建map集合，将这些数据放在map中
- *    通过 ${}和#{} 访问map集合的键就获取相对应的值
+ *    通过 ${}和#{} 访问 'map集合中设置的键' 就获取相对应的值
  *
  *  (4) ✔✔mapper接口中的方法所需参数为实体类类型
  *   此时可以直接通过访问实体类对象中的 属性名 获取属性值，注意${}需要手动加单引号
  *
  *  (5) 当所需参数为array、list类型时：动态sql常用
  *   此时MyBatis会自动将这些参数放在一个map集合中，以 array 为键，以 数组/集合 为值；
- *                                           和 以 arg0 为键，以 数组/集合 为值；
+ *                                            和 以 arg0 为键，以 数组/集合 为值；
  *     因此只需要通过${}和#{}访问 map集合的键 就可以获取相对应的 数组/集合，如 '${arg0}'
  *
  *  【@Param(value="") 标识参数】
- *   当MyBatis自动将多个参数放在一个map集合，使用该注解可以自定义键值
- *     ✔✔以@Param注解的value属性值 为键，以参数为值
- *   只需要通过${}和#{}访问map集合中我们的 自定义键 就可以获取相对应的值，注意${}需要手动加单引号
- *   ✔✔由于获取单个参数时，默认使用 与传入参数同名 的 变量就可以实现调用参数。故可以不用@Param
- *    但是强烈建议建议 方法二和方法五（即传入参数为多个，或传入数组集合的情况）都使用@Param注解。满足见名知意
+ *   对于上述方式二，当MyBatis自动将多个参数放在一个map集合，使用 #{arg0} 这样的方式来获取参数值便不够见名知意了
+ *     可以在编写usermapper时，使用该注解，设置创建传入参数值 与 mapper映射文件中获取参数值的映射关系
+ *     如下：
+--------------
+userMapper.checkLoginByParam("zzj", "qqabcd");
+User checkLoginByParam(@Param("uu") String username, @Param("pp") String password);    // 创建映射关系
+select * from mybatis_user where username = "${uu}" and password = #{pp}               // 此时通过映射关系，不再需要通过#{arg0}这样的方式来访问，满足了见名知意原则
+--------------
+ *   ✔✔✔由于获取单个参数时，在映射文件中 默认使用 与传入参数同名 的 变量就可以获取参数。
+ *             因此其本身就满足见名知意原则
+ *             故因此强烈强烈建议建议 方法二和方法五（即传入参数为多个，或传入数组集合的情况）都使用@Param注解。以满足见名知意
  *
  *
  @author Alex
@@ -62,7 +68,7 @@ public class UBF03 {
         System.out.println(user);
     }
 
-    // 多个字面量类型的参数
+    // 多个字面量类型的参数（推荐适用@param注解）
     @Test
     public void test2() throws IOException {
         UserMapper userMapper = GetMapperUtils.getMapper1(UserMapper.class);

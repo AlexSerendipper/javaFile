@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * 【SpringMVC获取请求参数】
+ * 【SpringMVC获取请求参数】即前端传递来的参数如何传递给controller
  * (1) 方式一：通过ServletAPI获取（原生API），一般不用原生API，因为SpringMVC已将其封装为方式二了
  *  将 HttpServletRequest req 作为控制器方法的形参
  *  req.getParameter(key)               # 此时HttpServletRequest类中封装了获取当前请求的方法
@@ -23,8 +23,8 @@ import javax.servlet.http.HttpSession;
  *  在控制器方法的形参位置，设置和请求参数同名的形参，当浏览器发送请求，DispatcherServlet中就会将请求参数赋值给相应的形参
  *   ✔✔✔并且，会将这些请求参数全都放入request域中！
  *  若请求所传输的请求参数中有多个同名的请求参数，可以在控制器方法的形参中设置 字符串类型的形参 或者 字符串数组 接收
- *    若使用字符串类型的形参，此参数的值为每个数据中间使用逗号拼接的结果
- *    若使用字符串数组类型的形参，此参数的数组中包含了每一个数据
+ *    若使用字符串类型的形参，此时参数值为：数据1，数据2（使用逗号拼接）
+ *    若使用字符串数组类型的形参，此时会将数据赋值入数组中
  *
  *（3）✔方式三： 通过POJO获取请求参数
  *  若客户端传输的 请求参数的参数名 和 某实体类（通常对应一个数据库表） 中的属性名一致
@@ -34,7 +34,6 @@ import javax.servlet.http.HttpSession;
  * 【获取请求参数映射问题 及 特殊请求参数获取】
  *（1）@RequestParam：设置 控制器方法的形参 与 请求参数之间的映射关系
  *  即当 控制器方法的形参 与 请求参数 不同名时，通过为 控制器方法的形参 添加该注解，创建映射关系
- *  还可以 将所有的请求过来的数据 全部自动放在map中， 如 @RequestHeader Map<String,String> params,
  *    value属性，用于指定请求参数名
  *    required属性，默认值为true, 表示必须传入 value指定的请求参数值。若没有传入，且没有设置defaultValue属性，则报错
  *                   若设置为false, 表示当没有 value指定的请求参数值，控制器方法的形参显示null值
@@ -59,7 +58,6 @@ import javax.servlet.http.HttpSession;
  *
  * (6) @DateTimeFormat(pattern = "yyyy-MM-dd")
  *  当浏览器传入指定格式字符串的日期时，使用该注解可以转换为Date类型。如@DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate
- *
  *
  * 【获取请求参数乱码问题】springMVC的编码过滤器CharacterEncodingFilter
  *  get请求若出现乱码通常与tomcat设置有关。tomcat8及以上都默认使用utf-8，不会出现乱码问题
@@ -89,7 +87,7 @@ import javax.servlet.http.HttpSession;
     <url-pattern>/*</url-pattern>
 </filter-mapping>
 ------------------------------------------------
- *
+ * 
  @author Alex
  @create 2023-03-02-15:20
  */
@@ -118,7 +116,7 @@ public class UBF04 {
         return "UBF04";
     }
 
-    // 若请求所传输的请求参数中有多个同名的请求参数时
+    // 若请求所传输的请求参数中有多个同名的请求参数时（hobby处可以多选）
     @RequestMapping("/test2/UBF04")
     public String testParam2(String username, String password, String hobby) {
         System.out.println("username:" + username + ",password:" + password + ",hobby:" + hobby);

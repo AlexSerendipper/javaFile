@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *         资源是以名词为核心来组织命名的，
  *   状态转移：：在客户端和服务器端之间转移（transfer）代表资源状态的表述。通过转移和操作资源的表述，来间接实现操作资源的目的
  *  ✔✔表现形式 (1) 我们对同一个资源的操作（如对数据表的增删改查），使用同一个数据描述（同一个URL地址），通过不同的操作方法进行区分（post/delete/put/get）
- *                (2) 不使用问号键值对的方式携带请求参数，而是将要发送给服务器的数据作为 URL 地址的一部分（占位符方式），以保证整体风格的一致性
+ *                 (2) 不使用问号键值对的方式携带请求参数，而是将要发送给服务器的数据作为 URL 地址的一部分（占位符方式），以保证整体风格的一致性
  *            ---------------------------------------------------------------------
  *               操作                        传统方式                       REST风格
  *             查询操作                getUserById?id=1                user/1-->get请求方式
@@ -27,13 +27,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *  HiddenHttpMethodFilter 处理 put和delete 请求的条件✔✔：
  *    当前请求的请求方式必须为 post
  *    当前请求必须传输请求参数 _method
- * 只要满足以上两个条件，过滤器就会将当前请求的请求方式转换为请求参数_method的值
+ *   只要满足以上两个条件，过滤器就会将当前请求的请求方式转换为请求参数_method的值
  *  在web.xml中注册HiddenHttpMethodFilter
  *  注意：在web.xml中注册时，必须先注册 CharacterEncodingFilter过滤器，再注册 HiddenHttpMethodFilter
  *   因为注册多个过滤器时，是按照注册的先后顺序执行，而CharacterEncodingFilter过滤器，必须在获取到请求参数之前设置编码格式，否则设置无效
  *   而 HiddenHttpMethodFilter过滤器中恰好是需要获取请求参数 _method的
  *
- * 【RESTful的实现 需要配合 @requestmapping的value属性】
+ * 【RESTful的实现 需要配合 @RequestMapping的value属性】
  *  value属性支持路径占位符✔✔✔✔✔
  *    SpringMVC路径中的占位符常用于RESTful风格中，即把请求参数均通过路径的方式传输到服务器中
  *    在Value属性中通过占位符{xxx}表示传输的数据，如 /get/{name}/{id}
@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *     还可以 将占位符中所有的数据 全部自动放在map中，如public String getName(@PathVariable Map<String,String> pv)
  *    若使用了路径占位符，则在请求路径中 必须为占位符处赋值
  *  @PathVariable传入空参数，如：@PathVariable(value = "pageNum",required = false)
- *                            不传参则默认值为null，注意此时必须在@requestmapping中指定多个访问路径，如@GetMapping(value = {"/index/{pageNum}","/index"})
+ *                            不传参则默认值为null，注意此时必须在@RequestMapping中指定多个访问路径，如@GetMapping(value = {"/index/{pageNum}","/index"})
  *
  * 【源码分析】
  * 查看HiddenHttpMethodFilter类中的doFilterInternal方法即可

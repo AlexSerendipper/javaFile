@@ -21,6 +21,9 @@ package usehtml;
  * <input type="image">                                      # 定义图像形式的提交按钮
  * <input type="password">                                   # 定义密码字段，该字段的字符被掩码。
  * <input type="rest">                                       # 重置按钮。重置按钮会清除表单中所有的数据
+ * <input type="date">                                       # 日期按钮，date选取日、月、年、month-选取月、年
+ *                                                                      week-选取周和年、time-选取时间（小时和分钟）、datetime-选取时间、日、月、年（本地时间）
+ *                                                                      
  * <label for=""> </label>                                   # 绑定一个表单元素，当点击label中的文本时，浏览器自动跳转到对应的表单元素上，
  *                                                             用以增加用户体验（扩大了点击范围），for的值必须和id一样才可以✔
  * <select>                                                  # 下拉表单，"selected"可以默认选择该选项

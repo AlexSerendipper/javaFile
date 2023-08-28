@@ -1,55 +1,46 @@
 package array;
 
-import com.sun.glass.ui.Size;
-
-import java.util.Arrays;
 
 /**
- * 3. 移除元素：https://leetcode.cn/problems/remove-element/
- *
- * 给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素，并返回移除后数组的新长度。
- * 不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 原地 修改输入数组。
- * 元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素
- *
- * 注意：只是移除了就行，没说要保证移除后数组的正确性！！！
+ * 2. 二分查找：https://leetcode.cn/problems/binary-search/
+ *    给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1
  @author Alex
- @create 2023-06-04-12:47
+ @create 2023-06-03-21:55
  */
-public class UA02 {
-
-    public static void main(String[] args) {
-        int[] nums = {1,2,3,5,2,4};
-        UA02 test = new UA02();
-        int i = test.removeElement(nums, 2);
-        System.out.println(i);
-    }
-
-
-    // 暴力解法：两层for循环，一个for循环遍历数组元素 ，第二个for循环更新数组
-    public int removeElement(int[] nums, int val) {
-        int size = nums.length;
-        for (int i = 0; i < size; i++) {
-            if (nums[i] == val) {  // 发现需要移除的元素，就将数组集体向前移动一位
-                for (int j = i + 1; j < size; j++) {
-                    nums[j - 1] = nums[j];
-                }
-                i--;  // 因为下标i以后的数值都向前移动了一位，所以i也向前移动一位（下一次仍应判断当前位置）
-                size--;  // 此时数组的大小-1
+class UA02 {
+    // 若定义 target 是在一个在左闭右闭的区间里，也就是[left, right] （这个很重要非常重要）。
+    public int search(int[] nums, int target) {
+        int left = 0;  // 定义左指针
+        int right = nums.length-1;  // 定义右指针，即形成了一个 [left,right]的一个区间。注意索引是比length-1的
+        while(left<=right){
+            int middle = left + ((right-left) >>1);  // 防止溢出，>>1相当于除2操作，只不过是只针对整数的除2操作，所以免去了floor操作
+            if(nums[middle]<target){
+                left = middle + 1;  // target 在右区间，在[middle + 1, right)中
+            }else if(nums[middle]>target){
+                right = middle - 1;   // target 在左区间，在[left, middle)中
+            }else{
+                return middle;
             }
         }
-        System.out.println(Arrays.toString(nums));
-        return size;
+        return -1;
     }
 
 
-    // 快慢指针法
-    public int removeElement2(int[] nums, int val) {
-        int slowIndex = 0;  // 慢指针：指向更新 新数组下标的位置
-        for (int fastIndex = 0; fastIndex < nums.length; fastIndex++) {  // 快指针：寻找新数组的元素 ，新数组就是不含有目标元素的数组
-            if (val != nums[fastIndex]) {
-                nums[slowIndex++] = nums[fastIndex];
+    // 如果说定义 target 是在一个在左闭右开的区间里，也就是[left, right) ，那么二分法的边界处理方式则截然不同。
+    public int search2(int[] nums, int target) {
+        int left = 0;  // 定义左指针
+        int right = nums.length;  // 定义右指针，即形成了一个 [left,right)的一个区间
+        while(left<right){  // 因为left == right的时候，在[left, right)是无效的空间，所以使用 <
+            int middle = left + ((right-left) >>1);  //  防止溢出，>>1相当于除2操作，只不过是只针对整数的除2操作，所以免去了floor操作
+            if(nums[middle]<target){
+                left = middle + 1;  // target 在右区间，在[middle + 1, right)中
+            }else if(nums[middle]>target){
+                right = middle;   // target 在左区间，在[left, middle)中
+            }else{
+                return middle;
             }
         }
-        return slowIndex;
+        return -1;
     }
-}
+};
+

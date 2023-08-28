@@ -20,7 +20,7 @@ import java.util.List;
  *
  * 【IF】
  *  if标签可通过test属性的表达式进行判断，若表达式的结果为true，则标签中的内容会执行；反之标签中的内容不会执行
- *  通常会使用恒等式作为where的一个条件，因为其不影响之后的判断，并且能够更好的拼接之后的条件
+ *  ✔✔通常会使用恒等式作为where的一个条件，因为其不影响之后的判断，并且能够更好的拼接之后的条件
 -------------------------------
 <select id="getEmpByCondition" resultType="Emp">
     select *
@@ -32,7 +32,7 @@ import java.util.List;
 </select>
 -------------------------------
  *
- * 【WHERE】与恒等式实现的功能相同！！
+ * 【WHERE】与恒等式实现的功能相同！！推荐使用恒等式
  *  where和if一般结合使用
  *  若where标签中的if条件都不满足，则where标签没有任何功能，即不会添加where关键字
  *   若where标签中，有if条件满足，则会自动添加where关键字，并将条件 前方的 多余的 and或者or去掉
@@ -46,12 +46,30 @@ import java.util.List;
 </where>
 --------------------------------
  *
- * 【TRIM】不缺少不多余的内容不会 添加/去掉！
- *  trim通常也和if结合使用，where作为trim的一种特殊情况
+ * 【TRIM】
  *  若TRIM标签中没有任何内容，则TRIM标签没有任何效果
- *    prefix属性/suffix属性：为trim标签中，条件的 前面/后面 添加 缺少的 内容
- *    prefixOverrides属性/suffixOverrides属性：为trim标签中，条件的 前面/后面 删除 多余的 内容
+ *  trim通常也和if结合使用，where作为trim的一种特殊情况✔
+ *    prefix属性：在trim标签包裹的部分的 最前面 添加指定符号
+ *    suffix属性：在trim标签包裹的部分的 最后面 添加指定符号
+ *    prefixOverrides属性：前缀需要覆盖的内容，一般是第一个判断条件前面的多余的结构，如下
+ *    suffixOverrides属性：为trim标签中，条件的 前面/后面 删除 多余的 内容
  --------------------------------
+ // preprefixOverrides属性：当第一个name没有值的时候，这个时候sql语句就会是 select * from User where and age='',
+ // 很明显这个sql语句语法存在问题。在这里prefixOverrides就起作用了，它会让前缀where覆盖掉第一个and。
+ // 覆盖之后的是：select * from User where age='';
+<select id='queryUser'>
+    select * from User
+    <trim prefix='where' prefixOverrides='and'>
+        <if test="name != null and name != ''">
+            name = #{name}
+        </if>
+        <if test="age !=null and age !=''">
+            and age = #{age}
+        </if>
+    </trim>
+<select>
+
+// suffixOverrides属性与之类似，这里不多加叙述
 <trim prefix="where" suffixOverrides="and|or">
      <if test="empName!='' and empName!=null "> emp_name = #{empName} and</if>
      <if test="age!='' and age!=null "> age = #{age} and </if>
@@ -76,7 +94,10 @@ import java.util.List;
  * 【foreach】常用于我们接收到的数据为数组或集合的情况： 如 收到前端传来的id数组，使用该标签进行批量删除
  *  collection属性：设置要循环的数组或集合
  *  item属性：表示集合或数组中的每一个数据
- *  separator属性：设置循环体之间的分隔符（即item之间的分隔符）
+ *  separator属性：设置循环体之间的分隔符（即item之间的分隔符）✔
+ *                  如下即为: insert into mybatis_emp values
+ *                            (null,#{emp.empName},#{emp.age},#{emp.sex},#{emp.email},null),
+ *                            (null,#{emp.empName},#{emp.age},#{emp.sex},#{emp.email},null)
  *  open属性：设置foreach标签中的 内容的开始符
  *  close属性：设置foreach标签中的 内容的结束符
 --------------------------------
@@ -95,7 +116,8 @@ import java.util.List;
 </sql>
 
 <select id="getEmpByEqual" resultType="Emp">
-    select <include refid="empColumns"></include>
+    select <include refid="empColumns"></include> from mybatis_emp
+</select>
 ---------------------------------
  *
  *
@@ -126,8 +148,16 @@ public class UBF09 {
     public void test3() throws IOException {
         DynamicSQLMapper mapper = GetMapperUtils.getMapper1(DynamicSQLMapper.class);
         Emp emp = new Emp(null, "张三", null, "男", null);
+
         List<Emp> empByCondition = mapper.getEmpByTrim(emp);
         System.out.println(empByCondition);
+    }
+    @Test
+    public void test3_1() throws IOException {
+        DynamicSQLMapper mapper = GetMapperUtils.getMapper1(DynamicSQLMapper.class);
+        Emp emp = new Emp(1, null, 6, "女", null);
+        int i = mapper.updateEmpByTrim(emp);
+        System.out.println(i);
     }
 
     // choose

@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * 【JDK8之前日期和时间API】了解即可，实际上在引入了calendar后，java.util.date类基本被抛弃了
@@ -13,8 +14,10 @@ import java.util.Date;
  *   public static long currentTimeMillis()
  *
  * 【二. java.util.Date类】
- *      ----【三. java.sql.Date类】是 java.util.Date类的子类，对应数据库中的时间，二者构造器与方法相同
- *
+ *      ----【三. java.sql.Date类】是 java.util.Date类的子类，对应数据库中的时间，二者构造器与方法相同。。。二者的相互转换见下方示例
+ *  要知道。本质上java.sql.Date 就是'yyyy-MM-dd'格式类型的数据，
+ *   所以通过特殊的sdf, 即 new SimpleDateFormat("yyyy-MM-dd") 可以实现java.util.date 和 java.sql.Date 二者的相互转换
+ *   当然，通过构造器方法，传入时间戳（使用.getTime()方法获得时间戳）,同样能够二者格式的相互转换
  *   Date():                   # 无参构造器创建的对象可以获取本地当前时间。
  *   Date(long date)
  *   getTime():                # 返回时间戳
@@ -22,9 +25,9 @@ import java.util.Date;
  *
  * 【四. SimpleDateFormat】主要用于对Date类的格式化和解析
  *   SimpleDateFormat(pattern) :            # 可以将date对象转换为指定的pattern格式的文本String (如 "yyyy-MM-dd hh:mm:ss")
+ *   SimpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8"));    # 指定一个时区为GMT+8即可输出当前正确的日期时间。否则在使用SimpleDateFormat 对日期进行格式化的时候，输出结果比预期结果晚了8个小时。
  *   public String format(Date date)：      # 格式化-时间对象date成文本
  *   public Date parse(String source)：     # 解析-将给定字符串文本解析成一个日期对象
- *
  * 【五. Calendar类】
  *  Calendar.getInstance()：                        # 获取Calendar实例
  *  public void set(int field,int value)：          # field为传入的常量，可以直接更改Calendar类中的属性
@@ -82,6 +85,7 @@ public class UseCommonClass04 {
     @Test
     public void test2() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat();
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         Date date = new Date();
         System.out.println(date);
         //（1）格式化：日期 ==> 字符串
@@ -91,10 +95,18 @@ public class UseCommonClass04 {
         String str = "2019-08-09 上午8:01";
         Date date1 = sdf.parse(str);
         System.out.println(date1);
+
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        sdf2.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        String str2 = "2019-08-09 16:01";
+        Date date2 = sdf2.parse(str2);
+        System.out.println(date2);
+
         System.out.println("********************************");
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");  // （3）查看源码，构造器中可以调用不同的转换格式
-        Date date2 = new Date();
-        String formate2 = sdf1.format(date2);
+        // （3）查看源码，构造器中可以调用不同的转换格式（如果要转换为特定的格式的字符串，就先看看标准格式date转换成字符串是什么样子就好了）
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date date3 = new Date();
+        String formate2 = sdf1.format(date3);
         System.out.println(formate2);
     }
 

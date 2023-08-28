@@ -22,14 +22,14 @@ import java.util.Map;
  *   req.setAttribute(key,value1);        # 向request域中存储数据
  *   通过Thymeleaf语法，在页面中回显数据
  *
- *（2）✔✔✔方式二：使用ModelAndView向request域对象 存数据，官方推荐做法
+ *（2）✔方式二：使用ModelAndView向request域对象 存数据。
  *  ModelAndView 有Model和View的功能。Model主要用于向请求域共享数据。View主要用于设置视图，实现页面跳转
  *  ModelAndView对象，必须作为该方法的返回值返回
  *    ModelAndView mav = new ModelAndView();
  *    mav.addObject("key", "value2");          # 向请求域共享数据
  *    mav.setViewName("success");              # 设置视图，实现页面跳转
  *
- *（3）✔✔方式三：使用Model向request域对象 存数据
+ *（3）✔✔✔方式三：使用Model向request域对象 存数据。。。推荐使用
  *  相当于实现了ModelAndView中的model功能
  *    将 Model model                         # 作为控制器方法的形参（自动注入）
  *    model.addAttribute(key,value3);        # 向request域中存储数据
@@ -58,12 +58,18 @@ import java.util.Map;
  *  --------------------------------------------------------------------------------------------------------------------------------------------------------
  *
  *  【SpringMVC共享域对象数据之 取数据】
- *  向request域中存的数据 在html页面处肯定是可以通过Thymeleaf语法正常调用的。。。。这里主要说的是使用 InternalResourceView（转发视图） 转发到另一前端控制器时
- *   此时在另一前端控制器中 无法通过Model来获取 存于request域中的属性，只能通过：
+ *  向request域中存的数据 在html页面处肯定是可以通过Thymeleaf语法正常调用的。
+ *   这里主要说的是使用 InternalResourceView（转发视图） 转发到另一前端控制器时
+ *   此时在另一前端控制器中 无法通过Model来获取 存于request域中的属性✔，只能通过：
  * （1）方式一：使用ServletAPI向request域对象 取数据
  *      将 HttpServletRequest req            # 作为控制器方法的形参（自动注入）
  *      req.getAttribute(key,value1);        # 向request域中取出数据
  * （2）方式二：通过为 控制器方法的形参 添加注解 @RequestAttribute 创建映射关系。完成自动注入
+ *
+ *  【判断当前请求是否为异步请求】
+ *   String xRequestedWith = req.getHeader("x-requested-with");   #  获取xRequestedWith
+ *   if("XMLHttpRequest".equals(xRequestedWith))==true            # 表示当前请求为异步请求
+ *
  *
  @author Alex
  @create 2023-03-03-11:16

@@ -46,8 +46,8 @@ package basicfunction;
  *  user settings file                                                           # 需要将maven的配置文件设置为重写的文件
  *  local repository                                                             # 可以看到，此处文件存储路径已经变成了我们在配置文件中设置的
  *  new project - Maven - GroupID/ArtifactID               # 新建Maven工程，其中GroupID 是项目的组织唯一的标识符（公司名）。而ArtifactID就是项目的唯一的标识符，实际对应项目名称
- *（2）引入依赖
- *  pom.xml是maven的核心配置文件，需要进行如下配置
+ *
+ * （2）pom.xml 引入引入依赖
 ---------------------------------------
 <!--设置打包方式为war包-->
 <packaging>war</packaging>

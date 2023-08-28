@@ -19,13 +19,15 @@ import java.util.Comparator;
  * 【定制排序】
  *   定制排序常用于 当元素的类型没有实现java.lang.Comparable接口而又不方便修改代码，
  *     或者实现了java.lang.Comparable接口的排序规则不适合当前的操作，那么可以考虑实现 Comparator 接口来实现排序
- *   ✔✔创建 java.util.Comparator 定制化排序器，并重写其中的compare(Object o1,Object o2)方法，比较o1和o2的大小
+ *   ✔创建 java.util.Comparator 定制化排序器，并重写其中的compare(Object o1,Object o2)方法，比较o1和o2的大小
  *   可以传入定制化排序器后，✔通过 Collections.sort(list1,comparator1) 或 Arrays.sort(array1,comparator1)进行排序
+ *    ✔✔✔注意，传入sort方法的数组或集合，其泛型一定要是包装类，如Integer[]。。。若使用基本类型数组会报错
  *   重写规则如下：
- *     如果方法返回正整数，则表示o1大于o2；
- *     返回负整数，表示o1小于o2
- *     如果返回0，表示相等；
- *   可以将 Comparator 传递给 sort 方法（如 Collections.sort 或 Arrays.sort），从而允许在排序顺序上实现精确控制
+ *     1)如果方法返回正整数，则表示o1大于o2；
+ *     2)返回负整数，表示o1小于o2
+ *     3)如果返回0，表示相等；
+ *     4)✔常使用包装类.compare(x,y)                 # 如果(x==y)则返回零，如果(x<y)则返回小于零，如果(x>y)，则返回大于零的值。
+ *
  *
  * @author Alex
  * @create 2022-12-01-13:28

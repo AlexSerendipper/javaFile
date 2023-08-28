@@ -20,6 +20,7 @@ package binaryTree;
  * 所以大家要了解，用数组依然可以表示二叉树。
  *
  * 【二叉树的定义】见下
+ *
  @author Alex
  @create 2023-07-06-11:50
  */
@@ -29,6 +30,7 @@ public class TreeNode {
     TreeNode right;
 
     TreeNode() {}
+
     TreeNode(int val) { this.val = val; }
     TreeNode(int val, TreeNode left, TreeNode right) {
         this.val = val;

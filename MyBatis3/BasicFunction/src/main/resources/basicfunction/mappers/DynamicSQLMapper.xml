@@ -26,8 +26,15 @@
     </delete>
 
     <!-- *********************************改*************************************   -->
-    <!--  -->
-
+    <!-- int updateEmpByTrim(Emp emp) -->
+    <update id="updateEmpByTrim">
+        update mybatis_emp set eid = #{eid}
+        <if test="empName!='' and empName!=null "> ,emp_name = #{empName}</if>
+        <if test="age!='' and age!=null "> ,age = #{age}</if>
+        <if test="sex!='' and sex!=null "> ,sex = #{sex}</if>
+        <if test="email!='' and email!=null "> ,email = #{email}</if>
+        where eid = #{eid}
+    </update>
 
     <!-- ********************************查**************************************   -->
     <!--List<Emp> getEmpByEqual(Emp emp);-->

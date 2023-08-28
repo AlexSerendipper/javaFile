@@ -23,17 +23,26 @@ import transaction.service.UserService;
  * 【声明式事务管理】
  *  在 Spring 进行声明式事务管理，底层使用 AOP 原理
  *  Spring框架中提供了一个接口，代表事务管理器，这个接口针对不同的框架提供不同的实现类
- *   如：针对jdbctemplate和mybatis框架，都是使用DataSourceTransactionManager这个实现类✔
- *  有两种方式实现声明式的事务管理，基于xml配置方式 和 基于注解方式
- *    一般都是用注解方式进行事务管理
+ *   如：针对jdbctemplate和mybatis框架，都是使用 DataSourceTransactionManager 这个实现类✔
+ *  有两种方式实现声明式的事务管理，基于xml配置方式 和 基于注解方式✔一般都是用注解方式进行事务管理
  *
  * 【声明式事务管理】基于注解方式，配置见下方
  * (1)引入名称空间 tx
  * (2)开启事务注解,使用<tx:annotation-driven></tx:annotation-driven>
- * (3)创建事务管理器
+ * (3)创建事务管理器，Spring.xml。
  * (4)为service中的类上面（或者为service类中的方法上面）添加事务注解@Transactional
  *    如果把这个注解添加类上面，这个类里面所有的方法都添加事务
  *    如果把这个注解添加方法上面，为这个方法添加事务
+---------------------------------------------
+<!--创建事务管理器-->
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+<!--注入数据源-->
+<property name="dataSource" ref="dataSource"></property>
+</bean>
+
+<!--开启事务注解驱动，引用创建的事务管理器。将使用@Transaction标识的类和方法进行事务管理-->
+<tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+-------------------------------------------------
  *
  * 【声明式事务管理参数配置】@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.REPEATABLE_READ)
  *（1）propagation：事务传播行为：当一个事务方法被另外一个事务方法调用时候，这个事务方法如何进行
@@ -60,16 +69,6 @@ import transaction.service.UserService;
  * (4) readOnly：是否只读，readOnly默认值 false，表示可以进行增删改查操作。设置readOnly为true时，只能进行查询操作
  * (5) rollbackFor：回滚。设置出现哪些异常进行事务回滚
  * (6) noRollbackFor：不回滚。设置出现哪些异常不进行事务回滚
----------------------------------------------
-<!--创建事务管理器-->
-<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-     <!--注入数据源-->
-     <property name="dataSource" ref="dataSource"></property>
-</bean>
-
-<!--开启事务注解驱动，引用创建的事务管理器。将使用@Transaction标识的类和方法进行事务管理-->
-<tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
--------------------------------------------------
  *
  * 【纯注解开发】创建建配置类(见SpringConfig，需要创建三个方法)，替代xml配置文件，从而实现纯注解开发（实际开发中，常用springboot实现纯注解开发）
  *   @Configuration                                                # 在配置类上使用该注解

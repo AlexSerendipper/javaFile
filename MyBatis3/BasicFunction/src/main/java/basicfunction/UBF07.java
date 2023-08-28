@@ -30,6 +30,7 @@ import java.util.List;
     <result property="dept.deptName" column="dept_name"></result>
 </resultMap>
 ------------------
+ *
  * （2）使用association
 -----------------
  <!--使用association专门处理多对一的映射关系，其中javaType属性为 需要进行赋值的属性的全类名-->
@@ -48,19 +49,29 @@ import java.util.List;
 </resultMap>
 -----------------
  * （3）✔✔✔✔通过分步查询（相当于 子查询 写在where中的方式！！！）
+ *                 如下：通过分步查询员工及其对应部门的信息
 -----------------
 <resultMap id="EmpAndDeptResultMapOne" type="emp">
+         ...
          ...
     <!-- 使用association专门处理多对一的映射关系：分步查询 -->
     <!-- select为分步查询的结果，需要设置为mapper的全类名（即 namespace + id ） -->
     <!-- 此处的column为设置分步查询的条件，即输入到select语句中的值（此处为外层查询的结果did作为输入） -->
     <!-- fetchType属性，手动控制延迟加载效果，eager立即加载-->
-    <association property="dept"
+    <association property="dept"  // 这个property就是把查询的结果赋值给emp类中的dept属性
                  select="basicfunction.mappers.DeptMapper.getEmpAndDeptTwo"
-                 column="did"
-    >
+                 column="did">
     </association>
 </resultMap>
+
+<select id="getEmpAndDeptOne" resultMap="EmpAndDeptResultMapOne">  // 第一步查询的结果根据resultMap映射
+    select * from mybatis_emp where eid = #{eid};
+</select>
+
+
+<select id="getEmpAndDeptTwo" resultType="dept">
+    select * from mybatis_dept where did = #{did};
+</select>
 -----------------
  *
  * 【分步查询最大的好处就是延时加载】

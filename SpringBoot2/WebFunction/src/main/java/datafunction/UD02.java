@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 # mybatis.config-location=classpath:mybatis/mybatis-config.xml
 # 将表中字段的下划线自动转换为驼峰
 mybatis.configuration.map-underscore-to-camel-case=true
-# 设置某个包下类的别名
+# 设置某个包 类名与类的全类名的 映射关系
 mybatis.type-aliases-package=datafunction.pojo
 # 设置mapper映射文件的位置
 mybatis.mapper-locations=classpath:mybatis/mapper/*.xml

@@ -23,7 +23,7 @@ package basicfunction;
  * (7) 修改 /opt/redis-7.0.10/redis.conf 配置文件
  *      将原本的redis.conf拷贝到自己定义好的路径下备份好，如 /myredis/redis7.conf
  *      配置文件修改，默认 daemonize no 改为 daemonize yes。允许redis后台运行
- *      配置文件修改，默认 protected-mode yes 改为 protected-mode no。关闭保护模式，允许其他机器连接
+ *      配置文件修改，默认 protected-mode yes 改为 protected-mode no。关闭保护模式，即允许其他机器连接
  *      配置文件修改，默认 bind 127.0.0.1 改为 直接注释掉。
  *      配置文件修改，默认 requirepass foobared，改为 取消注释，并将foobared改为你的redis密码
  *      配置文件修改，默认 port 6379，默认端口号为 6379, 可以进行修改

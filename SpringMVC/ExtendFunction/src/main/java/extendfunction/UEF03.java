@@ -23,7 +23,7 @@ import java.util.UUID;
  *     MultiValueMap<String, String> headers = new HttpHeaders();
  *     headers.add("Content-Disposition", "attachment;filename=1.jpg");
  * （3）设置响应报文
- *      HttpStatus statusCode = HttpStatus.OK;
+ *     HttpStatus statusCode = HttpStatus.OK;
  * （4）设置返回值类型ResponseEntity
  *     ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(bytes, headers,statusCode);
  *
@@ -47,17 +47,16 @@ import java.util.UUID;
 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> </bean>
 ------------------------------------
  * （3）控制器方法
- *     控制器方法形参处，用MultipartFile类型，接收上传的数据file1
- *     file1.transferTo(new File("./src"));                            # 进行文件上传,上传到artifact路径
- *     file1.getOriginalFilename()                                     # 获取上传的文件的文件名
- *     file1.getName()                                                 # 获取上传的表单元素的name属性
-
+ *   控制器方法形参处，用MultipartFile类型，接收上传的数据file1
+ *   file1.transferTo(new File("./src"));                            # 进行文件上传,上传到artifact路径
+ *   file1.getOriginalFilename()                                     # 获取上传的文件的文件名
+ *   file1.getName()                                                 # 获取上传的表单元素的name属性
+ *
  @author Alex
  @create 2023-03-07-16:07
  */
 @Controller
 public class UEF03 {
-
     @RequestMapping(value = "/download")
     public ResponseEntity<byte[]> testResponseEntity(HttpSession session) throws IOException {
         // 获取ServletContext对象

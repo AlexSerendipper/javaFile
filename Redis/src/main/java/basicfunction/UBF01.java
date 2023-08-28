@@ -25,11 +25,31 @@ package basicfunction;
  *  Redis数据类型丰富，不仅仅支持简单的key-value类型的数据，同时还提供list，zset，set，hash等数据结构的存储
  *  Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用
  *  Redis支持数据的备份，即master-slave模式的数据备份
- * 生成dump.rpb文件(可以在配置文件中改) 默认生成在redis.conf同级目录
+ *   生成dump.rpb文件(可以在配置文件中改) 默认生成在redis.conf同级目录
  *
  * 【redis下载】在https://redis.io/中下载redis7。。。。https://github.com/microsoftarchive/redis中是微软提供的windows安装包
  *  https://try.redis.io           # redis在线测试使用网址
  *  https://doc.redisfans.com      # redis命令参考手册
+ *
+ * 【Redis 和 memcached的异同】
+ *  都是内存数据库，memcached还可以存图片、视频。
+ *  存储数据类型：memcached的value只能是String，redis支持string/hash/list/set/sortedSet等数据结构。
+ *  虚拟内存：redis当内存用完时，可以把很久没用的value放到磁盘。
+ *  redis是单线程，memcached是多线程的。
+ *  Redis更可靠：memcached不支持持久化；redis可通过RDB快照和AOF日志持久化，所以支持灾难恢复，支持主从数据备份。
+ *  应用场景：redis除了可以做NoSQL数据库使用，还可以做消息队列、分布式锁等。
+ *
+ * 【redis为什么快？】
+ * 1. 内存存储：Redis是使用内存存储数据，避免了磁盘IO上的开销。数据存储在内存中。
+ * 2. 单线程实现：Redis使用单个线程处理请求，避免了多个线程之间线程切换和锁资源争用的开销（redis6.0以前）
+ * 3. 非阻塞IO：Redis使用多路复用IO技术，将epoll作为I/O多路复用技术的实现，再加上Redis自身的事件处理模型将epoll中的连接、读写、关闭都转换为事件，不在网络I/O上浪费时间。
+ * 4. 优化的数据结构：Redis有诸多可以直接应用的优化数据结构的实现，应用层可以直接使用原生的数据结构提升性能
+ *
+ * 要知道，redis的快 是相对于mysql这种数据库来说，要快得多，其原因不单单是因为内存存储
+ * 就算Mysql使用了内存，它也还是慢，原因是Mysql作为一种关系型数据库，其中存在了很多集合操作，如group,join等。。。这些操作是很慢的
+ * 而redis中也有集合操作（交集，并集），如果在redis中使用大量的集合操作，redis也是很慢的
+ * 所以，当数据量不大的时候，我们应尽量避免集合操作。如果数据量过大，我们将使用redis集群，由于集群的约束，此时将不再支持集合操作
+ *
  *
  * 【redis7新特性】了解，大体和之前redis版本保持一致和稳定，主要是自身底层性能和资源利用率上的优化和提高
  *  Redis function: 了解，现在主要用luna

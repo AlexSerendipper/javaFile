@@ -21,15 +21,15 @@ import java.util.Map;
  *       java.util.Map  -->  map
  *       java.util.List  -->  list
  *
- * 【查询结果为list集合】即 resultType="list"
+ * 【查询结果为list集合】mapper接口返回值为list, resultType="user"
  *  当查询的数据只有一条，可以使用 实体类 或 集合 作为返回值✔
  *   当查询的数据为多条时，只能使用集合(list或map)接收✔
  *
- * 【查询结果为一个map集合】即 resultType="map"
+ * 【查询结果为一个map集合】mapper接口返回值为map, resultType="user"
  *  当查询结果为 实体类时，实际上就是根据 与属性名相同的字段名（查询结果中） 为其属性赋值
  *   故当查询结果为 map集合时，实际上就是以 字段名=值 的形式为map集合填充值
  *
- * 【查询结果为多个map集合】即 resultType="map"
+ * 【查询结果为多个map集合】mapper接口返回值为 List<Map<String, Object>>, resultType="user"
  *  当查询多条数据，因为有多条数据，就会产生多个map集合
  *  若最终希望以List的形式返回，可以设置返回值类型为 List<Map<String, Object>>，把返回的多个map集合存储到List中
  *  若最终希望以一个map的方式返回数据。可以通过@MapKey注解 设置map集合的键（通常以某个字段作为键），每条数据所对应的map集合作为值

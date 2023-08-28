@@ -15,7 +15,7 @@ import java.util.List;
  *   无法使用#{}，因为模糊查询的条件在单引号中，若使用#{}，实际上会被解析成问号（自带单引号），而实际上不需要再有单引号 ，故出错
  *     如 select * from mybatis_user where username like '% #{blur_name} %'  被解析为
  *        select * from mybatis_user where username like '% ？ %'
- *   解决方案1：使用 ${}
+ *   解决方案1：使用 ${},
  *   解决方案2：使用 concat('%',#{blur_name},'%')
  *   ✔解决方案3：使用 "%"#{blur_name}"%"
  *
@@ -34,6 +34,7 @@ import java.util.List;
  *   useGeneratedKeys="true"               # 设置允许获得自增的主键
  *   keyProperty="id"                      # 因为增删改有统一的返回值是受影响的行数，因此只能将获取的 自增的主键 放在 传入参数的实体类对象的某个属性中
  *                                            当执行完添加操作后，传入参数的实体类对象的某个属性被赋值为 自增的主键
+ *
  *
  @author Alex
  @create 2023-03-12-11:18

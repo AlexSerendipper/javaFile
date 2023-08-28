@@ -21,13 +21,13 @@ import javax.servlet.http.HttpServletRequest;
  *  SpringMVC中默认的转发视图是 InternalResourceView(不同于ThymeleafView)
  *  ✔当控制器方法中所设置的视图名称 以"forward:"为前缀时，此时的视图名称不会被SpringMVC配置文件中所配置的视图解析器解析，
  *         而是会将前缀"forward:"去掉，直接将剩余部分作为最终路径 转发（以InternalResourceView形式）
- *  无法使用forward跳转到具体的资源，因为 / 会直接被前端控制器DispatcherServlet处理。。所以只能请求另一前端控制器
+ *  无法使用forward跳转到具体的资源，因为 / 会直接被前端控制器DispatcherServlet处理。。所以只能请求另一前端控制器✔
  * （3）RedirectView（重定向视图是）
  *  ✔当控制器方法中所设置的视图名称以"redirect:"为前缀时，此时的视图名称不会被SpringMVC配置文件中所配置的视图解析器解析，
  *    而是会将前缀"redirect:"去掉，直接将剩余部分作为最终路径 重定向（RedirectView形式）
- *  无法使用redirect跳转到具体的资源，因为 / 会直接被前端控制器 DispatcherServlet处理。。所以只能请求另一前端控制器
+ *  无法使用redirect跳转到具体的资源，因为 / 会直接被前端控制器 DispatcherServlet处理。。所以只能请求另一前端控制器✔
  *
- * 【view-controller】视图控制器
+ * 【view-controller】视图控制器，在SpringMVC中进行配置
  *  当某个 控制器方法 仅仅用来实现页面跳转( 即只返回视图名称，无需其他操作 )，可以将该处理器方法使用view-controller代替
  *  当配置了view-controller后，其他的控制器将全部失效，此时需要配置开启 mvc注解驱动已解决该问题
  *

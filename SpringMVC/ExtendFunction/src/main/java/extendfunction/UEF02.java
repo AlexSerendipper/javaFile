@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 【SpringMVC处理json】当我们需要响应一个对象给客户端时
- * (1) 导入jackson的依赖
+ * (1) 导入 jackson 的依赖
 ---------------
 <dependency>
     <groupId>com.fasterxml.jackson.core</groupId>

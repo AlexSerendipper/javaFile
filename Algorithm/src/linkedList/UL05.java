@@ -1,61 +1,31 @@
 package linkedList;
 
 /**
- * 删除链表的倒数第 N 个结点: https://leetcode.cn/problems/remove-nth-node-from-end-of-list/
- * 给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。
- *
- *
- *
- *
+ * 两两交换链表中的节点：https://leetcode.cn/problems/swap-nodes-in-pairs/
+ * 给你一个链表，两两交换其中相邻的节点，并返回交换后链表的头节点。你必须在不修改节点内部的值的情况下完成本题（即，只能进行节点交换）。
  @author Alex
- @create 2023-06-17-10:16
+ @create 2023-06-16-11:14
  */
-public class UL05 {
-
-        public static void main(String[] args) {
-               ListNode head = new ListNode(1);
-               head.next = new ListNode(2);
-               head.next.next = new ListNode(3);
-               head.next.next.next = new ListNode(4);
-               head.next.next.next.next = new ListNode(5);
-
-            int n = 2;
-
-            ListNode listNode = new UL05().removeNthFromEnd(head, n);
-
-
-
-        }
-
-
-    // 定义快慢指针: fast和slow同时指向虚拟节点,N为整个链表的长度（包含null,其中dummyHead为0,null为5）
-    //              fast先走n + 1步，然后fast和slow同时移动，直到fast指向null时，slow指向删除节点的上一个节点
-    // 原因：fast先走n + 1步，此时距离null节点的距离为N-(n+1)
-    //       N-(n+1)即为slow节点走的距离，即slow节点停止的位置
-    //       而 N-n-1 恰好就是 被删除节点的前一个节点
-
-
-    public ListNode removeNthFromEnd(ListNode head, int n) {
-            ListNode dummyHead = new ListNode(0);
-            dummyHead.next = head;  // 定义虚拟头节点
-            ListNode fast = dummyHead;  // 定义快慢指针
-            ListNode slow = dummyHead;  // 定义快慢指针
-
-            // fast先走n + 1步
-            for (int i = 0; i <= n; i++) {
-                fast = fast.next;
-            }
-
-            // 同时移动直到fast为null
-            while(fast!=null){
-                fast = fast.next;
-                slow = slow.next;
-            }
-
-            // 删除
-            slow.next = slow.next.next;
-            return dummyHead.next;
-
-    }
-
-}
+//public class UL04 {
+//    public ListNode swapPairs(ListNode head) {
+//        ListNode dumyhead = new ListNode(-1);  // 设置一个虚拟头结点
+//        dumyhead.next = head;  // 将虚拟头结点指向head，这样方面后面做删除操作
+//        ListNode cur = dumyhead;  // 指针初始指向虚拟头节点
+//        ListNode temp;  // 临时节点，保存两个节点后面的节点
+//        ListNode firstnode;  // 临时节点，保存两个节点之中的第一个节点
+//        ListNode secondnode; // 临时节点，保存两个节点之中的第二个节
+//
+//        while(cur.next!=null && cur.next.next!=null){
+//            temp = cur.next.next.next;
+//            firstnode = cur.next;
+//            secondnode = cur.next.next;
+//
+//            cur.next = secondnode;  // 步骤一
+//            secondnode.next = firstnode;  // 步骤二
+//            firstnode.next = temp;  // 步骤三
+//
+//            cur = firstnode;  // 这里一定要注意，firstnode后是第三个节点
+//        }
+//        return dumyhead.next;
+//    }
+//}

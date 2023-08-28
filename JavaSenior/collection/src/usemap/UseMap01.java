@@ -87,6 +87,7 @@ import java.util.*;
  *      int size()：返回map中key-value对的个数
  *      boolean isEmpty()：判断当前map是否为空
  *      boolean equals(Object obj)：判断当前map和参数对象obj是否相等
+ *      int getOrDefault(Object key, V defaultValue)  意思就是当Map集合中有这个key时，就使用这个key对应的value值，如果没有就使用默认值defaultValue
  *  3) 元视图操作的方法：
  *      Set keySet()：返回所有key构成的Set集合
  *      Collection values()：返回所有value构成的Collection集合

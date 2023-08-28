@@ -40,8 +40,11 @@ package DOM;
  *  location.href                                                # 获取当前页面的url地址，可读可写
  *
  * 【jquery中的常用套路】
- * (1) $("uploadForm").submit(upload);                             # 表示当点击提交表单，触发表单提交事件时，事件由upload函数处理
- *     function upload(){return false}                             # 此处 必须返回false，否则form仍会试图提交表单
+ * (1) $("#uploadForm").submit(upload);                             # 表示当点击提交表单，触发表单提交事件时，事件由upload函数处理
+ *     function upload(){
+ *          ....                                                    # 业务逻辑
+ *          return false                                            # 此处 必须返回false，否则form仍会试图提交表单
+ *     }
  *     
  @author Alex
  @create 2023-01-27-16:02

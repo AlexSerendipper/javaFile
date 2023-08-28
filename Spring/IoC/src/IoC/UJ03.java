@@ -22,8 +22,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  <bean id="userDaoImpl" class="IoC.dao.UserDaoImpl"></bean>
  -------------------------
 
-
-
  * (2) 注入对象属性（内部bean）: 如，使用spring表示Dept和Emp之间的关系
  *      一个部门有多个员工，一个员工属于一个部门
  *      配置xml。内部bean就体现在：在property中，直接创建一个其他bean对象
@@ -40,7 +38,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
          </bean>
      </property>
  </bean>
-
  ------------------------
  * (3) 级联赋值: 在一个bean对象中对另一个bean对象赋值（不常用）
  *      实际上，上述的 内部bean方法 以及 外部bean 方法，都能实现级联赋值
@@ -61,7 +58,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
      <!--<property name="dname"></property>-->
  </bean>
  ------------------------
-
  @author Alex
  @create 2023-02-21-13:41
  */

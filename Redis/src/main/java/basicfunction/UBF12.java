@@ -40,12 +40,15 @@ sentinel auth-pass mymaster qqabcd
  * (3) 当主节点被判断客观下线以后，各个哨兵节点会进行协商，选举出一个 领导者哨兵（哨兵代表） 节点
  *     并由该领导者节点进行故障迁移（Raft算法 选出领导者节点，基本思路就是先到先得~）
  *（4）领导者哨兵依次比较 所有slave的 priority/replication offset/run id， 谁的更大谁就是新的mater (如果priority相同再比较replication offset)
+ *     slave priority越低，优先级就越高
+ *     slave复制了越多的数据，offset越靠后， 优先级就越高
+ *     如果一个slave跟master断开连接已经超过了down-after-milliseconds的10倍，那么slave就会认为其不适合被选举为master.
  * (5) Sentinel leader会对新选举出来的新master执行slaveof no one操作，将其提升为master节点
  *     Sentinel leader然后向其他slave发送命令，让剩余的slave成为新的matster的slave
  *     若 原master重新上线，Sentinel leader会让原master降级为slave恢复正常工作
  *
  * 【哨兵使用建议】
- *  兵节点的数量应为多个，哨兵本身应该集群，保证高可用
+ *  哨兵节点的数量应为多个，哨兵本身应该集群，保证高可用
  *  哨兵节点的数量应该是奇数个
  *  各个哨兵节点的配置应该一致
  *  如果哨兵节点部署在Docker等容器里，要注意端口的正确映射

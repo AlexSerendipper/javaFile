@@ -7,18 +7,17 @@ import org.springframework.web.bind.annotation.*;
  * 【@RequestMapping】请求映射：通过该注解，SpringMVC接收到指定的请求，就会来找到在映射关系中对应的控制器方法来处理这个请求
  *  必须保证@RequestMapping映射的上下文路径的唯一性，否则报错
  *    @RequestMapping标识一个类：设置映射请求的请求路径的初始信息✔
- *    @RequestMapping标识一个方法：设置映射请求请求路径的具体信息✔
+ *    @RequestMapping标识一个方法：设置映射请求请求路径的具体信息，最终的请求路径为 初始信息+具体信息✔
  *
  * 【value属性】@RequestMapping的value属性
- *  表示该请求映射能够匹配请求地址所对应的请求
+ *  表示该请求映射能够匹配请求地址所对应的请求，必须设置
  *  value属性是一个字符串类型的数组，表示可以匹配多个地址✔
- *  value属性必须设置
  *  value属性支持模糊匹配✔
  *    ？：表示任意的单个字符
  *    *：表示任意的0个或多个字符
  *    **：表示任意的0层或多层目录
  *   注意：在使用**时，只能使用 /** 的格式，不能使用这样的格式 /a**a
- *  value属性支持路径占位符✔✔✔✔✔
+ *  value属性支持路径占位符（{xxx}）✔✔✔✔✔
  *    SpringMVC路径中的占位符常用于RESTful风格中，即把请求参数均通过路径的方式传输到服务器中
  *    在Value属性中通过占位符{xxx}表示传输的数据，如 /get/{name}/{id}
  *     在通过 @PathVariable("占位符")注解，将占位符所表示的数据赋值给控制器方法的形参, 如 public String getName(@PathVariable("name") username)

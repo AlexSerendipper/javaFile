@@ -16,6 +16,9 @@ import org.junit.Test;
  *  int compareTo(String anotherString)：                                  # 比较两个字符串的大小
  *  String substring(int beginIndex)：                                     # 回一个新的字符串，它是此字符串的从beginIndex开始截取到最后的一个子字符串。
  *  String substring(int beginIndex, int endIndex) ：                      #　返回一个新字符串，它是此字符串从beginIndex开始截取到endIndex(不包含)的一个子字符串（左闭右开）
+ *  byte[] getBytes()                                                      # 方法获取字符串的ASCII码值数组
+ *   `(int) ch`                                                              # 此外，使用强制类型转换，可以将单个字符 'ch' 转换为 int 类型，并打印结果为ASCII码值
+ *   ch1 - ch2                                                               # 两个字符串相减，结果也为ascii码值
  *
  * 【查找】
  *  boolean contains(CharSequence s)：　　　　　　　　　　　　　　　　　  # 当且仅当此字符串包含指定的 char 值序列时，返回 true
@@ -33,7 +36,7 @@ import org.junit.Test;
  *  String replace(CharSequence target, CharSequence replacement)：       # 使用指定的字面值(字符串)替换序列替换此字符串所有匹配字面值目标序列的子字符串。
  *  String replaceAll(String regex, String replacement) ：                # 使用给定的replacement替换此字符串所有匹配给定的正则表达式的子字符串。
  *  String replaceFirst(String regex, String replacement) ：              # 使用给定的replacement替换此字符串匹配给定的正则表达式的第一个子字符串。
- *  boolean matches(String regex)：                                       # 告知此字符串是否匹配给定的正则表达式。
+ *  boolean matches(String regex)：                                       # 告知此字符串是否匹配给定的正则表达式。（正则表达式见javaweb）
  *  String format(String formate, object);                                # 可以使用带有占位符%d的字符串作为formate，动态输入object进行占位符的替换
  *
  * 【切片】

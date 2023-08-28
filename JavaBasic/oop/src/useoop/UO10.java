@@ -6,16 +6,18 @@ import org.junit.Test;
  *【包装类】
  *  针对八种基本数据类型定义相应的引用类型—包装类（封装类）
  *  有了类的特点，就可以调用类中的方法，Java才是真正的面向对象
- *            基本数据类型                  包装类
- *               byte                       Byte
- *               short                      Short
- *               int                        Integer
- *               long                       Long
- *               float                      Float
- *               double                     Double
- *               boolean                    Boolean
- *               char                       Character
- *  *手动装箱、拆箱
+------------------------------------------------------------------
+             基本数据类型                  包装类
+                byte                       Byte
+                short                      Short
+                int                        Integer
+                long                       Long
+                float                      Float
+                double                     Double
+                boolean                    Boolean
+                char                       Character
+------------------------------------------------------------------
+ *  手动装箱、拆箱
  *   Integer num2 = new Integer(10)    # 基本数据类型转换为包装类。通过包装类的构造器实现：
  *   .xxxValue()                       # 获得包装类对象中包装的基本类型变量。调用包装类的.xxxValue()方法
  *  ✔JDK1.5之后，支持自动装箱，自动拆箱。但类型必须匹配。
@@ -23,11 +25,19 @@ import org.junit.Test;
  *   int num3 = num2;                  # 自动拆箱，不需要xxx.value，直接使用
  *  ✔有了自动装箱，自动拆箱。基本数据类型在很多情况下都可以看作是包装类了
  *
+ * 【包装类的常用方法】
+ *  包装类.parseXXX(binary, 2)            # 二进制转换为十进制，传入二进制字符串binary
+ *  包装类.toBinaryString(num);           # 十进制转换为二进制，传入数字
+ *
  *【String与包装类的转换】数据类型必须匹配
  *  包装类 + ""                          # 包装类==>String。方法1：连接运算
- *  String.valueOf(包装类)               # 包装类==>String。方法2：.valueOf()
- *  包装类.parseXxx(String s)            # String==>包装类。方法1：通过包装类的parseXxx(String s)
- *  new 包装类(String s);                # 通过包装类的构造器实现
+ *  String.valueOf(包装类)               # 包装类==>String。方法2：如 String.valueOf(Integer)
+ *
+ *  包装类.parseXXX(String s)            # String==>包装类。方法1：如 Integer.parseInt(String s)
+ *                                                                   Integer.parseInt(String s, int radix)，在转换时，可以指定进制呢
+ *  new 包装类(String s);                # String==>包装类。方法2：通过包装类的构造器实现
+ *
+ *
  @author Alex
  @create 2023-01-10-16:13
  */

@@ -3,7 +3,6 @@ package usebasicgrammar;
 import org.junit.Test;
 
 /**
- *
  * 【程序流程控制】
  * 【一、顺序结构】程序从上到下逐行地执行，中间没有任何判断和跳转
  *
@@ -158,6 +157,50 @@ public class UBG03 {
             }
             System.out.println(i);
         }
+    }
+
+    // 统计所有小于非负整数 n 的质数的数量。
+    // 思路：
+    // 质数又称为素数。一个大于1的自然数，除了1和它自身外，不能被其他自然数整除的数叫质数；否则称为合数。
+    // 厄拉多塞筛法：先将2－N的各数放入表中，然后在2的上面画一个圆圈，然后划去2的其他倍数；第一个既未画圈又没有被划去的数是3，将它画圈，再划去3的其他倍数；现在既未画圈又没有被划去的第一个数 是5，将它画圈，并划去5的其他倍数……
+    // 依次类推，一直到所有小于或等于N的各数都画了圈或划去为止。这时，表中画了圈的以及未划去的那些数正好就是小于N的素数。
+
+    @Test
+    public void test5(){
+        countPrimes(100);
+    }
+
+
+    /**
+     * 统计n以内的质数数量并输出
+     * @param n
+     * @return
+     */
+    public static int countPrimes(int n) {
+        if(n < 3){
+           return 0;
+        }
+
+        boolean [] dp = new boolean [n];  // 判断是否为数组，index为false的是质数
+        dp[0] = true;  // 先把0和1标记为合数（非质数）, 【数组中默认值为false】
+        dp[1] = true;
+        int res = 0;
+
+        for(int i = 2; i * i < n; i++){  // 遍历元素
+            if(!dp[i]){  // 如果是质数，将它的整数倍都标记位合数
+                for(long j = i * i; j < n; j += i)
+                    dp[(int)j] = true;
+            }
+        }
+
+        int ans = 0;
+        for (int i = 0; i < dp.length; i++) {
+            if(dp[i]==false){
+                System.out.print(i+" ");
+                ans++;
+            }
+        }
+        return ans;
     }
 }
 

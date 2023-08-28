@@ -25,7 +25,7 @@ package corefunction;
 
  * 【场景启动器 starter】
  *  引用依赖时可以直接使用 场景启动器starter，只要引入starter，这个场景的所需要的依赖都自动引入。。。目前starter几乎已经支持所有常用的场景
- *  spring-boot-starter-*                       # 官方提供的场景启动器。 *就代表某种场景。如web等..
+ *  spring-boot-starter-*                       # 官方提供的场景启动器。 *处代表某种场景（如web等）
  *  *-spring-boot-starter                       # 第三方提供的场景启动器。
  *  pom.xml右键 - diagrams - show dependency    # 查看依赖树，可以看到 所有场景启动器最底层都依赖 spring-boot-starter
  *

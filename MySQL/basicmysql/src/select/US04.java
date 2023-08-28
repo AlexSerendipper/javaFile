@@ -37,7 +37,7 @@ package select;
  *      LIKE: LIKE运算符主要用来匹配字符串，通常用于模糊匹配。LIKE运算符通常使用如下通配符:
  *         "%"：匹配0个或多个字符。
  *         "_"：只能匹配一个字符。
- *         如SELECT...FROM...WHERE last_name LIKE '_\_a%'。查找名字中第二个字符是下划线，第三个字符是a的员工
+ *         如SELECT...FROM...WHERE last_name LIKE '_\_a%'。查找名字中第二个字符是下划线，第四个字符是a的员工
  *      REGEXP：正则表达式运算符。 如：SELECT 'atguigu' REGEXP '[ab]',判断查询常数中是否包含a或者b
  *
  * 【逻辑运算符】对boolean型的运算结果，都可以使用逻辑运算符。如NOT LIKE, NOE BETWEEN AND...

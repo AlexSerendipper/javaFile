@@ -47,12 +47,12 @@ package DDL_DML_DCL;
  * 2) 查看表
  *   SHOW CREATE TABLE [表名\G]:                 # 使用SHOW CREATE TABLE语句不仅可以查看表创建时的详细语句，还可以查看存储引擎和字符编码。
  * 3) 修改表
- *   ALTER TABLE 表名 ADD 字段名 字段类型 [FIRST|AFTER 字段名];                                    # 向已有的表中添加列，默认添加到表中的最后一个字段。
- *                                                                                               # AFTER 字段名，可以将列添加到指定字段名的后面。FIRST设置添加到表中第一个字段
- *   ALTER TABLE 表名 MODIFY 字段名1 字段类型 [约束条件] [DEFAULT 默认值] [FIRST|AFTER 字段名2];    # 修改现有表中的列（数据类型、长度、默认值..）。✔利用alter可以实现字段的移动操作
- *                                                                                               # 通常也不会改类型拉，修改长度比较多。
- *   ALTER TABLE 表名 DROP 字段名                                                                # 删除现有表中的列
- *   ALTER TABLE 表名 CHANGE 字段名2 新列名 新数据类型;                                            # 重命名现有表中的列
+ *   ALTER TABLE 表名 ADD 字段名 字段类型 [FIRST|AFTER 字段名];                                        # 向已有的表中添加列，默认添加到表中的最后一个字段。
+ *                                                                                                    # AFTER 字段名，可以将列添加到指定字段名的后面。FIRST设置添加到表中第一个字段
+ *   ALTER TABLE 表名 MODIFY 字段名 新的字段类型 [约束条件] [DEFAULT 默认值] [FIRST|AFTER 字段名2];    # 修改现有表中的列的 数据类型、长度、默认值..。等参数
+ *                                                                                                      ✔利用alter可以实现字段的移动操作。。。通常也不会改类型拉，修改长度比较多。
+ *   ALTER TABLE 表名 DROP 字段名                                                                    # 删除现有表中的列
+ *   ALTER TABLE 表名 CHANGE 旧字段名 新字段名 新数据类型;;                                           # 重命名现有表中的字段名
  * 4）重命名表
  *   RENAME TABLE 表名1 TO 表名2;             # 二者效果一样，记第一个把
  *   ALTER table 表名1 RENAME [TO] 表名2;

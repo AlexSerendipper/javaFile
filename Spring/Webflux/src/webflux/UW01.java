@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  *  Spring5框架自带了通用的日志封装 Log4j2（移除了旧版的Log4jConfigListener）
  *
  * 【Log4j2使用流程】
- * (1) 引入相关jar包（4个）
+ * (1) 引入相关jar包（4个）（后续就推荐使用maven管理了）
  * (2) 创建log4j2.xml（固定名称，不能用其他名字，内容基本是固定的）（创建后会被自动读取）
  * (3) private static final Logger log = LoggerFactory.getLogger(UW01.class)            # 创建logger，以当前类为参数传入，即指定了logger的名字（输出时知道出处）
  *    （注意引入的是org.slf4j下的相关类）（此时在类中运行的程序就会自动给输出相关日志）

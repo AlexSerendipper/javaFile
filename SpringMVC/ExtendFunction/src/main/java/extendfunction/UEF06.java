@@ -12,11 +12,11 @@ package extendfunction;
  *  指定DispatcherServlet的映射规则
  *  添加过滤器
  *
- * 【二、创建SpringConfig配置类，代替Spring的配置文件】见SpringConfig
+ * 【二、创建SpringConfig配置类，代替Spring.xml】见SpringConfig
  *  ssm整合之后，spring的配置信息写在此类中
  *
- * 【三、创建WebConfig配置类，代替SpringMVC的配置文件】见WebConfig。原xml文件中用bean配置，在配置类中也可以用@bean配置
- *                                                              原xml文件中不是bean配置，在配置类中需要实现 WebMvcConfigurer 接口, 该接口提供了实现
+ * 【三、创建WebConfig配置类，代替SpringMVC.xml】见WebConfig。原xml文件中用bean配置，在配置类中也可以用@bean配置
+ *                                                          原xml文件中不是bean配置，在配置类中需要实现 WebMvcConfigurer 接口, 该接口提供了实现
  * （1） 扫描组件
  * （2） 配置Thymeleaf
 -------------------------

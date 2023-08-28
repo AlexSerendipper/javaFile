@@ -1,7 +1,7 @@
 package basicfunction;
 
 /**
- * 【核心配置文件详解】这部分内容只做了解，实际中可以直接复制使用
+ * 【核心配置文件详解】mybatis-config.xml。。。这部分内容只做了解，实际中可以直接复制使用
  *  核心配置文件中的标签必须按照固定的顺序书写✔✔
  *    properties?,settings?,typeAliases?,typeHandlers?,objectFactory?,objectWrapperFactory?,reflectorFactory?,plugins?,environments?,databaseIdProvider?,mappers?
 --------------------------
@@ -28,7 +28,9 @@ package basicfunction;
          alias属性：设置 该类的 别名，若不设置此属性，默认别名为 类名，且不区分大小写。
          若设置此属性，别名所设置的值！-->
          <!--<typeAlias type="com.atguigu.mybatis.bean.User"></typeAlias>-->
-         <!-- 最常用的做法，以包为单位，设置改包下所有的类型都拥有默认的别名，即类名(不区分大小写) -->
+
+         <!-- 最常用的做法，以包为单位，设置改包下所有的类型都拥有默认的别名(即类名)(不区分大小写)
+              即设置了 类名与类的全类名的对应关系 -->
          <package name="basicfunction.pojo"/>
      </typeAliases>
 
@@ -50,7 +52,7 @@ package basicfunction;
         </environment>
     </environments>
 
-    <!--引入映射文件-->
+    <!--引入映射文件（即设置映射文件的位置）-->
     <mappers>
         <!-- <mapper resource="mappers/UserMapper.xml"/> -->
         <!--以包的形式引入映射文件

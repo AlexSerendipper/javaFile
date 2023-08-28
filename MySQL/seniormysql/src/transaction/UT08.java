@@ -9,7 +9,7 @@ package transaction;
  *
  * 【快照读与当前读】
  *  MVCC在MySQL InnoDB中的实现主要是为了提高数据库并发性能，用更好的方式去处理读-写冲突，做到即使有读写冲突时，也能做到不加锁，非阻塞并发读，
- *   而这个读指的就是快照读, 而非当前读。当前读实际上是一种加锁的操作，是悲观锁的实现。而MVCC本质是采用乐观锁思想的一种方式。
+ *   而这个读指的就是快照读, 而非当前读。。。当前读实际上是一种加锁的操作，是悲观锁的实现。而MVCC本质是采用乐观锁思想的一种方式。
  *  快照读（一致性读）：读取的是快照数据。不加锁的简单的 SELECT 都属于快照读，即不加锁的非阻塞读。比如这样：
  *    SELECT * FROM player WHERE ...
  *   快照读的出现 是基于提高并发性能的考虑，快照读的实现是基于MVCC，即快照读可能读到的并不一定是数据的最新版本，但它在很多情况下，避免了加锁操作，降低了开销。
@@ -24,8 +24,8 @@ package transaction;
  *   ReadView就是事务在使用MVCC机制进行快照读操作时产生的读视图
  *  ✔ MVCC 的实现依赖于：隐藏字段(trx_id、roll_pointer)、Undo Log、ReadView 。
  *  ✔ MVCC只能在READ COMMTTED和REPEATABLE READ两个隔离级别下工作
- *   MVCC主要解决 READ COMMITTED和REPEATABLE READ 隔离级别下的事务并发问题，假如另一个事务已经修改了记录但是尚未提交，我们不能直接读取最新版本的记录，
- *   ReadView 要解决的主要问题核心问题是 需要判断一下版本链中的哪个版本是当前事务可见的
+ *       MVCC主要解决 READ COMMITTED和REPEATABLE READ 隔离级别下的事务并发问题，即假如另一个事务已经修改了记录但是尚未提交，我们不能直接读取最新版本的记录，
+ *       ReadView 要解决的主要问题核心问题是 需要判断一下版本链中的哪个版本是当前事务可见的
  *  Readview中主要包含四个核心内容：
  *    creator_trx_id                 # 创建这个Read View 的事务 ID。
  *                                      (只有在对表中的记录做改动时（增删改时）才会为事务分配事务id，读 事务中的事务id值都默认为0）
@@ -34,10 +34,10 @@ package transaction;
  *    low_limit_id                   # 表示生成ReadView时系统中应该分配给下一个事务的id值。low_limit_id 是系统最大的事务id值，这里要注意是系统中的事务id，需要区别于正在活跃的事务ID。
  *
  * 【ReadView的规则】MVCC实现原理
- *  如果被访问版本的trx_id属性值与ReadView中的creator_trx_id值相同，意味着当前事务 在访问它自己修改过的记录，所以该版本可以被当前事务访问。
- *  如果被访问版本的trx_id属性值小于ReadView中的up_limit_id值，表明生成该版本的事务在当前事务生成ReadView前已经提交，所以该版本可以被当前事务访问。
- *  如果被访问版本的trx_id属性值大于或等于ReadView中的low_limit_id值，表明生成该版本的事务在当前事务生成ReadView后才开启，所以该版本不可以被当前事务访问。
- *  如果被访问版本的trx_id属性值在ReadView的up_limit_id和low_limit_id之间，那就需要判断一下trx_id属性值是不是在 trx_ids 列表中。
+ *  如果被访问版本的 trx_id属性值 与ReadView中的creator_trx_id值相同，意味着当前事务 在访问它自己修改过的记录，所以该版本可以被当前事务访问。
+ *  如果被访问版本的 trx_id属性值 小于ReadView中的up_limit_id值，表明生成该版本的事务在当前事务生成ReadView前已经提交，所以该版本可以被当前事务访问。
+ *  如果被访问版本的 trx_id属性值 大于或等于ReadView中的low_limit_id值，表明生成该版本的事务在当前事务生成ReadView后才开启，所以该版本不可以被当前事务访问。
+ *  如果被访问版本的 trx_id属性值 在ReadView的up_limit_id和low_limit_id之间，那就需要判断一下trx_id属性值是不是在 trx_ids 列表中。
  *   如果在，说明创建ReadView时生成该版本的事务还是活跃的，该版本不可以被访问。
  *   如果不在，说明创建ReadView时生成该版本的事务已经被提交，该版本可以被访问。
  *  我们来看下当查询一条记录的时候，系统如何通过MVCC找到它：

@@ -5,7 +5,7 @@ package useSSM;
  * （1）创建MyBatis的核心配置文件mybatis-config.xml
  *     （方式一：仍由核心配置文件管理相应的内容，推荐使用✔）
  *     （方式二：将核心配置文件中的内容在spring.xml中进行配置）
- *     （注意：若使用方式二，只设置了部分内容，仍需要设置MyBatis核心配置文件的路径）
+ *     （注意：若使用方式二，并且只设置了部分内容（其余内容通过mybatis-config.xml实现），则仍需要设置MyBatis核心配置文件的路径）
 -----------------------------
 <!-- 将SqlSessionFactory对象交给spring管理-->
 <!-- 配置用于创建SqlSessionFactory的工厂bean，可以直接在spring的IOC中获取SqlSessionFactory对象(自动装配) -->

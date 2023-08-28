@@ -1,104 +1,104 @@
-<!--<?xml version="1.0" encoding="UTF-8"?>-->
-<!--<beans xmlns="http://www.springframework.org/schema/beans"-->
-<!--       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
-<!--       xmlns:p="http://www.springframework.org/schema/p"-->
-<!--       xmlns:util="http://www.springframework.org/schema/util"-->
-<!--       xmlns:context="http://www.springframework.org/schema/context"-->
-<!--       xmlns:mvc="http://www.springframework.org/schema/mvc"-->
-<!--       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd-->
-<!--                     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd-->
-<!--                     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd-->
-<!--                     http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">-->
-<!--    &lt;!&ndash;引入 context 名称空间结束&ndash;&gt;-->
-<!--    &lt;!&ndash;开启组件扫描&ndash;&gt;-->
-<!--    <context:component-scan base-package="extendfunction">-->
-<!--    </context:component-scan>-->
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+                     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                     http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!--引入 context 名称空间结束-->
+    <!--开启组件扫描-->
+    <context:component-scan base-package="extendfunction">
+    </context:component-scan>
 
-<!--    &lt;!&ndash; 配置Thymeleaf视图解析器，用来替代jsp &ndash;&gt;-->
-<!--    <bean id="viewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">-->
-<!--        &lt;!&ndash; 设置视图解析器的优先级 &ndash;&gt;-->
-<!--        <property name="order" value="1"/>-->
-<!--        <property name="characterEncoding" value="UTF-8"/>-->
-<!--        <property name="templateEngine">-->
-<!--            &lt;!&ndash;使用内部bean赋值&ndash;&gt;-->
-<!--            <bean class="org.thymeleaf.spring5.SpringTemplateEngine">-->
-<!--                <property name="templateResolver">-->
-<!--                    <bean class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">-->
-<!--                        &lt;!&ndash; 视图前缀 &ndash;&gt;-->
-<!--                        <property name="prefix" value="/WEB-INF/templates/"/>-->
-<!--                        &lt;!&ndash; 视图后缀 &ndash;&gt;-->
-<!--                        <property name="suffix" value=".html"/>-->
-<!--                        <property name="templateMode" value="HTML5"/>-->
-<!--                        <property name="characterEncoding" value="UTF-8" />-->
-<!--                    </bean>-->
-<!--                </property>-->
-<!--            </bean>-->
-<!--        </property>-->
-<!--    </bean>-->
-
-
-<!--    &lt;!&ndash;配置视图解析器，path：设置处理的请求地址，view-name：设置请求地址所对应的视图名称&ndash;&gt;-->
-<!--    <mvc:view-controller path="/" view-name="index"></mvc:view-controller>-->
+    <!-- 配置Thymeleaf视图解析器，用来替代jsp -->
+    <bean id="viewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+        <!-- 设置视图解析器的优先级 -->
+        <property name="order" value="1"/>
+        <property name="characterEncoding" value="UTF-8"/>
+        <property name="templateEngine">
+            <!--使用内部bean赋值-->
+            <bean class="org.thymeleaf.spring5.SpringTemplateEngine">
+                <property name="templateResolver">
+                    <bean class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+                        <!-- 视图前缀 -->
+                        <property name="prefix" value="/WEB-INF/templates/"/>
+                        <!-- 视图后缀 -->
+                        <property name="suffix" value=".html"/>
+                        <property name="templateMode" value="HTML5"/>
+                        <property name="characterEncoding" value="UTF-8" />
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
 
 
-<!--    &lt;!&ndash;-->
-<!--    处理静态资源，例如html、js、css、jpg-->
-<!--    若只设置该标签，则只能访问静态资源，其他请求则无法访问-->
-<!--    此时必须设置<mvc:annotation-driven/>解决问题-->
-<!--    &ndash;&gt;-->
-<!--    <mvc:default-servlet-handler/>-->
-<!--    &lt;!&ndash; 开启mvc注解驱动 &ndash;&gt;-->
-<!--    <mvc:annotation-driven>-->
-<!--        <mvc:message-converters>-->
-<!--            &lt;!&ndash; 处理响应中文内容乱码 &ndash;&gt;-->
-<!--            <bean class="org.springframework.http.converter.StringHttpMessageConverter">-->
-<!--                <property name="defaultCharset" value="UTF-8" />-->
-<!--                <property name="supportedMediaTypes">-->
-<!--                    <list>-->
-<!--                        <value>text/html</value>-->
-<!--                        <value>application/json</value>-->
-<!--                    </list>-->
-<!--                </property>-->
-<!--            </bean>-->
-<!--        </mvc:message-converters>-->
-<!--    </mvc:annotation-driven>-->
-
-<!--    &lt;!&ndash;配置文件上传解析器，才能将文件转换为MultipartFile对象&ndash;&gt;-->
-<!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> </bean>-->
+    <!--配置视图解析器，path：设置处理的请求地址，view-name：设置请求地址所对应的视图名称-->
+    <mvc:view-controller path="/" view-name="index"></mvc:view-controller>
 
 
-<!--    &lt;!&ndash;配置拦截器方式3，✔推荐，可以设计当前拦截规则&ndash;&gt;-->
-<!--&lt;!&ndash;    <mvc:interceptors>&ndash;&gt;-->
-<!--&lt;!&ndash;        <mvc:interceptor>&ndash;&gt;-->
-<!--&lt;!&ndash;            &lt;!&ndash;设置拦截地址, 与filter不同，/*仅表示拦截任意一层目录，/**表示拦截所有 &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;            <mvc:mapping path="/**"/>&ndash;&gt;-->
-<!--&lt;!&ndash;            &lt;!&ndash;设置不拦截地址 &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;            <mvc:exclude-mapping path="/"/>&ndash;&gt;-->
-<!--&lt;!&ndash;            <ref bean="interceptor"></ref>&ndash;&gt;-->
-<!--&lt;!&ndash;        </mvc:interceptor>&ndash;&gt;-->
+    <!--
+    处理静态资源，例如html、js、css、jpg
+    若只设置该标签，则只能访问静态资源，其他请求则无法访问
+    此时必须设置<mvc:annotation-driven/>解决问题
+    -->
+    <mvc:default-servlet-handler/>
+    <!-- 开启mvc注解驱动 -->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <!-- 处理响应中文内容乱码 -->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="defaultCharset" value="UTF-8" />
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html</value>
+                        <value>application/json</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
 
-<!--&lt;!&ndash;        <mvc:interceptor>&ndash;&gt;-->
-<!--&lt;!&ndash;            &lt;!&ndash;设置拦截地址, 与filter不同，/*仅表示拦截任意一层目录，/**表示拦截所有 &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;            <mvc:mapping path="/**"/>&ndash;&gt;-->
-<!--&lt;!&ndash;            &lt;!&ndash;设置不拦截地址 &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;            <mvc:exclude-mapping path="/"/>&ndash;&gt;-->
-<!--&lt;!&ndash;            <ref bean="interceptor2"></ref>&ndash;&gt;-->
-<!--&lt;!&ndash;        </mvc:interceptor>&ndash;&gt;-->
-<!--&lt;!&ndash;    </mvc:interceptors>&ndash;&gt;-->
+    <!--配置文件上传解析器，才能将文件转换为MultipartFile对象-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> </bean>
 
 
-<!--    &lt;!&ndash;配置异常处理&ndash;&gt;-->
-<!--    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
-<!--        <property name="exceptionMappings">-->
-<!--            <props>-->
-<!--                &lt;!&ndash;-->
-<!--                properties的键表示处理器方法执行过程中出现的异常的全类名-->
-<!--                properties的值表示若出现指定异常时，设置一个新的视图名称，跳转到指定页面-->
-<!--                &ndash;&gt;-->
-<!--                <prop key="java.lang.ArithmeticException">error</prop>-->
-<!--            </props>-->
-<!--        </property>-->
-<!--        &lt;!&ndash;exceptionAttribute属性设置一个属性名，将出现的异常信息在请求域中进行共享&ndash;&gt;-->
-<!--        <property name="exceptionAttribute" value="ex"></property>-->
-<!--    </bean>-->
-<!--</beans>-->
+    <!--配置拦截器方式3，✔推荐，可以设计当前拦截规则-->
+<!--    <mvc:interceptors>-->
+<!--        <mvc:interceptor>-->
+<!--            &lt;!&ndash;设置拦截地址, 与filter不同，/*仅表示拦截任意一层目录，/**表示拦截所有 &ndash;&gt;-->
+<!--            <mvc:mapping path="/**"/>-->
+<!--            &lt;!&ndash;设置不拦截地址 &ndash;&gt;-->
+<!--            <mvc:exclude-mapping path="/"/>-->
+<!--            <ref bean="interceptor"></ref>-->
+<!--        </mvc:interceptor>-->
+
+<!--        <mvc:interceptor>-->
+<!--            &lt;!&ndash;设置拦截地址, 与filter不同，/*仅表示拦截任意一层目录，/**表示拦截所有 &ndash;&gt;-->
+<!--            <mvc:mapping path="/**"/>-->
+<!--            &lt;!&ndash;设置不拦截地址 &ndash;&gt;-->
+<!--            <mvc:exclude-mapping path="/"/>-->
+<!--            <ref bean="interceptor2"></ref>-->
+<!--        </mvc:interceptor>-->
+<!--    </mvc:interceptors>-->
+
+
+    <!--配置异常处理-->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <!--
+                properties的键表示处理器方法执行过程中出现的异常的全类名
+                properties的值表示若出现指定异常时，设置一个新的视图名称，跳转到指定页面
+                -->
+                <prop key="java.lang.ArithmeticException">error</prop>
+            </props>
+        </property>
+        <!--exceptionAttribute属性设置一个属性名，将出现的异常信息在请求域中进行共享-->
+        <property name="exceptionAttribute" value="ex"></property>
+    </bean>
+</beans>

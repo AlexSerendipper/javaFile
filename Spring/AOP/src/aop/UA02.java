@@ -95,8 +95,6 @@ import java.lang.annotation.Annotation;
      }
  }
 --------------------------------------------------
- *
- *
  * 【纯注解开发】创建建配置类，替代xml配置文件，从而实现纯注解开发（实际开发中，常用springboot实现纯注解开发）
  *   @Configuration                                                # 在配置类上使用该注解
  *   @ComponentScan(basePackages = {"aop"})                        # 设置组件扫描路径

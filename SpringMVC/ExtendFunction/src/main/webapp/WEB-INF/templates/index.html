@@ -6,6 +6,7 @@
     <script type="text/javascript" th:src="@{/static/js/jquery-1.7.2.js}"> </script>
 </head>
 <body>
+    <p>*****************UEF01*******************</p>
     <form th:action="@{/requestBody}" method="post">
         用户名：<input type="text" name="username" value="zzj"><br>
         密码：<input type="password" name="password" value="qqabcd"><br>
@@ -22,12 +23,14 @@
 
     <a th:href="@{/responseBody}">通过@ResponseBody响应数据</a><br>
 
+    <p>*****************UEF02*******************</p>
     <a th:href="@{/json}">通过@ResponseBody响应json数据（User对象）</a><br>
 
     <div id="msg">
         <a th:href="@{/ajax}" id="ajax">通过@ResponseBody响应ajax数据</a><br>
     </div>
 
+    <p>*****************UEF03*******************</p>
     <a th:href="@{/download}">通过ResponseEntity进行文件下载</a><br><br>
 
     <form th:action="@{/upload}" method="post" enctype="multipart/form-data">
@@ -35,9 +38,10 @@
         <input type="submit" value="通过MultipartFile进行文件上传">
     </form><br>
 
-
+    <p>*****************UEF04*******************</p>
     <a th:href="@{/interceptor}">测试拦截器</a><br><br>
 
+    <p>*****************UEF05*******************</p>
     <a th:href="@{/error}">测试异常处理,基于xml配置</a><br><br>
     <a th:href="@{/error2}">测试异常处理,基于注解</a><br><br>
 

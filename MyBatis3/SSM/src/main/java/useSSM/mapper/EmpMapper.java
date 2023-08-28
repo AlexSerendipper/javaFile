@@ -1,7 +1,9 @@
 package useSSM.mapper;
 
 import useSSM.pojo.Emp;
+import useSSM.pojo.Holiday;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,4 +16,6 @@ public interface EmpMapper {
      * @return
      */
     List<Emp> getAllEmp();
+
+    List<Holiday> getHolidayByTime(Date begin, Date end);
 }

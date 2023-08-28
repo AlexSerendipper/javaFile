@@ -6,8 +6,8 @@ package select;
  *  如果没有使用排序，查询返回的数据是按照添加数据的顺序返回
  *  ASC（ascend）升序,DESC（descend）降序，ORDER BY子句需要放在SELECT语句中WHERE的后边
  *  如果没有指明排序的方式，则默认按照升序排列
- *  ✔列的别名只能在ORDER BY中使用，不能在WHERE中使用
- *    因为SELECT语句执行过程是从FROM ==> WHERE ==> SELECT ==> ORDER BY。别名是在SELECT中声明的，所以WHERE中不能用
+ *  ✔✔列的别名只能在ORDER BY中使用，不能在WHERE中使用（where中要使用会在from中指定）
+ *    因为SELECT语句执行过程是从 FROM ==> WHERE ==> SELECT ==> ORDER BY。别名是在SELECT中声明的，所以WHERE中不能用
  *  SELECT...FROM...ORDER BY salary ASC, last_name DESC。二级排序按照姓名降序排序
  *
  * 【分页】所谓分页显示，就是将查询结果，按照设定的条件一页一页显示
@@ -19,7 +19,7 @@ package select;
  *
  * 【MySQL8.0分页新特性】就是行数和位置偏移量颠倒了一下，引入了OFFSET关键字
  *  SELECT...FROM...WHERE...ORDER...LIMIT 行数 OFFSET 位置偏移量,;
- * 
+ *
  @author Alex
  @create 2023-01-13-14:01
  */

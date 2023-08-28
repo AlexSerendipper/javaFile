@@ -23,10 +23,10 @@ spring.task.execution.pool.max-size=15
 # 当扩容到最大线程数量时，线程仍然不够用时，会把任务先放到队列中
 spring.task.execution.pool.queue-capacity=100
 
-# TaskSchedulingProperties定时任务线程
+# TaskSchedulingProperties定时任务线程，这个好像不配置也不会报错，所以SSM中就可以直接用吧
 spring.task.scheduling.pool.size=5
 -----------------
- * （2）创建配置类，让spring定时任务线程生效
+ *（2）创建配置类，让spring定时任务线程生效
 -----------------
 @Configuration
 @EnableScheduling
@@ -84,7 +84,6 @@ public class QuartzConfig {
     // 1. FactoryBean 中封装了某些bean的实例化过程
     // 2. 将 FactoryBean 装配到spring容器中后， 将 FactoryBean 注入给其他的bean，则该bean得到的是FactoryBean所管理的对象实例
 
-
     // 配置 JobDetail
     @Bean
     public JobDetailFactoryBean jobDetailFactoryBean(){
@@ -96,7 +95,6 @@ public class QuartzConfig {
         JobDetail.setRequestsRecovery(true);  // job出现异常，是否可恢复
         return JobDetail;
     }
-
 
     // 配置 Trigger
     @Bean
@@ -137,6 +135,8 @@ spring.quartz.properties.org.quartz.threadPool.threadCount=5
  @author Alex
  @create 2023-04-25-10:55
  */
+
+// 这里是运行不了的哈！!要去test文件夹下运行才行
 public class UC08 {
     // spring普通线程池
     @Autowired
@@ -146,6 +146,7 @@ public class UC08 {
     private ThreadPoolTaskScheduler threadPoolTaskScheduler;
     @Autowired
     ThreadT threadT;
+
 
     // 测试普通线程池
     @Test
@@ -166,6 +167,7 @@ public class UC08 {
                 }
             }
         };
+
         Callable task3 = new Callable() {
             @Override
             public Object call() throws Exception {
@@ -181,7 +183,9 @@ public class UC08 {
         sleep(10000);
     }
 
+
     // 测试spring定时任务线程池
+    // 测试普通线程池的快速调用
     @Test
     public void test2(){
         Runnable task = new Runnable() {
@@ -196,8 +200,6 @@ public class UC08 {
         // junit测试 不同与 main方法中的线程测试，当junit检测到当前没有线程输出时，会自动停止方法，所以要让当前线程sleep
         sleep(30000);
     }
-
-    // 测试普通线程池的快速调用
     @Test
     public void test3(){
         for (int i = 0; i < 10; i++) {

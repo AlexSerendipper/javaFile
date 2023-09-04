@@ -1,8 +1,6 @@
-package interview;
+package interview_computer2;
 
-import javax.xml.bind.Element;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 /**

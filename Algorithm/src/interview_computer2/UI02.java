@@ -1,4 +1,4 @@
-package interview;
+package interview_computer2;
 
 import java.util.Scanner;
 

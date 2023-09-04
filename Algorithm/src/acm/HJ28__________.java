@@ -1,6 +1,5 @@
 package acm;
 
-import org.junit.Test;
 
 /**
  @author Alex

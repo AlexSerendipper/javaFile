@@ -2,13 +2,14 @@ package IoC;
 
 import IoC.bean.Book;
 import org.junit.Test;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 
 /**
  * 【IOC（概念和原理）】
- *  什么是IOC
- *    控制反转，把对象创建和对象之间的调用过程，交给Spring进行管理
- *    使用IOC目的：为了耦合度降低
+ *  什么是IOC（Inversion of Control）
+ *    IOC控制反转是一种设计思想，而不是一个具体的技术实现。即 IoC 的思想就是将原本在程序中手动创建对象的控制权，交由 Spring 框架来管理
+ *    使用IOC目的（好处）：将对象之间的相互依赖关系交给 IoC 容器来管理，并由 IoC 容器完成对象的注入。这样可以很大程度上简化应用的开发，
+ *                        降低代码耦合度，大大增加了项目的可维护性且降低了开发难度。把应用从复杂的依赖关系中解放出来。
  *  IOC底层原理: 见xmind演变流程
  *    xml解析 + 工厂模式 + 反射
  *
@@ -24,6 +25,17 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *     ApplicationContext context = new FileSystemXmlApplicationContext()                   # 输入配置文件在系统盘中的位置（D:\...）
  *     ApplicationContext context = new ClassPathXmlApplicationContext()                    # 输入配置文件在src下的位置（./）
  *     context.getBean("别名"，类)                                                           # 获取创建的对象
+ *
+ * 【IOC的理解】
+ *  对象 a 依赖了对象 b，当对象 a 需要使用对象 b 的时候必须自己去创建。
+ *   但是当系统引入了 IOC 容器后， 对象 a 和对象 b 之间就失去了直接的联系。
+ *   这个时候，当对象 a 需要使用 对象 b 的时候，我们可以指定 IOC 容器去创建一个对象 b 注入到对象 a 中。
+ *   对象 a 获得依赖对象 b 的过程, 由主动行为变为了被动行为，控制权反转，这就是控制反转名字的由来
+ *
+ * 【依赖注入】
+ *  依赖注入是实现控制反转的一种设计模式，在传统的程序设计过程中，通常由调用者来创建`被调用者`的实例。
+ *   但在Spring里，创建`被调用者`的工作不再由调用者来完成，创建`被调用者`实例的工作通常由Spring容器来完成，然后注入调用者，这个过程也称为依赖注入。
+ *  依赖注入的3种实现方式分别是：接口注入（interface injection）、Set注入（setter injection）和构造注入（constructor injection）
  *
  * 【bean管理】
  *  Bean 管理指的是两个操作：（1）Spring创建对象（2）Spirng注入属性

@@ -2,6 +2,9 @@ package usecommonclass;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 【String类的常用方法】
  *  int length()：                                                         # 返回字符串的长度
@@ -19,6 +22,8 @@ import org.junit.Test;
  *  byte[] getBytes()                                                      # 方法获取字符串的ASCII码值数组
  *   `(int) ch`                                                              # 此外，使用强制类型转换，可以将单个字符 'ch' 转换为 int 类型，并打印结果为ASCII码值
  *   ch1 - ch2                                                               # 两个字符串相减，结果也为ascii码值
+ *  String join("delimiter",arr/list/string[])                             # 第一个参数是分隔符，第2个参数可以是 数组、List也可以是多个字符串
+ *                                                                             结果是实现以分隔符来拼接 数组、List、多个字符串
  *
  * 【查找】
  *  boolean contains(CharSequence s)：　　　　　　　　　　　　　　　　　  # 当且仅当此字符串包含指定的 char 值序列时，返回 true
@@ -58,5 +63,24 @@ public class UseCommonClass02 {
        }
    }
 
+    public static void main(String[] args){
+        // 字符串数组
+        String[] strArray = new String[]{"ni","zhen","hao","kan"};
+
+        // 字符串List
+        List<String> strList = new ArrayList<String>();//添加元素
+        strList.add("ni");
+        strList.add("zhen") ;
+        strList.add("hao");
+        strList.add("kan");
+
+        // 第一个参数是分隔符，第2个参数可以是 数组、List也可以是多个字符串
+        String a = String.join("!",strArray);//第2个参数是字符串队列
+        String b = String.join("!",strList);//第1个参数之后是多个字符串
+        String c = String.join("!","ni","zhen","hao","kan");
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(c);
+   }
 
 }

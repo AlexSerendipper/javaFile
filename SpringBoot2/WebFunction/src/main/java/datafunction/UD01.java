@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-
-
 /**
  * 【数据库访问1】SQL
  * （1）引入JBDC场景依赖（自动完成数据源、jdbc、事务 的相关组件）

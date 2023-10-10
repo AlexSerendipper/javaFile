@@ -21,6 +21,8 @@ public class UA06 {
             }
             System.out.println();
         }
+        int[][] arr = new int[2][3];
+        int n = arr.length;
     }
 
 

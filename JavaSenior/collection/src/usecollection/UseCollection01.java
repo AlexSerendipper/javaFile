@@ -32,6 +32,7 @@ import java.util.Date;
  *  containsAll(Collection coll1)      # 判断coll1中的所有元素是否都包含于当前集合中
  *  remove(obj)                        # ✔移除指定的元素（利用equals判断，需要对类重写equals方法）
  *  removeAll(Collection coll1)        # 从当前集合中移除coll1中所有的元素
+ *                                         ✔常用set1.removeAll(set2)，即从set1中移除与set2相同的元素
  *  retainAll(Collection coll1)        # 从当前集合中找出与coll1共有的元素,并赋值给当前集合
  *  equals(Collection coll1)           # 判断coll1与当前集合是否完全相等(注意此时为有序，需完全相等才true)
  *  hashcode()                         # 返回当前对象的哈希值

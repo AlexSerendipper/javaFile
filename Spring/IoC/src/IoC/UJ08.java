@@ -49,7 +49,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *     根据属性类型进行自动装配
  * （2） @Qualifier(value="")
  *     根据名称进行注入，需要和 @Autowired配合使用
- *     当传入的属性有多个实现类时，需要根据名称进行区分（当userdao有多个实现类时可以使用）
+ *     当传入的属性有多个实现类时，需要根据名称进行区分（当userDao有多个实现类时可以使用）
  * （3） @Resource
  *     既可以根据类型注入，可以根据名称注入
  *     @Resource，即为根据属性类型进行自动装配，相当于 @Autowired

@@ -44,7 +44,7 @@ import transaction.service.UserService;
 <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
 -------------------------------------------------
  *
- * 【声明式事务管理参数配置】@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.REPEATABLE_READ)
+ * 【声明式事务管理参数配置】@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
  *（1）propagation：事务传播行为：当一个事务方法被另外一个事务方法调用时候，这个事务方法如何进行
  *     REQUIRED（默认）:  当事务A中存在方法1，当事务B中存在方法2，当方法1调用方法2。
  *                         默认事务A和事务B都为REQUIRED
@@ -70,7 +70,33 @@ import transaction.service.UserService;
  * (5) rollbackFor：回滚。设置出现哪些异常进行事务回滚
  * (6) noRollbackFor：不回滚。设置出现哪些异常不进行事务回滚
  *
- * 【纯注解开发】创建建配置类(见SpringConfig，需要创建三个方法)，替代xml配置文件，从而实现纯注解开发（实际开发中，常用springboot实现纯注解开发）
+ * 【编程时事务】
+ *   springboot整合了spring中对事务的支持，无需配置事务管理器，直接使用@Transactional注解，就可以使用事务管理
+ *   除了spring传统的声明式事务，springboot还提供了一种编程式事务。只需要自动装配TransactionTemplate
+ *     transactionTemplate.execute()               # 该方法需要传入一个TransactionCallback对象，并重写其中的doInTransaction方法。。。该方法中的代码会被事务管理
+ *   编程时事务，实际应用中很少使用。推荐使用spring中的声明式事务，若需要被管理的业务中 只有部分方法需要被管理，使用编程式事务也有其优势
+ -------------
+ @Autowired
+ TransactionTemplate transactionTemplate;
+
+ @Autowired
+ JdbcTemplate jdbcTemplate;
+
+ @Test
+ public void test1() {
+ transactionTemplate.execute(new TransactionCallback<Object>() {
+         @Override
+         public Object doInTransaction(TransactionStatus transactionStatus) {
+             jdbcTemplate.update("update spring_transaction set money=money-100 where username='lucy'");
+             System.out.println(10/0);
+             jdbcTemplate.update("update spring_transaction set money=money+100 where username='mary'");
+             return "ok";
+         }
+     });
+ }
+ -------------
+ *
+  * 【纯注解开发】创建建配置类(见SpringConfig，需要创建三个方法)，替代xml配置文件，从而实现纯注解开发（实际开发中，常用springboot实现纯注解开发）
  *   @Configuration                                                # 在配置类上使用该注解
  *   @ComponentScan(basePackages = {"transaction"})                # 设置组件扫描路径
  *   @EnableTransactionManagement                                  # 开启事务。由于在注解扫描时，碰到该注解就会创建一个事务管理器

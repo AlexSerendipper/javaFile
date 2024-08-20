@@ -44,6 +44,7 @@ package usegit;
  *
  *     git clone 远仓别名                          # 公共库的克隆操作是完全不需要登录的！使用SSH/HTTPS的地址均可
  *                                                    ✔克隆会完成三个操作 1、拉取代码 2、初始化本地仓库。3、创建别名（默认创建为origin）
+  *     git clone --branch 分支名 远仓别名           # 克隆并切换到指定分支，也可以先克隆再切换分支 
  *     git remote rm 远仓别名                       # 为远仓起的别名可以通过该命令删除
  *     github页面 - repository - setting - delete   # 删除github中的远程仓库
  *

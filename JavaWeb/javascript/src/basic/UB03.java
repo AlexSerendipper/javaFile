@@ -34,6 +34,8 @@ package basic;
  *      }
  *      var bigbai = new Person('大白', 100, '男');                # 使用new调用构造函数（实例化）
  *
+ * 【Object.defineProperty】
+ * Object.defineProperty(obj, prop)                               # 用于在对象obj上定义新的属性或修改现有属性prop 
  @author Alex
  @create 2023-01-27-10:44
  */

@@ -15,7 +15,7 @@ import java.io.InputStream;
 
 
 /**
- * 【Mybatis缓存】
+ * 【Mybatis缓存】了解
  *
  * 【MyBatis的一级缓存】✔
  *  一级缓存Mybatis默认开启

@@ -1,7 +1,7 @@
 package computerNetWork;
 
 /**
- * 【HTTP & HTTPS】
+ * 【HTTP & HTTPS】Hypertext Transfer Protocol
  *  HTTP协议：HTTP协议中，请求和响应的报文都是明文的，所有人都能看得到HTTP报文中的内容
  *   为了给HTTP协议增加安全性，所以应运而生了HTTPS
  *  HTTPS：HTTPS协议并不是一个单独的协议，只不过是在HTTP的基础之上，运用了TLS和SSL进行加密，这样通信就不容易受到拦截和攻击

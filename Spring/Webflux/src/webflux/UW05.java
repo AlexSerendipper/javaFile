@@ -65,8 +65,6 @@ System.out.println(content);
 // 发送邮件
 mailClient.sendMail("642671525@qq.com","test",content);
 ----------------
- *
- *
  @author Alex
  @create 2023-04-04-21:42
  */

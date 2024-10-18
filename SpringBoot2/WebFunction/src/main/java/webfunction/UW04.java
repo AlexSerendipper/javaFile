@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * (2) thymeleaf将自动配置
  *  所有 thymeleaf 的配置值都在 ThymeleafProperties 中
  *   配置好了 SpringTemplateEngine 模板引擎
- *   配好了 ThymeleafViewResolver 视图解析器
+ *   配置好了 ThymeleafViewResolver 视图解析器
  *  我们只需要直接开发页面
 -----------------------
  * (3) 相关配置

@@ -16,7 +16,7 @@ import java.io.IOException;
  *       ↑继承
  * Class HttpServlet               # 实现了service()方法，并实现了请求的分发处理，但是HttpServlet的doGet和doPost只能抛出异常
  *       ↑继承
- *     用户程序                     # 我们只需要根据自己的业务重写doGet和doPost方法即可（✔重写时建议取消对父类的调用，否则可能出错）
+ *     用户程序                    # 我们只需要根据自己的业务重写doGet和doPost方法即可（✔重写时建议取消对父类的调用，否则可能出错）
  *
  * 【✔✔✔继承servlet】一般在实际项目开发中都是使用继承HttpServlet类的方式
  * （1）编写一个类去继承HttpServlet类

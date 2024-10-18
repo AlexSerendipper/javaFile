@@ -25,8 +25,8 @@ import javax.servlet.http.HttpServletResponse;
  *   通过getBody()获取请求体信息
  *
  * 【@ResponseBody】✔✔输出响应报文
- *  对于传统的方法，有两种方法输出相应  1.是通过请求转发和重定向 2.是通过resp.getWriter.write()方法
- *  @ResponseBody 用于标识一个控制器方法，可以将该方法的返回值直接作为响应报文的响应体响应到浏览器
+ *  ✔对于传统的方法，有两种方法输出相应  1.是通过请求转发和重定向 2.是通过resp.getWriter.write()方法
+ *  ✔@ResponseBody 用于标识一个控制器方法，可以将该方法的返回值直接作为响应报文的响应体响应到浏览器
 -------------------------------------
 <mvc:annotation-driven>
     <mvc:message-converters>

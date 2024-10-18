@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * 【cookie】见cookie.html
  *  Cookie是服务器在客户端保存键值对的一种技术。
- *  客户端有了Cookie后，每次请求都会将cookie发送给服务器检查✔。
+ *  客户端有了Cookie后，每次请求都会将cookie发送给服务器检查✔✔✔
  *  每次请求可以保存多个cookie, 每个Cookie的大小不能超过4kb
  *    Cookie cookie = new Cookie("key1", "value1");    # 创建 Cookie 对象
  *    resp.addCookie(cookie);                          # 通知客户端保存 Cookie

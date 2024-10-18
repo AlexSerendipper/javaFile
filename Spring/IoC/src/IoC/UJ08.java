@@ -39,16 +39,16 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *
  * 【基于注解注入属性】@Autowired, @Qualifier, @Resource, @Value
  * 【普通属性注入】part1
- * （1）@Value(value="")
+ * （1） @Value(value="")
  *     在需要注入的普通属性上使用注解，value值传入注入的数据
  * 【对象属性注入】part2
- *  ✔注入属性前，需要在相关类中添加 对象创建 注解（在userservice和userdao类上添加创建对象注解）
- *  ✔在需要注入的对象属性上使用注解（✔在userservice中有一个userdao属性，由于userdao是接口，会自动寻找他的实现类进行赋值）
+ *  ✔注入属性前，需要在相关类中添加 对象创建 注解（如在Userservice中使用@Service）
+ *  ✔在需要注入的对象属性上使用注解（@Autowired）（✔在userservice中有一个userdao属性，由于userdao是接口，会自动寻找他的实现类进行赋值）
  *  ✔注意：不同xml配置，使用注解的方式不需要为对象属性设置set方法
- * （1）@Autowired✔✔
- *     根据属性类型进行自动装配
+ * （1） @Autowired✔✔
+ *     根据bean类型进行自动装配(即byType)
  * （2） @Qualifier(value="")
- *     根据名称进行注入，需要和 @Autowired配合使用
+ *     根据bean名称进行注入(即byName)，需要和 @Autowired配合使用
  *     当传入的属性有多个实现类时，需要根据名称进行区分（当userDao有多个实现类时可以使用）
  * （3） @Resource
  *     既可以根据类型注入，可以根据名称注入
@@ -59,7 +59,23 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *   @Configuration                                                # 在配置类上使用该注解
  *   @ComponentScan(basePackages = {"Ioc.IoC"})                    # 设置组件扫描路径
  *   new AnnotationConfigApplicationContext(SpringConfig.class);   # 加载配置类，等同于加载xml配置文件
- *
+--------------------------------
+<bean name="article1" class="com.sss.Article">
+    <property name="text" value="Content of the 1st Article" />
+</bean>
+
+<bean name="article2" class="com.sss.Article">
+    <property name="text" value="Content of the 2nd Article" />
+</bean>
+
+@Qualifier(value="article1")
+@Autowired
+private Article firstArticle;
+
+@Qualifier(value="article2")
+@Autowired
+private Article secondArticle;
+--------------------------------
  @author Alex
  @create 2023-02-22-19:27
  */

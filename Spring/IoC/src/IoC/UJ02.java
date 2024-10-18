@@ -2,6 +2,7 @@ package IoC;
 
 import IoC.bean.Book;
 import org.junit.Test;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
 /**
@@ -38,7 +39,7 @@ import org.junit.Test;
  *  依赖注入的3种实现方式分别是：接口注入（interface injection）、Set注入（setter injection）和构造注入（constructor injection）
  *
  * 【bean管理】
- *  Bean 管理指的是两个操作：（1）Spring创建对象（2）Spirng注入属性
+ *  Bean管理指的是两个操作：（1）Spring创建对象（2）Spirng注入属性
  *  ✔Bean管理操作有两种方式：（1）基于xml配置文件方式实现（2）基于注解方式实现
  *
  * 【基于xml的bean管理】part1:注入普通属性

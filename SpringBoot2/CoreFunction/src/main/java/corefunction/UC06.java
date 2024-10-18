@@ -38,13 +38,14 @@ import java.io.FileInputStream;
     <optional>true</optional>
 </dependency>
 -------------------
+ *
  *  【Spring Initailizr】项目初始化向导
  *  创建模块：创建时选择我们需要的开发场景 和 开发工具
  *  （注意选择springboot版本,如果版本不对可以先创建一个，然后手动降低版本）
  *  （注意创建完项目看一下 <java.version>8</java.version>）
  *  使用Spring Initailizr创建模块，将自动完成 依赖引入、项目结构创建、编写好主配置类
  *
- * 【commons-lands】
+ * 【commons-lands】常用的springMVC组件集合
  *  StringUtils.isBlank()              # 判断是否为空值（包括null,""等）
  *  CharUtils.isAsciiAlphanumeric(c)   # 判断字符是否为普通字符（普通字符返回true,特殊字符返回false）
  *

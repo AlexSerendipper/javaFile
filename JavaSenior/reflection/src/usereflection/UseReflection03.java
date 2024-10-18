@@ -49,7 +49,7 @@ import java.util.Random;
  *     Class.getAnnotations;                                           # 获取运行时类声明的注解
  *
  * 【修改 运行时类的 指定结构（属性、方法、构造器）】首先需要 获取运行时类(Class) 的完整结构
- *  ✔✔✔（非静态属性/方法 的调用者为运行时类(Class) 的对象，静态属性/方法 的调用者为当前运行时类）
+ *  ✔✔✔（非静态属性/方法 的调用者为运行时类(Class)的对象，静态属性/方法 的调用者为当前运行时类）
  *  1）调用运行时类的指定属性
  *     Field.get(Object obj)                                  # 获取属性调用者obj的Field值。
  *     Field.set(Object obj,Object value)                     # 设置属性调用者obj的Field值。

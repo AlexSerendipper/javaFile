@@ -11,28 +11,24 @@ import java.util.Map;
 
 /**
  * 【MyBatis的各种查询功能】
+ * 【查询结果为单条数据】
+ *  1）对应一个实体类对象。。。即 mapper接口返回值为User，resultType="user"
+ *     当查询结果为 实体类时，实际上就是根据 与属性名相同的字段名（查询结果中） 为其属性赋值
+ *  2）对应一个Map对象。。。即 mapper接口返回值为Map, resultType="user"
+ *    ✔当查询结果使用Map集合用于接收时，实际上就是以 字段名=值 的形式为map集合填充值
  *
- * 【查询结果为实体类对象】即 resultType="user"
+ * 【查询结果为多条数据】
+ *  1）对应多个实体类，能使用list集合。。。即 mapper接口返回值为list, resultType="user"
+ *  2）对应多个Map，只能使用list集合。。。即mapper接口返回值为 List<Map<String, Object>>, resultType="user"
+ *  3）若最终希望以一个map的方式返回数据。可以通过@MapKey注解 设置map集合的键（通常以某个字段作为键，如id），每条数据所对应的map集合作为值
+ *     这样返回的值实际上是Map<id,Map<String,Object>>
  *
- * 【查询结果为单个数据】即 resultType="int"
+ * 【查询结果为聚合函数查询结果】对应整型。。。即 resultType="int"
  *  当查询结果为整型、集合类型时，我们本应该输入类型全类名，如 java.lang.Integer
  *   但实际上在MyBatis中，对Java中常用的类型都设置了类型别名 (基本数据类型都为其简写)
  *   如：java.lang.Integer  -->  int/integer/_int/_integer（不区分大小写）
  *       java.util.Map  -->  map
  *       java.util.List  -->  list
- *
- * 【查询结果为list集合】mapper接口返回值为list, resultType="user"
- *  当查询的数据只有一条，可以使用 实体类 或 集合 作为返回值✔
- *   当查询的数据为多条时，只能使用集合(list或map)接收✔
- *
- * 【查询结果为一个map集合】mapper接口返回值为map, resultType="user"
- *  当查询结果为 实体类时，实际上就是根据 与属性名相同的字段名（查询结果中） 为其属性赋值
- *   故当查询结果为 map集合时，实际上就是以 字段名=值 的形式为map集合填充值
- *
- * 【查询结果为多个map集合】mapper接口返回值为 List<Map<String, Object>>, resultType="user"
- *  当查询多条数据，因为有多条数据，就会产生多个map集合
- *  若最终希望以List的形式返回，可以设置返回值类型为 List<Map<String, Object>>，把返回的多个map集合存储到List中
- *  若最终希望以一个map的方式返回数据。可以通过@MapKey注解 设置map集合的键（通常以某个字段作为键），每条数据所对应的map集合作为值
  *
  @author Alex
  @create 2023-03-12-10:05

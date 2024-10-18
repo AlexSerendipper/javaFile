@@ -48,16 +48,15 @@ spring.elasticsearch.rest.uris=http://192.168.131.130:9200
  * （2）在对应的字段上使用对应的注解，声明存储到elasticsearch中的数据类型
  *      @Id                                # 主键
  *      @Field(type=FieldType.Integer)     # 整数类型
- *        设置String类型（需要被搜索的字段）
+ *      @Field(index = true, type = FieldType.Text,analyzer = "ik_max_word",searchAnalyzer = "ik_smart")  # String类型（需要被搜索的字段）
  *       analyzer: 存储时的解析器和搜索时的解析器，实际上在索引中存值时，如 '互联网校招' ，我们希望elasticsearch能将其拆分成更多的词存入 如'互联、校招、联网等',
  *       用这些词来关联这句话，当输入关键词后能出现该词条！故使用"ik_max_word"
  *       searchAnalyzer：搜索解析器，当我们搜索时，如我们搜索 '互联网校招' ，我们肯定是只想搜索与 '互联网' '校招' 有关的内容，所以要使用更加聪明的分词方式，故使用"ik_smart"
  *       type：设置数据类型
  *       index：设置字段是否索引，默认是true，如果是false则该字段不能被查询
- *      @Field(index = true, type = FieldType.Text,analyzer = "ik_max_word",searchAnalyzer = "ik_smart")
+ *      @Field(type = FieldType.Date,format = DateFormat.date_hour_minute)    # 日期类型
  *        注意，✔字段使用的时间类型import java.time.LocalDate/LocalDateTime;✔如果使用旧版的java.util.Date会报错
  *         format：注意设置时必须设置日期格式，否则报错✔而且目前好像只能设置这个date_hour_minute....
- *      @Field(type = FieldType.Date,format = DateFormat.date_hour_minute)
  * （3）创建dao层接口 实现ElasticsearchRepository接口（该接口内置了多种CRUD操作方法），指定处理的 实体类型 以及 主键的类型
  *      @Repository
  *      public interface DiscussPostRepository extends ElasticsearchRepository<DiscussPost,Integer> {}
@@ -86,12 +85,12 @@ NativeSearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(QueryBu
  * （2）搜索1
 -----------------------
 Page<DiscussPost> page = ElasticsearchRepository.search(searchQuery);    // 得到命中的分页page对象
-System.out.println(page.getTotalPages());                // 查询命中页数
-System.out.println(page.getTotalElements());            // 查询命中总数
-System.out.println(page.getNumber());                   // 查询当前页数
-System.out.println(page.getSize());                     // 查询当前页总记录数
-for (DiscussPost post : page) {                         // 遍历命中的所有数据
-    System.out.println(post);
+    System.out.println(page.getTotalPages());                // 查询命中页数
+    System.out.println(page.getTotalElements());            // 查询命中总数
+    System.out.println(page.getNumber());                   // 查询当前页数
+    System.out.println(page.getSize());                     // 查询当前页总记录数
+    for (DiscussPost post : page) {                         // 遍历命中的所有数据
+        System.out.println(post);
 }
 -----------------------
  * （3）搜索2（返回高亮显示数据）

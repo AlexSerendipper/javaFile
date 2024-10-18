@@ -41,7 +41,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
     </dependency>
 </dependencies>
 -------------------
- *
  * （2）创建主程序：使用 @SpringBootApplication 对主程序进行标记
 ------------------
 @SpringBootApplication
@@ -74,14 +73,12 @@ public class MainApplication {
     </plugins>
 </build>
 --------------------
- *
  *【SpringBoot部署 与 传统的SSM部署的区别】
  * 1、引入相关场景的启动器后，会引入相关场景下的所有依赖，无需像SSM一样需要在pom.xml中导入
  * 2、引入相关场景的启动器后，会自动加载自动配置类进行配置（见UC02.java），
  *    无需像SSM一样，配置web.xml、spring.xml、springMVC.xml等，
  *    常见的需要修改的配置都抽取到了application.properties中
  * 3、springboot项目通过主程序启动项目，SSM通过tomcat服务器启动项目
- *
  @author Alex
  @create 2023-03-17-22:23
  */
@@ -94,5 +91,4 @@ public class UC01 {
     public String handle01(){
         return "Hello, Spring Boot 2!";
     }
-
 }

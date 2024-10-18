@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * (2) ✔方式二：通过 控制器方法的形参 获取请求参数（基于原生API封装）
  *  在控制器方法的形参位置，设置和请求参数同名的形参，当浏览器发送请求，DispatcherServlet中就会将请求参数赋值给相应的形参
- *   ✔✔✔并且，会将这些请求参数全都放入request域中！
+ *   ✔✔✔并且同时，会将这些请求参数全都放入request域中！
  *  若请求所传输的请求参数中有多个同名的请求参数，可以在控制器方法的形参中设置 字符串类型的形参 或者 字符串数组 接收
  *    若使用字符串类型的形参，此时参数值为：数据1，数据2（使用逗号拼接）
  *    若使用字符串数组类型的形参，此时会将数据赋值入数组中
@@ -33,7 +33,7 @@ import javax.servlet.http.HttpSession;
  *
  * 【获取请求参数映射问题 及 特殊请求参数获取】
  *（1）@RequestParam：设置 控制器方法的形参 与 请求参数之间的映射关系
- *  即当 控制器方法的形参 与 请求参数 不同名时，通过为 控制器方法的形参 添加该注解，创建映射关系
+ *  即当 控制器方法的形参 与 请求参数 不同名时，通过为 控制器方法的形参 添加该注解，并设置其value属性为 请求参数名，指定映射关系
  *    value属性，用于指定请求参数名
  *    required属性，默认值为true, 表示必须传入 value指定的请求参数值。若没有传入，且没有设置defaultValue属性，则报错
  *                   若设置为false, 表示当没有 value指定的请求参数值，控制器方法的形参显示null值
@@ -105,6 +105,7 @@ public class UBF04 {
     }
 
     // 方式二：通过 控制器方法的形参 获取请求参数(参数、请求头、cookie)
+    // “/test1/UBF04?user_name=zzj&password=qqabcd”
     @RequestMapping("/test1/UBF04")
     public String testParam1(@RequestParam(value = "user_name", defaultValue = "默认值") String username,
                              String password,

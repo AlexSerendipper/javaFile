@@ -11,6 +11,7 @@ import java.util.TreeMap;
  *  底层使用红黑树结构存储数据
  *  treeMap是对key进行排序（自然排序、定制排序），所以向treemap中添加key-value时，要保证key必须是同一个类创建的对象
  *
+ * 值得注意的是，treemap的默认排序规则是按照键值进行自然排序！即键值为String时按照首字符排序，键值为数字时按照大小排序
  @author Alex
  @create 2022-12-11-14:52
  */
@@ -62,7 +63,17 @@ public class UseMap02 {
     }
 
 
+    // 更改treemap的默认排序
+    @Test
+    public void test2(){
+        new TreeMap<Integer,String>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return -Integer.compare(o1,o2);
+            }
+        })
 
+    }
 
 
 

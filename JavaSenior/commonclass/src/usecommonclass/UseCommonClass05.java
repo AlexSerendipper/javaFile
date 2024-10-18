@@ -1,7 +1,6 @@
 package usecommonclass;
 
 import org.junit.Test;
-
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -13,7 +12,7 @@ import java.time.temporal.TemporalAccessor;
  * (2) 偏移性：Date中的年份是从1900开始的，而月份都从0开始。
  * (3) 格式化：格式化只对Date有用，Calendar则不行。
  * (4) 此外，它们也不是线程安全的；不能处理闰秒等。
- *
+ *  
  * 【jdk8.0中引入的时间API基本解决了上述的所有问题】实际上在引入了新API后，旧的API都被抛弃了，当然新版和旧版是可以互相转换
  * (1) LocalDate代表IOS格式（yyyy-MM-dd）的日期
  *     LocalTime表示一个时间

@@ -38,7 +38,7 @@ mybatis.type-aliases-package=datafunction.pojo
 mybatis.mapper-locations=classpath:mybatis/mapper/*.xml
 ---------------
  *
- * 【mybatis整合2】注解方式
+ * 【mybatis整合2】注解方式，较少使用
  * （1）创建mapper接口，使用@Select等标签进行增删改操作，如 @Select("select * from springboot_dept where did=1")
  *      还可以使用{}的方式，此时{}内的字符串会自动完成拼接操作，增加可读性。如@Insert({"insert into user(user_id,status) "
  *                                                                              "values(#{userId},#{ticket})"})

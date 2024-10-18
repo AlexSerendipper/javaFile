@@ -1,7 +1,6 @@
 package usecommonclass;
 
 import org.junit.Test;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 

@@ -21,7 +21,7 @@ package basicfunction;
  *      redis-sentinel: redis集群使用
  *      redis-server: redis服务器启动命令✔
  * (7) 修改 /opt/redis-7.0.10/redis.conf 配置文件
- *      将原本的redis.conf拷贝到自己定义好的路径下备份好，如 /myredis/redis7.conf
+ *      将原本的redis.conf拷贝到自己定义好的路径下备份好，如 src/myredis/redis7.conf
  *      配置文件修改，默认 daemonize no 改为 daemonize yes。允许redis后台运行
  *      配置文件修改，默认 protected-mode yes 改为 protected-mode no。关闭保护模式，即允许其他机器连接
  *      配置文件修改，默认 bind 127.0.0.1 改为 直接注释掉。

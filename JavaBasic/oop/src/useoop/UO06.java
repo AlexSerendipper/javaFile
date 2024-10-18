@@ -8,8 +8,8 @@ import org.junit.Test;
  *  它在构造器内部使用，表示该构造器正在初始化的对象。
  *  this 可以调用类的属性、方法和构造器
  *  当在方法内需要用到调用该方法的对象时，就用this。
- *   ✔具体的：我们可以用this来区分属性和局部变量。比如：this.name = name
- *   ✔许多时候，属性和方法没有重名，我们会省略this
+ *   ✔具体的：我们可以用this来区分属性和局部变量。比如：this.name（类中的属性） = name（构造器中的局部变量）
+ *   ✔许多时候，属性和局部变量没有重名，我们会省略this
  *
  * 【this(形参列表)】
  *  在类的构造器中使用"this(形参列表)"的方式，调用本类中重载的其他的构造器！
@@ -100,7 +100,7 @@ public class UO06 {
         }
 
         public Animal(String name, int age) {
-            this(name);
+            this(name);  // 调用本类中重载的其他构造器
             System.out.println("Animal带两个参数的构造器，其age为" + age);
             this.sleep();
             System.out.println(this.getClass().getName());

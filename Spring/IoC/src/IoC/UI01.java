@@ -13,12 +13,12 @@ package IoC;
  *               即 Spring Framework 最初为仅包含 IOC和AOP模块的框架
  *               经过十多年的发展，Spring Framework逐渐发展成为一个由多个不同模块组成的成熟技术。但是Spring Framework始终是其他子模块的基础
  *               主要包含：Spring AOP，对面向切面编程的支持
- *                         Spring ORM，包含Hibernate、Mybaties的支持、jdbc封装、事务相关
- *                         Spring DAO，包含JDBC、DAO等功能的支持
- *                         Spring Context， spring配置文件的支持，联系上下文，对UI、JNDI、EJB、邮件等的支持
- *                         Spring Web，依托于context，增加对web的支持，Struts那类的
- *                         Spring Web MVC，MVC 容纳了大量视图技术，Jsp那类的
- *                         Spring Core，提供框架基本功能，IOC等
+ *                        Spring ORM，包含Hibernate、Mybaties的支持、jdbc封装、事务相关
+ *                        Spring DAO，包含JDBC、DAO等功能的支持
+ *                        Spring Context， spring配置文件的支持，联系上下文，对UI、JNDI、EJB、邮件等的支持
+ *                        Spring Web，依托于context，增加对web的支持，Struts那类的
+ *                        Spring Web MVC，MVC 容纳了大量视图技术，Jsp那类的
+ *                        Spring Core，提供框架基本功能，IOC等
  *              ✔✔✔所以我们约定：Spring指 包含多个模块的，以Spring Framework为基础的技术系统
  *
  *  × 狭义上：Spring特指Spring Framework。建议使用广义解释Spring（区分Spring 与 Spring Framework）

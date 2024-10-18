@@ -48,6 +48,10 @@ import java.util.List;
  *  String[] split(String regex)：                                       # 根据给定正则表达式的匹配拆分此字符串。
  *  String[] split(String regex, int limit)：                            # 根据匹配给定的正则表达式来拆分此字符串，最多不超过limit个，如果超过了，剩下的全部都放到最后一个元素中。
  *
+ * 【保留有效位数功能、四舍五入功能】bigDecimal也有类似功能
+ * double value = 3.14159265358979323846;
+ * String formatted = String.format("%.10f", value);                 # 输出10位有效数值。. 表示小数点。10表示小数点后要保留的位数。f表示格式化浮点数。
+ * System.out.println(formatted);                                    # 输出3.141592653
  *
  * @author Alex
  * @create 2022-11-20-14:07

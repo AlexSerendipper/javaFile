@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * 【日志简介】
  * 日志功能的实现 需要用日志门面来解决系统与日志实现框架的耦合性。 SLF4J就是最常用日志门面。
- *  SLF4J，即简单日志门面（Simple Logging Facade for Java），它不是一个真正的日志实现，而是一个抽象层（ abstraction layer）
+ *  SLF4J，即简单日志门面（Simple Logging Facade for Java），它不是一个真正的日志实现，而是一个抽象层（abstraction layer）
  * 日志框架的实现有 Log4j、Logback、log4j2
  * 在springboot中默认整合的是logback日志功能，其使用方式与log4j2非常类似
  *

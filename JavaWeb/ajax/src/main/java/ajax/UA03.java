@@ -61,7 +61,7 @@ package ajax;
  * 【开发遇到的问题】使用ajax碰到进入不了success回调函数的原因分析
  * （1）后端返回的格式，与dataType设置的格式类型不一致！！
  * （2）ajax默认使用异步模式（async:false）
- *      发送ajax异步后，在等待server端返回数据的过程中，前段程序会继续执行ajax块之后的内容，直到server返回正确的结果。如果后面的程序有刷新页面的操作！就会错过success函数中数据的回显！
+ *      发送ajax异步后，在等待server端返回数据的过程中，前端程序会继续执行ajax块之后的内容，直到server返回正确的结果。如果后面的程序有刷新页面的操作！就会错过success函数中数据的回显！
  *      而使用同步方式时（async:true），发送ajax请求后，程序会一直等待server端，直到server端返回数据。
  @author Alex
  @create 2023-02-18-17:23

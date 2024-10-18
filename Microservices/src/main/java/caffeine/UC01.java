@@ -36,7 +36,7 @@ postListCache = Caffeine.newBuilder()
                     if(key == null || key.length() == 0){
                         throw new IllegalArgumentException("参数错误！");
                     }
-                    String [] params = key.split(":");
+                    String [] params = key.split(":");  // 入参切割
                     if(params == null || params.length!=2){
                         throw new IllegalArgumentException("参数错误！");
                     }
@@ -53,7 +53,7 @@ postListCache = Caffeine.newBuilder()
 });
 ----------------
 *（2）在需要的时候优先调用缓存中的数据，调用时传入key（该key用于初始化缓存中的load方法！~）
-*      postListCache.get(pageNum + ":" + pageSize);
+*      postListCache.get(pageNum + ":" + pageSize);                # ✔✔✔对应上方初始化的缓存数据
 *
  @author Alex
  @create 2023-05-03-13:48

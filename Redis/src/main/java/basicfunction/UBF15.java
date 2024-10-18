@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * 【sprintboot集成redis】
  *  就如sprintboot集成mysql需要中间驱动jdbc一样，springboot集成redis也需要中间驱动包
- *  中间驱动包发展：Jedis ==> lettuce ==> RedisTemplate。 lettuce是对jedis的改进，RedisTemplate是又对lettuce的进一步封装
+ *  中间驱动包发展：Jedis ==> lettuce ==> RedisTemplate✔✔。 lettuce是对jedis的改进，RedisTemplate是又对lettuce的进一步封装
  *
  * 【集成Jedis步骤】
  *（1）引入依赖

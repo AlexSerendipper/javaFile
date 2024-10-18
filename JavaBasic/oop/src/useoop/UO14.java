@@ -12,8 +12,8 @@ import org.junit.Test;
  * 【interface】
  *  接口(interface)是抽象方法和常量值定义的集合。
  *  用interface来标记，先写extends，后写implements。如class SubClass extends SuperClass implements InterfaceA{ }
- *  接口中的所有成员变量都默认是由 public static final 修饰的。
- *  接口中的所有抽象方法都默认是由 public abstract 修饰的。
+ *  ✔接口中的所有成员变量都默认是由 public static final 修饰的。
+ *  ✔接口中的所有抽象方法都默认是由 public abstract 修饰的。
  *  接口中没有构造器。
  *  ✔接口采用多继承机制。一个类可以实现多个接口，接口也可以继承其它接口。
  *  实现接口的类中必须提供接口中所有方法的具体实现内容，方可实例化。否则，仍需定义为抽象类

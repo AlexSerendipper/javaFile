@@ -6,7 +6,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.lang.annotation.Annotation;
-
 /**
  * 【Spring AOP 和 AspectJ AOP 的区别】
  * - Spring AOP 属于运行时增强，而 AspectJ 是编译时增强， Spring AOP 基于代理(Proxying)，而 AspectJ 基于字节码操作(Bytecode Manipulation)。
@@ -37,7 +36,7 @@ import java.lang.annotation.Annotation;
  *
  * 【AOP操作流程】常用见UserProxy。基于AspectJ注解
  * (1) 创建被增强类(被代理类): User
- * (2) 创建增强类（编写增强逻辑）: UserProxy，在增强类中创建方法，让不同方法代表不同通知类型
+ * (2) 创建增强类（编写增强逻辑）: UserProxy，在增强类中创建方法，让不同方法代表不同通知类型✔
  * (3) AOP使用配置
  *      引入aspect名称空间，并在spring配置文件中利用 <aop:aspectj-autoproxy> 开启生成代理对象
  *      通过配置文件 或 配置类开启注解扫描（增强类和被增强类需要交由IOC管理）
@@ -52,9 +51,10 @@ import java.lang.annotation.Annotation;
  *                 proceedingJoinPoint.proceed();
  *               其他所有通知中可以声明JoinPoint对象，代表被增强的方法！！！并可以通过如下方法获取其类路径和方法名
  *                String method = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
- * (6)其他操作1：相同切入点抽取✔
- *      在增强类中创建一个方法，并添加注解 @Pointcut(value = "execution(* aop.bean.User.add(..))")
- *      为作为 通知的方法上面 添加通知类型注解时，使用该方法作为值即可。@Before(value = "方法")
+ * (6)其他操作1：定义切入点✔
+ *      在增强类中创建一个方法，如pointdemo，并添加注解 @Pointcut(value = "execution(* aop.bean.User.add(..))")
+ *        即表示该方法名作为这个切入点的缩写
+ *      编写增加类时，使用该方法名作为值，即为该切入点设置指定通知，如 @Before(value = "pointdemo")
  * (7)其他操作2：当有多个增强类对同一个方法进行增强（如userproxy和personproxy都对user类的add方法进行增强），可以设置增强类优先级
  *      在增强类上面添加注解 @Order(数字类型值)，数字类型值越小优先级越高
 -------------------------------------------------

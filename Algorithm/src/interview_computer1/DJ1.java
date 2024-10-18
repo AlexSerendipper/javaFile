@@ -1,4 +1,4 @@
-package acm;
+package interview_computer1;
 
 import java.util.HashSet;
 import java.util.Scanner;
@@ -23,7 +23,7 @@ import java.util.Scanner;
  @create 2023-08-06-20:07
  */
 
-public class dajiang1 {
+public class DJ1 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         HashSet<String> set = new HashSet<>();

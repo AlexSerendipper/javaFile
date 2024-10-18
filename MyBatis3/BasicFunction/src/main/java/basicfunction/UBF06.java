@@ -15,7 +15,7 @@ import java.util.List;
  *  resultType：自动映射关系，即用于属性名和表中字段名一致的情况
  *  resultMap：自定义映射关系，即用于一对多或多对一的表关系 或 字段名和属性名不一致 的情况
  *
- * 【resultMap 解决 字段名和属性名不一致的问题】✔✔✔推荐使用方法1和方案2，  resultMap主要用来处理 多对一 以及 一对多 的映射关系！！！
+ * 【resultMap 解决 字段名和属性名不一致的问题】✔✔✔推荐使用方案1和方案2，resultMap主要用来处理 多对一 以及 一对多 的映射关系！！！
  *  解决方案一：为查询的字段设置别名，保证与属性名一致。如 select eid,emp_name empName,age,sex,email from mybatis_emp
  *  解决方案二：在mybatis-config中开启全局配置<settings>，将表中字段的下划线自动转换 为 小驼峰形式
 ---------------------------------

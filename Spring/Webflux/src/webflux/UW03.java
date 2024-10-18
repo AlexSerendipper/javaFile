@@ -4,7 +4,7 @@ package webflux;
  * 【Spring5新功能4】整合测试框架
  *  整合junit4
  *   (1) 引入测试相关jar包spring-test-5.2.6.RELEASE.jar
- *                        junit-4.13.1.jar
+ *                       junit-4.13.1.jar
  *   (2) 创建测试类，使用注解方式完成
  *       @RunWith(SpringJUnit4ClassRunner.class)              # 使用单元测试框架JUnit4，让测试运行于spring环境
  *       @ContextConfiguration("classpath:UW03.xml")          # 加载配置文件，两个标签一般配合使用

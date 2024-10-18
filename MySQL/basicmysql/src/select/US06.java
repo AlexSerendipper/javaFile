@@ -61,7 +61,7 @@ package select;
  *   JOIN location l
  *   ON d.location_id = l.location_id
  *    目前数据中employee_id中有107条数据，有一个员工(老板)的department_id为null。最后匹配结果为106条数据
- *    INNER可以省略
+ *    INNER可以省略✔
  *
  * 【外连接】
 *   多表查询结果包含不匹配的结果称为外连接。返回左（右）表中不满足条件的结果称为左（右）外连接。返回表中所有满足和不满足条件的结果称为满外连接
@@ -80,7 +80,7 @@ package select;
  *  SELECT employee_id,department_name,e.department_id
  *   FROM employees e FULL OUTER JOIN departments d
  *   ON e.department_id = d.department_id
- *    OUTER可以省略
+ *    OUTER可以省略✔
  *    注意：MySQL中不支持SQL99的满外连接写法✔
  *
  *  【UNION】

@@ -5,7 +5,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 /**
- * 【创建多线程3：实现callable接口】
+ * 【创建多线程3：实现callable接口】了解即可
  *  相比run()方法，可以有返回值
  *  方法可以抛出异常
  *  支持泛型的返回值

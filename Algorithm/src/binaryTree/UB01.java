@@ -7,8 +7,8 @@ import java.util.TreeMap;
 /**
  * // 递归法
  * 144.二叉树的前序遍历（中左右）(opens new window)：https://leetcode.cn/problems/binary-tree-preorder-traversal/
- * 145.二叉树的后序遍历（左中右）(opens new window)：https://leetcode.cn/problems/binary-tree-postorder-traversal/
- * 94.二叉树的中序遍历（左右中）：https://leetcode.cn/problems/binary-tree-inorder-traversal/
+ * 94.二叉树的中序遍历（左中右）：https://leetcode.cn/problems/binary-tree-inorder-traversal/
+ * 145.二叉树的后序遍历（左右中）(opens new window)：https://leetcode.cn/problems/binary-tree-postorder-traversal/
  *
  @author Alex
  @create 2023-07-07-9:40
@@ -23,7 +23,10 @@ public class UB01 {
         rootNode.right.left = new TreeNode(7);
         rootNode.right.right = new TreeNode(8);
 
-        new UB01().postorderTraversal(rootNode);
+        List<Integer> list = new UB01().inorderTraversal(rootNode);
+        for(Integer i : list){
+            System.out.printf(i+" ");
+        }
     }
 
     // 前序遍历
@@ -63,7 +66,7 @@ public class UB01 {
         arr.add(root.val);
     }
 
-    // 中序遍历
+    // 中序遍历（左中右）
     public List<Integer> inorderTraversal(TreeNode root) {
         ArrayList<Integer> arr = new ArrayList<>();
         inorder(root,arr);

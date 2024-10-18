@@ -3,7 +3,7 @@ package usethread;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * 【Lock锁解决线程安全问题】
+ * 【Lock锁解决线程安全问题】了解
  * 【使用格式】
 ------------------------------------
   class A{

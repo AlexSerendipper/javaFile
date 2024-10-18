@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 【主程序使用】了解
+ * 【主程序使用】
  *  @SpringBootApplication(scanBasePackages="",exclude = {})                                    # 设置于主启动类上，设置包扫描位置
  *                                                                                                  可以设置不加载某些自动配置类，如DataSourceAutoConfiguration.class
  *  @MapperScan(value = "")                                                                     # 设置mapper接口的包扫描路径

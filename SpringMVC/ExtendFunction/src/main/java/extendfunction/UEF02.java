@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *     将Java对象直接作为控制器方法的返回值返回，将会自动转换为Json格式的字符串✔
  *
  * 【SpringMVC处理ajax请求】
- *  前端正常使用ajax发送数据，后端使用@ResponseBody正常接收即可
+ *  前端正常使用ajax发送数据，后端正常接收即可
  *
  @author Alex
  @create 2023-03-06-21:40

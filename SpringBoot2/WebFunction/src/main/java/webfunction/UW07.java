@@ -8,7 +8,7 @@ import webfunction.pojo.Person;
 
 /**
  * 【异常处理机制】springboot解决方案与springMVC有差异，但是同样推荐使用springMVC中的 SimpleMappingExceptionResolver 方法
- *  默认情况下，Spring Boot提供 /error 处理所有错误的映射
+ *  默认情况下，SpringBoot提供 /error 处理所有错误的映射
  *  发生异常时：对于机器客户端(postman)，它将生成 JSON 响应，其中包含错误，HTTP状态和异常消息的详细信息。
  *              对于浏览器客户端，响应一个 "whitelabel" 错误视图，以HTML格式呈现相同的数据
  *  springboot中，异常处理只需要在 /template/error下 新建 4xx，5xx页面，错误页面就会被自动解析；

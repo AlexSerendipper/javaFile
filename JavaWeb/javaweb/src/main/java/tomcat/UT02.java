@@ -19,9 +19,9 @@ package tomcat;
  *  Tomcat由 Apache 组织提供的一种Web服务器，提供对jsp和Servlet的支持。它是一种轻量级的javaWeb容器（服务器），也是当前应用最广的JavaWeb 服务器（免费）。
  *  Mysql默认的端口号是：3306。Tomcat 默认的端口号是：8080
  *   修改tomcat默认端口号：Tomcat目录下的conf ==> server.xml ==> 找到connector标签，修改port属性为想要的端口号(范围是1-65535)
- *  为什么要用tomcat？因为我们直接打开html文件，使用的file://协议，即告诉浏览器读取本地文件即可
+ *  ✔✔为什么要用tomcat？因为我们直接打开html文件，使用的file://协议，即告诉浏览器读取本地文件即可
  *   使用tomcat输入入http://ip:port/工程目录/项目名，使用的是http://协议，相当于客户端发起了请求，二者原理完全不同
- *  tomcat的默认访问路径✔✔✔✔✔
+ *  tomcat的默认访问路径✔✔
  *    当我们在浏览器地址栏中http://ip:port/ （没有输入工程名）的时候，默认访问的是 webapps/ROOT工程。
  *    当我们在浏览器地址栏中http://ip:port/工程名/  默认映射到webapp这个目录（即当前工程在web中的路径），但无法方法WEB-INF目录
  *    当我们在浏览器地址栏中http://ip:port/工程名/ （没有输入资源名）的时候，默认访问 webapp/index.html 页面

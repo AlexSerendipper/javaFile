@@ -12,6 +12,7 @@
 </head>
 <body>
     <form action="http://localhost:8080/javaweb/loginServlet" method="get">
+        <%--用户名和密码首先从cookie中取值--%>
         用户名：<input type="text" name="username" value="${cookie.username.value}"> <br>
         密码：<input type="password" name="password" value="${cookie.password.value}"> <br>
         <input type="submit" value="登录">

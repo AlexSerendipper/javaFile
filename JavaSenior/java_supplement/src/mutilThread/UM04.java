@@ -1,10 +1,8 @@
 package mutilThread;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-
 /**
  * 【Volatile】两个作用
- * （1）保证线程可见性
+ * （1）保证线程 可见性/一致性
  *  指的是 volatile 类型的变量，其变量值一旦被修改，其他线程就能够立刻感知到
  *   如果对声明了 volatile 变量将进行写操作，JVM就会向处理器发送一条Lock前缀的指令，将这个变量所在的缓存行的数据立即写回到系统内存。
  *   并且cpu读取volatile标识的变量时 只能从系统内存中读取，不能从缓存中读取

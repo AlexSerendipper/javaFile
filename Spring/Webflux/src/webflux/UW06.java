@@ -1,7 +1,7 @@
 package webflux;
 
 /**
- * 【springboot整合验证码功能】其实是对javaweb中导入jar包方式的一种提升
+ * 【Spring整合验证码功能】其实是对javaweb中导入jar包方式的一种提升
  *（1）导入kaptcha依赖
 --------------
 <!--Kaptcha-->
@@ -38,7 +38,7 @@ public class KaptchaConfig {
     }
 }
 --------------
- *（3）生成随机字符、根据字符生成图片（在controller中，需要自动装配 Producer kaptchaProducer 对象）
+ *（3）生成随机字符、根据字符生成图片（在Controller中，需要自动装配 Producer kaptchaProducer 对象）
 --------------
 // 生成验证码
 String text = kaptchaProducer.createText();

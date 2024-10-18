@@ -7,7 +7,6 @@ import java.util.PriorityQueue;
 
 /**
  * 前 K 个高频元素：https://leetcode.cn/problems/top-k-frequent-elements/
- *
  * 给你一个整数数组 nums 和一个整数 k ，请你返回其中出现频率前 k 高的元素。你可以按 任意顺序 返回答案
  *
  *
@@ -16,7 +15,7 @@ import java.util.PriorityQueue;
  */
 public class US07 {
     public static void main(String[] args) {
-        int[] arr = new int[]{1,1,1,2,2,3};
+        int[] arr = new int[]{1,1,1,1,2,2,3,3,3};
         new US07().topKFrequent(arr,2);
 
     }
@@ -36,7 +35,7 @@ public class US07 {
             map.put(num,map.getOrDefault(num,0)+1);
         }
 
-        // 构建小顶堆的优先级队列，排序时按照int[]的第二位值进行排序（小顶堆）
+        // 构建小顶堆的优先级队列，排序时按照int[]的第二个元素进行排序（小顶堆）
         PriorityQueue<int[]> pq = new PriorityQueue<>(
                 new Comparator<int[]>() {
                     @Override

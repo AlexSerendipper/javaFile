@@ -23,6 +23,10 @@ import java.math.BigInteger;
  *   public BigDecimal subtract(BigDecimal subtrahend)
  *   public BigDecimal multiply(BigDecimal multiplicand)
  *   public BigDecimal divide(BigDecimal divisor, int scale, int roundingMode)
+ *
+ *  【保留有效数字】String类也能实现类似功能
+ *   BigDecimal bd = new BigDecimal(1/3);               # 将1/3的结果用bd存储
+ *   bd = bd.setScale(10, RoundingMode.HALF_DOWN);      # 保留10位有效数字，四舍五入模式（还有向上取整、向下取整模式）
  @author Alex
  @create 2023-01-04-18:54
  */

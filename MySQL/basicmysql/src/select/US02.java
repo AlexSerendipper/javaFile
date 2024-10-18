@@ -46,6 +46,10 @@ package select;
  *                           USE mysql;        #cmd中使用mysql数据库
  *                           ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'qqabcd';  #修改'root'@'localhost'用户的密码规则和密码
  *                           FLUSH PRIVILEGES;  #刷新权限
+ *   本机的主机名为localhost,端口3306,用户名root,密码qqabcd
+ *   SHOW VARIABLES WHERE Variable_name = 'hostname';           # 查看主机名
+ *   SHOW VARIABLES WHERE Variable_name = 'port';               # 查看端口
+ *
  *
  * 【MySQL主要目录结构】
  *   bin目录 ：所有MySQL的可执行文件。如：mysql.exe

@@ -28,6 +28,7 @@ import java.util.TimeZone;
  *   SimpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8"));    # 指定一个时区为GMT+8即可输出当前正确的日期时间。否则在使用SimpleDateFormat 对日期进行格式化的时候，输出结果比预期结果晚了8个小时。
  *   public String format(Date date)：      # 格式化-时间对象date成文本
  *   public Date parse(String source)：     # 解析-将给定字符串文本解析成一个日期对象
+ *
  * 【五. Calendar类】
  *  Calendar.getInstance()：                        # 获取Calendar实例
  *  public void set(int field,int value)：          # field为传入的常量，可以直接更改Calendar类中的属性

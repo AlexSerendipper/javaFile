@@ -37,13 +37,12 @@ import org.junit.Test;
  *  同：1). 三者底层都是用char[]存储
  *
  * 【String与StringBuffer、StringBuilder的开发效率对比】
- *
+ *  StringBuilder>StringBuffer>String
  * @author Alex
  * @create 2022-11-21-13:24
  */
 
 public class UseCommonClass03 {
-
     @Test
     public void test1() {
         // 问题1：底层源码问题
@@ -60,7 +59,6 @@ public class UseCommonClass03 {
         // String → StringBuffer、StringBuilder
         String str1 = new String("abc");
         StringBuffer sb1 = new StringBuffer(str1);
-
 
         // StringBuffer、StringBuilder → String
         String str2 = new String(sb1);  // 方法1：调用构造器

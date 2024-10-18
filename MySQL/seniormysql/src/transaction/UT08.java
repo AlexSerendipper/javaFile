@@ -2,7 +2,9 @@ package transaction;
 
 /**
  * 【MVCC简介】Multiversion Concurrency Control，多版本并发控制
- *  在我们平常使用数据库的时候，一般不会关注MVCC，我们通常关注的是隔离级别。MVCC实际上是在隔离级别的下层，✔即我们是如何在各种隔离级别下实现并发
+ *  在我们平常使用数据库的时候，一般不会关注MVCC，我们通常关注的是隔离级别。
+ *   实际上，各种隔离级别（read committed,repeatable read）的底层实现机制是MVCC机制✔✔✔✔
+ *   (另外两个read uncommitted和Serializable并不主要通过MVCC实现)
  *  MVCC是通过数据行的多个版本管理来实现数据库的并发控制。这项技术使得在InnoDB的事务隔离级别下执行一致性读（快照读）操作有了保证。
  *   简言之，就是可以 查询到一些正在被另一个事务更新的行，并且可以看到它们被更新之前的值，这样在做查询的时候就不用等待另一个事务释放锁。
  *  MVCC 没有正式的标准，在不同的DBMS中MCC的实现方式可能是不同的，也不是普遍使用的，这里讲解InnoDB中MVCC的实现机制（MySQL其它的存储引擎并不支持它)。

@@ -15,11 +15,10 @@ import java.io.IOException;
  *   从servlet1跳到servlet2的过程就叫做请求转发。
  *
  * 【常用方法】
- *  RequestDispatcher requestDispatcher = req.getRequestDispatcher("/path") ; 请求转发，path为跳转的servlet地址
- *  requestDispatcher.forward(req,resp); 跳转到对应的servlet
- *  setAttribute(key, value); 设置域数据(同ServletContext类，同个工程下的资源，可以共享其中的域数据)
- *  getAttribute(key); 获取域数据
- *  getRequestDispatcher("/...") 获取请求转发对象（ '/'通常映射为'http://ip:port/工程名）
+ *  RequestDispatcher requestDispatcher = req.getRequestDispatcher("/path") ;  ✔1）获取请求转发对象（ '/'通常映射为'http://ip:port/工程名）
+ *   requestDispatcher.forward(req,resp);                                       ✔2）请求转发，跳转到对应的servlet上（path地址，即为跳转的servlet地址）
+ *  setAttribute(key, value);                                 设置域数据(同ServletContext类，同个工程下的资源，可以共享其中的域数据)
+ *  getAttribute(key);                                        获取域数据
  *
  * 【请求转发的特点】
  * （1）浏览器的地址栏不会变化

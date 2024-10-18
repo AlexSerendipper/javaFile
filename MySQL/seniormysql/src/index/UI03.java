@@ -2,7 +2,7 @@ package index;
 
 /**
  * 【MyISAM中索引方案】见xmind
- *  InnoDB和MyISAM引擎 默认的索引是Btree索引；而Memory引擎 默认的索引是Hash索引。
+ *  InnoDB和MyISAM引擎 默认的索引是B-tree索引；而Memory引擎 默认的索引是Hash索引。
  *   MyISAM引擎 使用 B+Tree作为索引结构，叶子节点的data域存放的是  数据记录的地址。
  *  MyISAM引擎由于数据和索引分离，主键索引和二级索引在结构上没有任何区别，只是主键索引要求key是唯一的（二级索引的key可以重复）。所有只有 非聚簇索引 这个说法。
  *

@@ -41,7 +41,7 @@ public class UO08 {
     @Test
     public void test1() {
         Sub s = new Sub();
-        Base b = s;  // 多态，此处赋值赋的就是地址值。故下方地址值相同
+        Base b = s;  // 多态，此处赋值赋的就是地址值。故下方地址值相同。。。。或者写成 Base b = new Sub()
         System.out.println(b == s);
         System.out.println(b.count);  // 多态性不适用于属性
         b.display();  // 难点!由于虚拟方法调用，执行子类的方法，通过方法显示了子类中特有的属性
@@ -74,7 +74,7 @@ public class UO08 {
             System.out.println("sub_1");
         }
 
-        // 该方法为新方法
+        // 该方法为新方法（并非重写）
         public void add(int a, int b, int c) { // 考察2：打开这个之后，输出为？——理论上优先执行固定参数的 //
             System.out.println("sub_2");
         }
@@ -99,6 +99,25 @@ public class UO08 {
                 return new Sub();
             default:
                 return null;
+        }
+    }
+
+
+
+
+    @Test
+    public void test666(){
+        Animal o = new Duck();
+        o.fly();
+    }
+    class Animal{
+        public void fly(){
+            System.out.println("起飞撸");
+        }
+    }
+    class Duck extends Animal{
+        public void fly(){
+            System.out.println("起飞");
         }
     }
 }

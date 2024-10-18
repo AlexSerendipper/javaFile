@@ -48,7 +48,7 @@ package mutilThread;
  *              答：调用lock comxchg（汇编语言，compare and exchange），
  *              使用comxchg指令，即底层cpu支持CAS操作，但是该操作是非原子性的
  *              使用lock指令，底层具体是调用 cpu锁定缓存行 或者 锁总线来实现的，可以保证了一个cpu执行时不会被另一颗cpu打断，保证了原子性！！！
- *  注意：synchronized加锁的代码中，指令仍然能够重排序，即synchronized能够保证程序的可见性(CAS)和原子性(lock)，无法保证其有序性
+ *  注意：synchronized加锁的代码中，指令仍然能够重排序，即synchronized能够保证程序的 可见性/一致性(CAS)和原子性(lock)，无法保证其有序性
  *
  *  【重入锁】
  *  java中大多数的锁都是重入锁，即可以在一个 锁的内部继续加锁（同一把锁）。。。如synchronized,lock锁等。。。。

@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * 【servlet】
  *  Servlet就 JavaWeb 三大组件之一。三大组件分别是：Servlet程序、Filter过滤器、Listener监听器。
- *  Servlet运行在服务器上，主要负责接收客户端发送过来的请求，并响应数据给客户端。
+ *  ✔Servlet运行在服务器上，主要负责接收客户端发送过来的请求，并响应数据给客户端。
  *  Servlet作为一个接口，定义了发送和相应请求的规范
  *
  * 【✔实现servlet】继承的方式更为常见

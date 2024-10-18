@@ -8,7 +8,7 @@ import java.util.Scanner;
  @author Alex
  @create 2023-09-09-10:23
  */
-public class UI06 {
+public class MT01 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();  // 考试科目数

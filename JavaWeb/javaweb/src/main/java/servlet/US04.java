@@ -10,7 +10,8 @@ import java.util.Arrays;
 
 /**
  * 【HttpServletRequest类】part1
- *  每次只要有请求进入Tomcat服务器，Tomcat服务器就会把请求过来的HTTP协议信息解析好封装到HttpServletRequest对象中。
+ *  每次请求进来，Tomcat服务器都会创建一个Request对象供Servlet程序去使用。
+ *   Tomcat服务器会把请求过来的HTTP协议信息解析好封装到HttpServletRequest对象中。
  *   我们可以通过HttpServletRequest对象，获取到所有请求的信息✔
  *
  * 【常用方法】
@@ -24,7 +25,7 @@ import java.util.Arrays;
  *  getMethod() 获取请求的方式 GET 或 POST
  *  getContextPath() 获取工程路径(上下文路径)：http:localhost:8080/javaweb/
  *
- * 【POST请求时的获取请求参数中文乱码解决】
+ * 【POST请求时的获取请求参数出现中文乱码的解决】
  *  req.setCharacterEncoding("UTF-8"); 设置服务器字符集为 UTF-8，从而解决 post 请求的中文乱码问题
  *
  * 【通过request对象，判断当前请求是否为异步请求】

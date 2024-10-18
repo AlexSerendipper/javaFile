@@ -17,22 +17,23 @@ import java.util.Map;
  *   数据交换指的是客户端和服务器之间业务数据的传递格式
  *  前后端数据交互时，通常就是后端以json字符串的格式发送数据给前端，然后前端通过一些手段解析为json对象
  *
- * 【客户端使用json】在javascript中的使用✔✔✔。见json.html
+ * 【客户端使用json】在前端javascript中的使用✔✔✔。见json.html
  *   json的两种存在形式
  *    （1）json对象:
  *      json对象由大括号包围。是由键值对组成，并且每个键由 双引号 引起来，键和值之间使用冒号进行分隔，多组键值对之间进行逗号进行分隔。
  *         ✔在前端中 以json对象 的形式存在。如 {"firstName": "Bill", "lastName": "Gates"}
- *           json对象可以直接通过 json对象.key 访问值
+ *             json对象可以直接通过 json对象.key 访问值
  *         ✔在后端中，以json字符串的的形式存在，如 "{ "firstName": "Bill", "lastName": "Gates" }"
- *           通常在客户端和服务器之间进行数据交换的时用json字符串格式。
+ *             通常在客户端和服务器之间进行数据交换的时用json字符串格式。
  *     (2) json数组：json对象为元素构成的数组
- *      json数组，可以直接通过for循环 取出json数组中的数据
+ *         ✔在前端中 以json数组 的形式存在。
+ *         ✔在后端中，同样是以json字符串的的形式存在。如'[{"id": "1"},{"id": "2"}]'
  *   前端中操作json的两个常用方法
  *   JSON.stringify()            # 把json对象转换成为json字符串，类似于java的toString
  *   JSON.parse()                # 把json字符串转换成为json对象
  *
  * 【服务器端使用json：方式一】在java中的使用✔✔✔，需要导入gson包~
- *  javaBean和json对象的互转
+ *  javaBean和json对象（字符串）的互转
  *    new Gson();                  # 创建 Gson 对象实例
  *    gson.toJson(stu);            # toJson方法可以把javabean对象转换成为json字符串✔
  *    gson.fromJson(str, Student.class);                 # fromJson把json字符串转换回Java对象。第一个参数是json字符串。第二个参数是转换回去的Java对象类型

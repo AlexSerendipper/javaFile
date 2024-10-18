@@ -13,7 +13,8 @@ import java.util.concurrent.*;
 /**
  * 【Spring多线程】类比于jdk提供的线程池
  * （1）spring.properties配置，配置后，spring将自动初始化好线程池，并将其放入容器中进行管理
-*   从其配置上不难看出，spring提供的线程池，比jdk提供的线程池要更加灵活
+ *   从其配置上不难看出，spring提供的线程池，比jdk提供的线程池要更加灵活
+ *
 -----------------
 # TaskExecutionProperties普通线程
 # 默认调用五个线程
@@ -26,29 +27,32 @@ spring.task.execution.pool.queue-capacity=100
 # TaskSchedulingProperties定时任务线程，这个好像不配置也不会报错，所以SSM中就可以直接用吧
 spring.task.scheduling.pool.size=5
 -----------------
- *（2）创建配置类，让spring定时任务线程生效
+ *
+ * （2）spring定时任务线程池配置类，需要使用定时任务时配置
 -----------------
 @Configuration
 @EnableScheduling
 @EnableAsync
 public class ThreadPoolConfig {}
 -----------------
- * （3） 自动装配后，用户与jdk线程池几乎一致
- *   threadPoolTaskExecutor.execute()                                   # 执行指定的线程操作，需要传入实现runnable接口的实现类对象
- *   threadPoolTaskExecutor.submit()                                    # 执行指定的线程操作，需要传入实现callable接口的实现类对象
- *   threadPoolTaskExecutor.shutdown();                                 # 执行完后可以手动关闭线程池
- *   scheduledExecutorService.scheduleAtFixedRate(task,new Date(System.currentTimeMillis() + 10000),period(ms));             # 以固定的 延迟（需要传入Date类型数据）和频率 执行~ 执行多次（直到执行完线程任务）
------------------
-@Autowired
-private ThreadPoolTaskExecutor threadPoolTaskExecutor;
-// spring定时任务线程池
+// spring定时任务线程池自动装配
 @Autowired
 private ThreadPoolTaskScheduler threadPoolTaskScheduler;
 -----------------
  *
+ * （3） 自动装配后，用户与jdk线程池几乎一致
+ *   threadPoolTaskExecutor.execute()                                   # 执行指定的线程操作，需要传入实现runnable接口的实现类对象
+ *   threadPoolTaskExecutor.submit()                                    # 执行指定的线程操作，需要传入实现callable接口的实现类对象
+ *   threadPoolTaskExecutor.shutdown();                                 # 执行完后可以手动关闭线程池
+ *   scheduledExecutorService.scheduleAtFixedRate(task,new Date(System.currentTimeMillis() + 10000),period(ms));     # 以固定的 延迟（需要传入Date类型数据）和频率 执行~ 执行多次（直到执行完线程任务）
+ *
+ *
+ *
  * 【spring 线程池简化使用方式】
  *   @Async                 # 普通线程池的快速调用：在某方法上使用@Async注解，当调用该方法时，会由多个线程异步执行
  *   @Scheduled(initialDelay = 10000,fixedRate = 1000)         # 定时任务线程池的快速调用，使用该注解，指定延迟时间和频率，当该方法的组件被装配时，该方法自动被调用！！
+ *
+ *
  *
  * 【分布式多线程】
  *  当服务器采用分布式部署时，每个服务器上都有（controller 以及 scheduler），当服务器启动，若采用传统的多线程的方式scheduler自动运行，将可能产生冲突。

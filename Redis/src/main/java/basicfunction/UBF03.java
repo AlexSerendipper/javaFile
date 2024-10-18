@@ -31,7 +31,7 @@ package basicfunction;
  *   flushall 			          # 清空16个数据库 慎用
  *
  * 【redis常见命令————String】常用于需要计数的场景，比如用户的访问次数、热点文章的点赞转发数量等
- *   string是redis最基本的类型，一个key对应一个value
+ *   string是redis最基本的类型，一个key对应一个value✔
  *    其他的数据结构都是在String类型的基础上构建的
  *    虽然Redis是用C语言写的，但是Redis并没有使用C语言的的String。而是自己构建了一种 简单动态字符串（SDS）。
  *    相比于 C 的原生字符串，Redis 的 SDS 不光可以保存文本数据还可以保存二进制数据（比如jpg图片或者序列化的对象）
@@ -59,7 +59,7 @@ package basicfunction;
  *    append k1 value              # 在当前k1后追加value字符串
  *
  * 【redis常见命令————List】list1表示键，value表示值。。。常用于发布与订阅（消息队列）、慢查询。
- *   单key多value结构
+ *   单key多value结构✔
  *   lpush [list1] [value] ...     # 往列表（左边）放入元素
  *   Rpush [list1] [value] ...     # 往列表（右边）放入元素
  *   lrange [list1] 0 -1           # 从左边开始遍历列表，0 -1表示取出所有元素，只能从左边遍历✔
@@ -75,7 +75,7 @@ package basicfunction;
  *   linsert [key] brfore/after [value]              # 在list某个已有值的 前/后 再添加具体值
  *
  * 【redis常见命令————Hash】key表示键，file value为键值对。。。常用于购物车功能
- *   k-v 模式不变，但v 又是一个新的键值对。类似于java中的Map<String, Map<Object,Object>
+ *   k-v 模式不变，但v 又是一个新的键值对✔。类似于java中的Map<String, Map<Object,Object>
  *   hset key field value [field value]              # 如hset user name zzj age 17
  *    hget key field                                   # 如hget user age
  *    hgetall key                                      # 遍历一个hash，如hgetall user
@@ -89,7 +89,7 @@ package basicfunction;
  *   hsetnx [key] field1 [value]                     # 不存在field1,则赋值，若存在了field1则赋值无效
  *
  * 【redis常见命令————Set】set1表示键，member表示值。。。常用于猜你喜欢、共同关注、共同喜欢等功能
- *   单key多value结构，与list的区别是其存储 无重复数据, 是一个无序集合
+ *   单key多value结构，与list的区别是其存储 无重复数据, 是一个无序集合✔
  *     SADD Set1 member                        # 添加元素
  *     SMEMBERS Set1                           # 遍历key中所有元素
  *     SISMEMBER Set1 member                   # 判断元素 member 是否在集合中
@@ -105,7 +105,7 @@ package basicfunction;
  *     SINTERCARD numkeys Set1 Set2 [LIMIT limit]  # 了解，不返回结果集，只返回结果的基数（numkeys设定set个数，limit设置显示基数的限制）
  *
  * 【redis常见命令————ZSet】zset1表示键，score表示分数，member表示值。。。适用于需要对数据根据某权重进行排序的场景,如根据商品价格进行排序等
- *  Zset就是在set的基础上加了一个score分数值。  Set1 v1 v2 v3  ==> ZSet1 score1 v1 score2 v2
+ *  Zset就是在set的基础上加了一个score分数值✔。  Set1 v1 v2 v3  ==> ZSet1 score1 v1 score2 v2
  *    ZADD zset1 score member [score member]      # 添加元素
  *    ZRANGE zset1 start stop [WITHSCORES]        # 遍历：返回元素分数从小到大的顺序。返回索引从start到stop之间的所有元素（withscopes会将分数一同遍历）
  *    ZREVRANGE zset1 0 - 1 [WITHSCORES]          # 反序。返回元素分数从大到小的顺序

@@ -3,7 +3,7 @@ package usethread;
 /**
  * 【创建多线程1：继承多线程】
  * 步骤：（1）创建一个继承于Thread类的子类
- *      （2）重写Thread类的run()，该线程方法体放在此处
+ *      （2）重写Thread类的run()方法，该线程方法体放在run方法内
  *      （3）创建子类对象，并调用start方法（此时会开辟一个新线程，然后调用当前线程的run方法）
  *           要想创建多个进程，需要创建多个对象
  *           可以利用Thread的匿名子类的方法创建进程
@@ -70,9 +70,9 @@ public class UseThread02 {
                 }
             }
         }.start();
-
-
         System.out.println("*****************");
+
+
         // 当前线程，即主线程，输出100以内的质数
         Thread.currentThread().setName("主线程："); // 命名2：设置当前进程实例名
         Thread.currentThread().setPriority(10);  // 设置主线程优先级

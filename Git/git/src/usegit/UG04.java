@@ -22,6 +22,7 @@ package usegit;
  *        ② 在终端输入上述指令后，连续敲击 3 次回车，即可在 C:\Users\.ssh 目录中生成 id_rsa(私钥文件)和 id_rsa.pub(公钥文件)两个文件
  *        ③ 使用记事本打开 id_rsa.pub 文件，复制里面的文本内容
  *        ④ 在浏览器中登录 Github，点击头像 -> Settings -> SSH and GPG Keys -> New SSH key
+ *                        Gitlab，点击头像 -> preferences -> SSH Keys -> New SSH key
  *        ⑤ 将 id_rsa.pub 文件中的内容，粘贴到 Key 对应的文本框中
  *        ⑥ 在 Title文本框中任意填写一个名称，作标识即可
  *         git remote add origin git@github.com:AlexSerendipper/ttest.git            # 将远程仓库（SSH网址）重命名为别名（可省略）
@@ -44,6 +45,7 @@ package usegit;
  *
  *     git clone 远仓别名                          # 公共库的克隆操作是完全不需要登录的！使用SSH/HTTPS的地址均可
  *                                                    ✔克隆会完成三个操作 1、拉取代码 2、初始化本地仓库。3、创建别名（默认创建为origin）
+  *     git clone --branch 分支名 远仓别名           # 克隆并切换到指定分支，也可以先克隆再切换分支 
  *     git remote rm 远仓别名                       # 为远仓起的别名可以通过该命令删除
  *     github页面 - repository - setting - delete   # 删除github中的远程仓库
  *

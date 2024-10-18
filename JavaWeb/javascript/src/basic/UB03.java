@@ -34,6 +34,29 @@ package basic;
  *      }
  *      var bigbai = new Person('大白', 100, '男');                # 使用new调用构造函数（实例化）
  *
+ * 【Object.defineProperty】
+ * Object.defineProperty(obj, prop, descriptor)                   # 用于在对象obj上定义新的属性或修改现有属性prop,并且可以对属性的行为进行精细控制
+------------------
+let number = 18
+Object.defineProperty(person,'age',{
+   // value:18,
+   // enumerable:true,    // 控制属性是否可以枚举，默认值是false
+   // writable:true,      // 控制属性是否可以被修改，默认值是false
+   // configurable:true   // 控制属性是否可以被删除，默认值是false
+ 
+   // 当有人读取person的age属性时，get函数(getter)就会被调用，且返回值就是age的值
+   get(){
+    console.log('有人读取age属性了')
+    return number
+   },
+ 
+   // 当有人修改person的age属性时，set函数(setter)就会被调用，且会收到修改的具体值
+   set(value){
+    console.log('有人修改了age属性，且值是',value)
+    number = value
+   }
+})
+------------------
  @author Alex
  @create 2023-01-27-10:44
  */

@@ -27,7 +27,10 @@ package DDL_DML_DCL;
  *  4)删除数据库
  *  DROP DATABASE 数据库名;                                        # 方式1：删除指定的数据库
  *  DROP DATABASE IF EXISTS 数据库名;                              # 方式2：删除指定的数据库（ 推荐 ）
- *
+ *  5)备份数据库
+ *  mysqldump -u 用户名 -p 数据库名 > 备份文件名.sql                # cmd，在Mysql文件夹的bin目录下使用该命令，将数据库文件备份为——备份文件名.sql
+ *  mysql -u alexzhong -p zzjbook < zzjbook.sql                    # cmd，在Mysql文件夹的bin目录下使用该命令，将数据库中所有表格恢复（由于不包含建库语句，需要手动完成建库）
+ * 
  * 【数据表操作】
  * 1）创建数据表：
  *   CREATE TABLE [IF NOT EXISTS] 表名(           # 直接创建表
